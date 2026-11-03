@@ -1,0 +1,36 @@
+{
+  "brand": "@gsspai",
+  "source": "OpenAI / Anthropic",
+  "date": "2026.10.27",
+  "slides": [
+    {
+      "type": "cover-min",
+      "kicker": "数学 · 10-27",
+      "headline": ["30 年的地基", "塌了"],
+      "accentLine": 1,
+      "sub": "OpenAI 和 Anthropic 同一天放话，指数时间假设不成立。",
+      "chips": ["第二天在 Lean 里验完", "Anthropic 也给了独立证明", "论文署名 by Claude"],
+      "num": "10-16",
+      "numLabel": "OpenAI 找到反证的那天，第二天完成 Lean 形式化",
+      "note": "同篇还证了杨-米尔斯存在性的一部分。"
+    },
+    {
+      "type": "ledger",
+      "kicker": "证据 · 两家的差别",
+      "headline": ["都交了卷", "一家先说短处"],
+      "accentLine": 1,
+      "sub": "同一周，两家公开材料的完整度差很远。",
+      "rows": [
+        { "k": "OpenAI", "v": "10-16 找到", "d": "第二天完成 Lean 形式化，公告 10-26 才发" },
+        { "k": "Anthropic", "v": "纯渐近", "d": "README 写明对实际求解没说法", "on": true }
+      ],
+      "note": "外部核查由 Impagliazzo、Paturi 和 MIT 的 Ryan Williams 牵头。"
+    },
+    {
+      "type": "statement",
+      "kicker": "判断",
+      "lines": ["能写出证明，", "只是第一步；", "[[能有人审完]]，", "才算数。"],
+      "by": "数学界现在最缺的工种，是审稿人。"
+    }
+  ]
+}

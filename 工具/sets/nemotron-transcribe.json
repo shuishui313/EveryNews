@@ -1,0 +1,55 @@
+{
+  "brand": "@gsspai",
+  "source": "NVIDIA · Hugging Face",
+  "date": "2026.10.28",
+  "noImageReason": "Hugging Face 博客正文没有插图，页面里只有作者头像；模型集合页也没有 benchmark 图表。查过 huggingface.co/blog/nvidia/nemotron-transcribe-granary 与 collections/nvidia/nemotron-speech。",
+  "slides": [
+    {
+      "type": "bigfact",
+      "kicker": "语音模型 · 10-28",
+      "headline": ["一百小时录音", "三分钟出稿"],
+      "sub": "NVIDIA 开源的 Nemotron 3.5 Transcribe，把转录、翻译、标出谁在说话塞进同一个权重。",
+      "num": "3",
+      "unit": "分钟",
+      "numLabel": "处理 100 小时音频的耗时，单卡完成",
+      "rows": [
+        { "k": "硬件", "v": "RTX PRO 6000 Blackwell Server Edition" },
+        { "k": "前提", "v": "NVFP4 量化版，官方说即将推出" },
+        { "k": "切法", "v": "30 秒切片并发，不是整段喂进去" }
+      ],
+      "note": "这是官方给的高并发场景，普通机器跑不到这个速度。"
+    },
+    {
+      "type": "table",
+      "kicker": "覆盖 · 按任务分",
+      "headline": ["三百亿参数", "每步只跑四十亿"],
+      "sub": "语音编码器接投影层，再进混合 Mamba 与 Transformer 的稀疏专家层。",
+      "head": ["任务", "覆盖范围"],
+      "rows": [
+        { "a": "转录", "b": "40 种语言", "c": "带词级时间戳" },
+        { "a": "说话人分离", "b": "13 种语言", "c": "单段最多标 8 人", "hot": true },
+        { "a": "翻译", "b": "31 种语言", "c": "和英语双向互译" },
+        { "a": "音频问答", "b": "仅英语", "c": "就录音内容提问", "hot": true },
+        { "a": "实时", "b": "不支持", "c": "只处理已录好的音频" }
+      ],
+      "note": "开放权重，权重与 Granary v2 数据集都在 Hugging Face。",
+      "verdict": "语言覆盖按任务算，不按模型算。"
+    },
+    {
+      "type": "quote",
+      "kicker": "成绩 · 四个榜",
+      "headline": ["开源第一", "但榜不止一个"],
+      "quote": [
+        "英文开源权重榜平均错字率 [[5.33%]]，",
+        "Artificial Analysis 上 2.80%，",
+        "和 24B 激活的对手并列第一。"
+      ],
+      "by": "NVIDIA · Hugging Face 博客 · 10-28",
+      "rows": [
+        { "k": "多语言", "v": "4.62% 平均 WER，七种语言" },
+        { "k": "长音频", "v": "10.98% 平均 WER" },
+        { "k": "代价", "v": "不做实时，只处理录好的音频" }
+      ]
+    }
+  ]
+}

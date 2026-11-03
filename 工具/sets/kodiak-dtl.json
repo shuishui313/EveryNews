@@ -1,0 +1,44 @@
+{
+  "brand": "@gsspai",
+  "source": "Kodiak 新聞稿 · TechCrunch · 10-28",
+  "date": "2026.10.30",
+  "noImageReason": "查過 Kodiak 新聞頁與 TechCrunch 正文，正文圖 0 張，只剩 og:image 與合作方縮圖；官方新聞稿未附現場照，改走純卡片。",
+  "slides": [
+    {
+      "type": "cover",
+      "kicker": "交易 · 10-28",
+      "headline": ["車歸客戶", "Kodiak 收里程費"],
+      "accentLine": 1,
+      "sub": "協議 10 月 28 日簽下，有約束力。DTL 把車登記在自己名下，Kodiak 只出那套駕駛系統。",
+      "hero": {
+        "num": "2028",
+        "unit": "年 · 開始交車",
+        "lines": ["達拉斯到埃爾帕索", "達拉斯到亞特蘭大", "兩條線都已經跑過測試"]
+      },
+      "chips": ["按英里計費", "客戶自購自營", "線路後續擴充"],
+      "note": "DTL 在加州弗雷斯諾，跑生鮮與冷藏整車貨運三十六年。"
+    },
+    {
+      "type": "versus",
+      "kicker": "同一週，兩份單子",
+      "headline": ["Aurora 簽得多", "Kodiak 簽得硬"],
+      "accentLine": 1,
+      "bars": [
+        { "label": "Aurora × Charger Logistics · 10-26", "price": "最多 500 台", "width": 100 },
+        { "label": "Kodiak × DTL · 10-28", "price": "75 台", "width": 15 }
+      ],
+      "rows": [
+        { "k": "Aurora 那份", "v": "非約束性備忘錄" },
+        { "k": "Kodiak 這份", "v": "最終協議，按英里付費" },
+        { "k": "Aurora 另有 Hirschbach", "v": "同為意向，未簽死" }
+      ],
+      "note": "兩家賣的都是駕駛系統，車由承運商自己買、自己養。"
+    },
+    {
+      "type": "statement",
+      "kickerTop": "真正的差距",
+      "lines": ["無人車真的在跑，", "跑在德州油田的封閉場地裡，", "[[公開公路上還是零]]。"],
+      "by": "Kodiak 付費無人營運 4 萬小時 · 全在二疊紀盆地 · 首跑排在 2026 年底"
+    }
+  ]
+}

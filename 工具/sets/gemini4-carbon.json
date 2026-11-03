@@ -1,0 +1,42 @@
+{
+  "brand": "@gsspai",
+  "source": "Google DeepMind",
+  "date": "2026.10.28",
+  "slides": [
+    {
+      "type": "cover-split",
+      "kicker": "模型 · 10-28",
+      "headline": ["登上榜首的模型", "先给防守方"],
+      "accentLine": 1,
+      "sub": "Gemini 4 Carbon 拿下 Artificial Analysis 智能指数第一，官方说本周先开放给部分网络安全防御者。",
+      "hero": { "num": "59", "unit": "分 · AA 智能指数 v5.0" },
+      "chips": ["SEC-bench Pro 88.2%", "作弊率 0.0%", "入门价 $2 / $10 每百万 token"],
+      "note": "开发者与消费级还没排期，官方没给日期。"
+    },
+    {
+      "type": "kpi",
+      "kicker": "防守 · 三条基准",
+      "headline": ["攻防类基准", "涨得最多"],
+      "accentLine": 1,
+      "sub": "官方给出的都是 SOTA 成绩，提升的单位是百分点。",
+      "cells": [
+        { "n": "88.2", "l": "% · SEC-bench Pro", "d": "专业取证类任务，官方称 SOTA" },
+        { "n": "+21.1", "l": "% · ExploitGym", "d": "漏洞利用聚合体，相对此前最好成绩" },
+        { "n": "+13.4", "l": "% · CWE-bench", "d": "内存漏洞仓库，相对此前最好成绩" }
+      ],
+      "note": "博客原话：这些提升是相对此前的最好成绩。"
+    },
+    {
+      "type": "timeline-icons",
+      "kicker": "节奏 · 谁能先用",
+      "headline": ["你这周到手不了"],
+      "sub": "官方列的开放顺序，后两段都没给日期。",
+      "events": [
+        { "date": "本周", "t": "抢先体验", "d": "部分网络安全防御者，经 Fairwind Program，走 Vertex AI 与 Gemini Enterprise 非公开预览", "state": "now" },
+        { "date": "之后", "t": "可信伙伴", "d": "官方说会逐步开放给 trusted partners", "state": "todo" },
+        { "date": "未定", "t": "开发者 / 消费级", "d": "官方只说还没到时候，没给日期", "state": "todo" }
+      ],
+      "verdict": "榜单第一先给防守方，轮到你还得等。"
+    }
+  ]
+}

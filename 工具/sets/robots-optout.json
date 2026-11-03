@@ -1,0 +1,49 @@
+{
+  "brand": "@gsspai",
+  "source": "Google 搜索中心博客 · 10-30",
+  "date": "2026.11.03",
+  "noImageReason": "查過 Google Search Central 這篇 Supporting a shared AI training control for websites，正文只有代碼示例與文字，無信息圖。",
+  "slides": [
+    {
+      "type": "bigfact",
+      "kicker": "網站 · 10-30",
+      "headline": ["一行標記", "四家都認"],
+      "sub": "OpenAI、谷歌、微軟、Anthropic 同日宣布支持 robots.txt 裡的同一個訓練偏好標記。",
+      "num": "1",
+      "unit": "行標記 · 寫進 robots.txt",
+      "numLabel": "標記名 __usage_ai-training",
+      "rows": [
+        { "k": "表態的四家", "v": "OpenAI、谷歌、微軟、Anthropic" },
+        { "k": "草案作者", "v": "Anthropic 標準技術負責人" },
+        { "k": "草案位置", "v": "IETF AIPREF 工作組" }
+      ],
+      "note": "這是政策標記，不攔抓取，頁面照樣可被抓取與建索引。"
+    },
+    {
+      "type": "table",
+      "kicker": "四張時間表",
+      "headline": ["簽了字", "還得等"],
+      "sub": "統一的是寫法，不是生效時間。",
+      "head": ["誰", "什麼時候生效"],
+      "rows": [
+        { "a": "Anthropic", "b": "已開始實施", "c": "草案就是他家工程師寫的", "hot": true },
+        { "a": "OpenAI", "b": "未來數月", "c": "只說了方向" },
+        { "a": "谷歌", "b": "2027 年初", "c": "計劃與 Google-Extended 綁定" },
+        { "a": "微軟", "b": "2027-02-01", "c": "Bing 起開始讀取" }
+      ],
+      "note": "微軟另提供更細粒度的 AI 檢索引用控制。",
+      "verdict": "統一的是寫法，生效各有各的日子。"
+    },
+    {
+      "type": "list",
+      "kicker": "三個邊界",
+      "headline": ["一行寫下去", "改變的是什麼"],
+      "items": [
+        { "k": "管訓練", "v": "只表達拉到了別拿去訓練的意願" },
+        { "k": "不管抓取", "v": "爬蟲照樣能抓頁面，搜索收錄與排名不變" },
+        { "k": "不追溯", "v": "已抓取、已訓練的歷史數據不退回" }
+      ],
+      "verdict": "自願約定，沒表態的廠商不受約束。"
+    }
+  ]
+}

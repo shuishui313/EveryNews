@@ -1,0 +1,48 @@
+{
+  "brand": "@gsspai",
+  "source": "Surge AI",
+  "date": "2026.10.27",
+  "slides": [
+    {
+      "type": "cover-min",
+      "kicker": "评测 · 10-27",
+      "headline": ["最好的税务 AI", "只及格一成"],
+      "accentLine": 1,
+      "sub": "DAYJOB: Tax 用 50 个作业环境、1,789 个源文件，评分门槛 95%，最好的模型通过率 10.8%。",
+      "chips": ["Claude Sonnet 5.5 居首", "GPT-6 Astra 7.2%", "垫底的那个 0.0%"],
+      "num": "10.8",
+      "numLabel": "% · 最佳模型 pass@1，评分门槛 95%",
+      "note": "博客发布日 10-27，今天在 Hacker News 首页。"
+    },
+    {
+      "type": "matrix",
+      "kicker": "排名 · 十一个模型",
+      "headline": ["第一名到垫底", "差出一整屏"],
+      "accentLine": 1,
+      "sub": "同一次评测，同样算一次就交卷。",
+      "groups": [
+        { "label": "Claude Sonnet 5.5", "value": "10.8", "filled": 11, "tone": "fill" },
+        { "label": "Fable 5.1", "value": "9.6", "filled": 10 },
+        { "label": "GPT-6 Astra", "value": "7.2", "filled": 7 },
+        { "label": "Gemini 4 Flash", "value": "0.4", "filled": 0 }
+      ],
+      "note": "点阵每格约 1 个百分点，单位都是百分比。"
+    },
+    {
+      "type": "quote",
+      "kicker": "失败的样子",
+      "headline": ["它崩在哪一步"],
+      "quote": [
+        "即使是做得最好的模型，",
+        "任务的前 [[10–20%]] 也能做好，",
+        "然后急转直下。"
+      ],
+      "by": "Surge AI · DAYJOB: Tax 博客 · 10-27",
+      "rows": [
+        { "k": "规模", "v": "50 个环境 / 1,789 个文件 / 8 个领域" },
+        { "k": "口径", "v": "评分门槛 95%，一次交卷就算通过" },
+        { "k": "典型翻车", "v": "客户没提的截止时间，五个模型都漏了" }
+      ]
+    }
+  ]
+}

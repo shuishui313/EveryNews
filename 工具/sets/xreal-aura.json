@@ -1,0 +1,58 @@
+{
+  "brand": "@gsspai",
+  "source": "Google / XREAL",
+  "date": "2026.10.28",
+  "slides": [
+    {
+      "type": "bigfact",
+      "kicker": "眼镜 · 10-28",
+      "headline": ["第一款 Android XR", "是有线的"],
+      "accentLine": 1,
+      "sub": "XREAL AURA 把算力做成口袋里的 puck，眼镜本体不到 95 克。",
+      "num": "1099",
+      "unit": "美元",
+      "numLabel": "年底前首发价，官方写 11 月中旬发货",
+      "rows": [
+        { "k": "今天开订", "v": "美国、加拿大、韩国" },
+        { "k": "日本", "v": "11 月 2 日" },
+        { "k": "生态", "v": "150+ Android XR 应用" }
+      ],
+      "note": "Snapdragon Reality Elite 在这台设备上首次亮相。"
+    },
+    {
+      "type": "before-after",
+      "kicker": "结构 · 算力在哪",
+      "headline": ["眼镜本体", "不再背着芯片"],
+      "accentLine": 1,
+      "sub": "这代把处理器从眼镜挪到了外接 puck。",
+      "segs": [
+        {
+          "label": "无线一体机的做法",
+          "from": { "box": "芯片塞进镜腿", "tone": "dim" },
+          "arrow": "→",
+          "dash": true,
+          "to": { "box": "重量和发热都压在脸上", "tone": "dim" }
+        },
+        {
+          "label": "AURA 的做法",
+          "from": { "box": "眼镜本体不到 95 克", "tone": "fill" },
+          "arrow": "→",
+          "to": { "box": "算力放进口袋里的 puck", "tone": "fill" }
+        }
+      ],
+      "verdict": "无线 XR 喊了这么多年，Google 的答案先把算力放回口袋。"
+    },
+    {
+      "type": "kpi",
+      "kicker": "参数 · 三个数",
+      "headline": ["这次给的具体东西"],
+      "sub": "都是官方页面上列出来的数值。",
+      "cells": [
+        { "n": "95", "l": "克以下", "d": "眼镜本体重量，不含 puck" },
+        { "n": "70", "l": "度 · 视场角", "d": "官方标称 FOV" },
+        { "n": "150+", "l": "个应用", "d": "Android XR 生态已有应用数" }
+      ],
+      "note": "官方页面上没写其它版本的参数差别。"
+    }
+  ]
+}

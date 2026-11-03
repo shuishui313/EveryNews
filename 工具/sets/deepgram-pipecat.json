@@ -1,0 +1,56 @@
+{
+  "brand": "@gsspai",
+  "source": "Deepgram · 10-29",
+  "date": "2026.10.31",
+  "noImageReason": "查過 deepgram.com 這篇公告，正文圖為版式背景圖與 Daily 品牌卡；官方新聞稿未附現場照。",
+  "slides": [
+    {
+      "type": "cover",
+      "kicker": "收購 · 10-29",
+      "headline": ["買下公司", "把控制權交出去"],
+      "accentLine": 1,
+      "sub": "Deepgram 收購 Daily，Pipecat 移交獨立基金會，授權條款原封不動。",
+      "hero": { "num": "BSD", "unit": "授權不變 · 免費 · 廠商中立", "lines": ["指導委員會含競爭對手", "Daily 團隊加入 Deepgram", "收購價未披露"] },
+      "chips": ["Pipecat 是語音智慧體常用框架", "同日推出 Real-Time Context Standard", "基金會獨立治理"],
+      "note": "收購方主動交出框架控制權，開發者不用換框架。"
+    },
+    {
+      "type": "diagram",
+      "kicker": "誰接了誰",
+      "headline": ["團隊進買方", "框架進基金會"],
+      "sub": "Daily 的團隊進 Deepgram，Pipecat 的治理權進基金會。",
+      "nodes": [
+        { "box": "Daily 團隊", "lab": "原維護方", "tone": "dim" },
+        { "box": "Deepgram", "lab": "收購方", "tone": "fill" },
+        { "box": "Pipecat 基金會", "lab": "獨立治理", "tone": "fill" }
+      ],
+      "arrows": [
+        { "label": "10-29 加入" },
+        { "label": "BSD 授權移交", "dash": true }
+      ],
+      "note": "基金會指導委員會成員包含 Deepgram 的競爭對手。",
+      "verdict": "錢買走團隊，框架沒跟著進去。"
+    },
+    {
+      "type": "before-after",
+      "kicker": "一條授權，兩個主人",
+      "headline": ["同樣是開源", "管的人換了"],
+      "segs": [
+        {
+          "label": "收購前",
+          "from": { "box": "Pipecat 由 Daily 維護", "tone": "dim" },
+          "arrow": "→",
+          "dash": true,
+          "to": { "box": "路線由一家公司決定", "tone": "dim" }
+        },
+        {
+          "label": "收購後",
+          "from": { "box": "Deepgram 買下 Daily", "tone": "fill" },
+          "arrow": "→",
+          "to": { "box": "Pipecat 移交獨立基金會", "tone": "fill" }
+        }
+      ],
+      "verdict": "誰都能接，不用擔心被卡住。"
+    }
+  ]
+}

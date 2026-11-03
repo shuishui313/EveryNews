@@ -1,0 +1,52 @@
+{
+  "brand": "@gsspai",
+  "source": "Apple",
+  "date": "2026.10.28",
+  "slides": [
+    {
+      "type": "cover",
+      "kicker": "硬件 · 10-28",
+      "headline": ["Mac 第一次", "把触控做进屏里"],
+      "accentLine": 1,
+      "sub": "PROLED XDR 用 tandem OLED，触控层不再是从外面加的一层。",
+      "hero": { "num": "2000", "unit": "尼特 · 峰值 HDR 亮度", "lines": ["SDR 1000 尼特", "对比度 10,000,000:1"] },
+      "chips": ["对比度 10,000,000:1", "ProMotion 10–120 Hz", "M5 Pro / M5 Max"],
+      "note": "官方页面写明了这块屏最低亮度可到 1 尼特。"
+    },
+    {
+      "type": "specs",
+      "kicker": "规格 · 三处改动",
+      "headline": ["不只是更亮"],
+      "sub": "官方页面上列出来的三处硬件变化。",
+      "cells": [
+        { "k": "屏幕", "t": "tandem OLED", "d": "2000 尼特峰值 HDR、1000 尼特 SDR" },
+        { "k": "触控", "t": "做进面板", "d": "触控层不再是往外加的一层玻璃" },
+        { "k": "续航", "t": "最长 24 小时", "d": "14 吋机型 3.0 磅，比上一代轻半磅" }
+      ],
+      "verdict": "先把屏这一层换掉，再谈 Mac 上的多指手势。"
+    },
+    {
+      "type": "before-after",
+      "kicker": "变化 · 触控这条线",
+      "headline": ["多指手势", "终于上了 Mac"],
+      "accentLine": 1,
+      "sub": "苹果说这套手势先在 iPhone 上验证过，才搬到 macOS Tahoe 26.3。",
+      "segs": [
+        {
+          "label": "以前",
+          "from": { "box": "MacBook Pro 只有触控板", "tone": "dim" },
+          "arrow": "→",
+          "dash": true,
+          "to": { "box": "多指手势留给 iPhone", "tone": "dim" }
+        },
+        {
+          "label": "现在",
+          "from": { "box": "PROLED XDR 面板自带触控", "tone": "fill" },
+          "arrow": "→",
+          "to": { "box": "macOS Tahoe 26.3 原生手势", "tone": "fill" }
+        }
+      ],
+      "verdict": "这次改的是屏幕结构，不是加一块触控玻璃。"
+    }
+  ]
+}

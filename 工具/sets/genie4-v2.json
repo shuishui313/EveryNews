@@ -1,0 +1,44 @@
+{
+  "brand": "@gsspai",
+  "source": "Google DeepMind",
+  "date": "2026.10.27",
+  "slides": [
+    {
+      "type": "kpi",
+      "kicker": "世界模型 · DeepMind",
+      "headline": ["能造世界", "自曝七条短板"],
+      "accentLine": 0,
+      "sub": "Genie 4 开研究预览，画面和声音一起生成。",
+      "cells": [
+        { "n": "七条", "l": "官方自列短板", "d": "细节漂移、复杂物理、长期一致性等" },
+        { "n": "2 分钟", "l": "场景稳定时长", "d": "够拍一个镜头" },
+        { "n": "0", "l": "公开定价", "d": "API 只给早期伙伴" }
+      ],
+      "verdict": "年底之前，它大概只会出现在预告片里。"
+    },
+    {
+      "type": "timeline",
+      "kicker": "路径 · 谁能用",
+      "headline": ["先给测试者", "再给订阅者"],
+      "accentLine": 1,
+      "events": [
+        { "date": "今天", "t": "可信测试者", "d": "研究预览，只开给受邀团队。" },
+        { "date": "之后", "t": "Google AI Ultra", "d": "在 Project Genie 里排队等。" },
+        { "date": "未定", "t": "API 与 AI Studio", "d": "只对早期伙伴，没有时间表。" }
+      ]
+    },
+    {
+      "type": "triad",
+      "kicker": "拆开 · 三个模型",
+      "headline": ["不是一个模型", "是三班倒"],
+      "accentLine": 1,
+      "cols": [
+        { "num": "01", "t": "Gemini Omni", "d": "管场景长什么样、物理对不对。", "tag": "外观与物理" },
+        { "num": "02", "t": "Gemini 3.8 Flash", "d": "在实时循环里当引导代理。", "tag": "引导" },
+        { "num": "03", "t": "Gemini 4 Argon", "d": "配合机器人，试实体世界迁移。", "tag": "机器人" }
+      ],
+      "note": "所有生成音视频均嵌入 SynthID 水印；API 目前只对早期伙伴开放。",
+      "verdict": "模型越拆越细，产品才敢把「实时」写进卖点。"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "brand": "@gsspai",
+  "source": "GitHub Trending",
+  "date": "2026.10.28",
+  "slides": [
+    {
+      "type": "cover-split",
+      "kicker": "GitHub · 10-28",
+      "headline": ["最火的仓库", "在治 AI 味"],
+      "accentLine": 1,
+      "sub": "今天趋势第一，是给编码智能体去 AI 味的样式技能。",
+      "hero": { "num": "2,830", "unit": "STARS TODAY · GITHUB 第一" },
+      "chips": ["前十有 8 个是智能体技能", "关键词 skills、harness、memory", "全是给 Claude Code、Cursor、Codex 用的"]
+    },
+    {
+      "type": "stack",
+      "kicker": "榜单 · 前三",
+      "headline": ["都在卖", "同一件事"],
+      "accentLine": 1,
+      "bars": [
+        { "label": "Nutlope/hallmark", "price": "2,830", "width": 100 },
+        { "label": "pbakaus/impeccable", "price": "1,449", "width": 51, "muted": true },
+        { "label": "elayadesign/ai-design-skills", "price": "1,395", "width": 49, "muted": true }
+      ],
+      "rows": [
+        { "k": "高频词", "v": "skills、harness、memory" },
+        { "k": "共同点", "v": "都在约束模型的输出风格" }
+      ],
+      "note": "数字为 GitHub 页面显示的 stars today。"
+    },
+    {
+      "type": "statement",
+      "kicker": "判断",
+      "lines": ["写得快，", "是上一轮的事；", "[[写得不像机器]]，", "才是这一轮。"],
+      "by": "模板感，正在变成技术债。"
+    }
+  ]
+}

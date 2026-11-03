@@ -1,0 +1,41 @@
+{
+  "brand": "@gsspai",
+  "source": "Meta Newsroom",
+  "date": "2026.10.27",
+  "slides": [
+    {
+      "type": "cover-img-top",
+      "kicker": "Agent · Meta 新加坡",
+      "headline": ["Meta 的 Agent", "能替你下单"],
+      "accentLine": 1,
+      "sub": "10 月 27 日起在新加坡可用，付款之前先问你。",
+      "chips": ["先接 8 个本地品牌", "跑在云端专用虚拟机", "密码不进模型视野"],
+      "note": "Shopee、Grab、新加坡航空、Agoda、ShopBack、Klook、Trip.com、Lazada",
+      "image": "img/muse-hero.png"
+    },
+    {
+      "type": "specs",
+      "kicker": "拆开 · 三个设计",
+      "headline": ["先给接口", "再谈模型"],
+      "accentLine": 1,
+      "cells": [
+        { "k": "接入", "t": "8 个本地品牌", "d": "Shopee、Grab、新航、Agoda、Klook、Lazada 等。" },
+        { "k": "隔离", "t": "Muse Secure VM", "d": "云端专用机，存凭证但不把密码给模型看。" },
+        { "k": "确认", "t": "敏感动作先问", "d": "发邮件、付款之前必须你点头。" }
+      ],
+      "note": "iOS、Android、muse.ai 均可用，AI 眼镜排在后面。"
+    },
+    {
+      "type": "quote",
+      "kicker": "判断",
+      "headline": ["接口才是护城河"],
+      "accentLine": 0,
+      "quote": ["这 8 个接口", "是谈给用户用的，", "[[也是谈给同行看的]]。"],
+      "by": "— 我的判断",
+      "rows": [
+        { "k": "免费", "v": "大部分功能免费，另有订阅" },
+        { "k": "价格", "v": "官方没公布" }
+      ]
+    }
+  ]
+}
