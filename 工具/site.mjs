@@ -208,7 +208,7 @@ const cardStrip = (pics) =>
         .join("")}</div>`
     : "";
 
-function pageShell({ title, body, home = false }) {
+function pageShell({ title, body, home = false, thin = false }) {
   return `<!doctype html>
 <html lang="zh-Hant">
 <head>
@@ -218,7 +218,7 @@ function pageShell({ title, body, home = false }) {
 <meta name="description" content="每天六条，每条三张卡。开源的人工智能新闻生产线。">
 <link rel="stylesheet" href="site.css">
 </head>
-<body${home ? ' class="home"' : ""}>
+<body${home ? ` class="home${thin ? " thin" : ""}"` : ""}>
 <header class="top">
   <a class="brand" href="index.html">EveryNews</a>
   <span class="tag">每天六条 · 每条三张卡</span>
@@ -317,7 +317,9 @@ main{padding:0 clamp(18px,5vw,64px) 80px;max-width:1280px;margin:0 auto}
 .more{font-size:14px;color:var(--accent);font-weight:600}
 .more:hover{text-decoration:underline}
 
-.grid{display:grid;grid-template-columns:repeat(6,1fr);gap:clamp(10px,1.5vw,20px)}
+.grid{display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(10px,1.5vw,20px)}
+.home.thin .grid{grid-template-columns:repeat(3,1fr);gap:clamp(16px,2.2vw,28px)}
+.home.thin .ctitle{font-size:14px;padding:13px 14px 15px}
 .cell{position:relative;display:block;border-radius:6px;overflow:hidden;
   background:var(--paper2);border:1px solid var(--line);transition:transform .18s,box-shadow .18s}
 .cell:hover{transform:translateY(-3px);box-shadow:0 10px 28px rgba(20,16,40,.12)}
@@ -458,7 +460,12 @@ const indexBody = `<main>
 
 fs.writeFileSync(
   path.join(OUT, "index.html"),
-  pageShell({ title: "EveryNews · 每天六条", body: indexBody, home: true }),
+  pageShell({
+    title: "EveryNews · 每天六条",
+    body: indexBody,
+    home: true,
+    thin: parsed.length === 1,
+  }),
   "utf8",
 );
 
