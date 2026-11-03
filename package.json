@@ -1,0 +1,18 @@
+{
+  "name": "everynews",
+  "version": "0.1.0",
+  "private": true,
+  "description": "每天六条 AI 新闻，每条三张竖版卡。文案按规则写，出稿前过一道自动闸门。",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "cards": "sh 工具/make.sh",
+    "check": "node 工具/check-post.mjs && node 工具/check-layouts.mjs",
+    "site": "node 工具/site.mjs",
+    "site:latest": "node 工具/site.mjs --latest 1",
+    "serve": "python3 -m http.server 4321 --directory site"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

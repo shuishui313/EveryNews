@@ -15,7 +15,18 @@ import { fileURLToPath } from "node:url";
 
 const TOOL = path.dirname(fileURLToPath(import.meta.url));
 const WS = path.resolve(TOOL, "..");
-const OUT = path.join(WS, "site");
+
+const argv = process.argv.slice(2);
+const arg = (k) => {
+  const i = argv.indexOf(k);
+  return i >= 0 ? argv[i + 1] : null;
+};
+/** --only 2026-11-03,2026-11-04　只生成指定期；不给就全出 */
+const ONLY = arg("--only")
+  ? arg("--only").split(",").map((x) => x.trim()).filter(Boolean)
+  : null;
+/** --out docs　产物目录，默认 site */
+const OUT = path.resolve(WS, arg("--out") || "site");
 const ASSETS = path.join(OUT, "assets");
 
 const esc = (s) =>
@@ -29,12 +40,18 @@ const NUMS = ["①", "②", "③", "④", "⑤", "⑥", "⑦", "⑧", "⑨", "�
 
 /* ---------- 读盘 ---------- */
 
-const days = fs
+let days = fs
   .readdirSync(WS)
   .filter((d) => /^\d{4}-\d{2}-\d{2}$/.test(d))
   .filter((d) => fs.existsSync(path.join(WS, d, "文案.md")))
   .sort()
   .reverse();
+
+if (ONLY) days = days.filter((d) => ONLY.includes(d));
+if (arg("--latest")) {
+  const n = Number(arg("--latest")) || 1;
+  days = days.slice(0, n);
+}
 
 if (!days.length) {
   console.error("✗ 没找到任何 YYYY-MM-DD/文案.md");
@@ -476,5 +493,5 @@ console.log(
     0,
   )} 张图`,
 );
-console.log(`   本地预览: python3 -m http.server 4321 --directory site`);
+console.log(`   本地预览: python3 -m http.server 4321 --directory ${path.relative(WS, OUT) || "."}`);
 
