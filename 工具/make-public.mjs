@@ -1,11 +1,11 @@
 #!/usr/bin/env node
 /**
- * 把当天产出做成单文件自包含公开页：EveryNews_<YYYYMMDD>.html
+ * 把当天产出做成单文件自包含公开页：<YYYYMMDD>.html
  * 图片 base64 内联、CSS 内联，拿到网址或单个文件就能打开，不依赖任何相对路径。
  *
  * 用法: node 工具/make-public.mjs [YYYY-MM-DD]
  *   不给日期就取最新一期（按目录里有 文案.md 的最大日期）。
- * 输出: <工作区>/EveryNews_<YYYYMMDD>.html
+ * 输出: <工作区>/<YYYYMMDD>.html
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -287,7 +287,7 @@ document.addEventListener('keydown',(e)=>{if(e.key==='Escape')document.getElemen
 </html>`;
 
 const stamp = date.replace(/-/g, "");
-const out = path.join(WS, `EveryNews_${stamp}.html`);
+const out = path.join(WS, `${stamp}.html`);
 fs.writeFileSync(out, html, "utf8");
 const size = (fs.statSync(out).size / 1024 / 1024).toFixed(1);
 console.log(`✅ ${path.relative(WS, out)}　${items.length} 条 · ${items.reduce((a, x) => a + x.pics.length, 0)} 张卡 · ${size} MB`);
