@@ -10,9 +10,12 @@
 工具/img/
 工具/out/
 
-# 站点产物，由工具/site.mjs 与 CI 生成
+# 站点产物。工具/site.mjs 默认写 site/，并会先删掉整个输出目录。
+# docs/ 只入库决策记录。不要用 site.mjs --out docs。
 site/
-docs/
+docs/*
+!docs/decisions.md
+!docs/declined.md
 
 # 内容：只放一期示例，其余期不入库
 # 抓来的新闻配图有版权，不进公开仓库
