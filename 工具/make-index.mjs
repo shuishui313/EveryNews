@@ -1,8 +1,10 @@
 #!/usr/bin/env node
 /**
- * 生成根目录 index.html，作为全部期次的归档入口。
- * 扫描 <工作区>/<YYYYMMDD>.html，从每期页面的 .jump 导航取六条标题与统计。
- * 出稿.sh ③ 在生成当天公开页之后调用一次，新一期自动出现在最前。
+ * 站点的期次导航与首页。
+ * 1. 扫描 <工作区>/<YYYYMMDD>.html，给每期页面注入顶部期次切换（幂等，带标记）
+ * 2. 把最新一期的完整内容写成根目录 index.html，主页就是当日成果
+ * 3. 另生成 archive.html，保留按日期／关键词筛选全部期次的能力
+ * 出稿.sh ③ 在生成当天公开页之后调用一次，新一期自动成为主页。
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -19,6 +21,10 @@ const strip = (s) => String(s)
   .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
   .replace(/&quot;/g, '"').replace(/&#39;/g, "'").trim();
 const WEEK = ["週日", "週一", "週二", "週三", "週四", "週五", "週六"];
+
+const NAV_START = "<!-- ISSUE-NAV:START -->";
+const NAV_END = "<!-- ISSUE-NAV:END -->";
+const NAV_RE = new RegExp(`${NAV_START}[\\s\\S]*?${NAV_END}\\n?`, "g");
 
 const files = fs.readdirSync(WS)
   .filter((f) => /^\d{8}\.html$/.test(f))
@@ -52,14 +58,68 @@ const days = files.map((f) => {
   };
 });
 
-const CSS = `
+const NAV_CSS = `
+.issue-nav{border-bottom:1px solid var(--line,#E7E2F3);background:rgba(255,255,255,.5)}
+.issue-nav-inner{max-width:1280px;margin:0 auto;padding:10px clamp(18px,5vw,64px);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.issue-nav label{font-size:12px;color:var(--mute,#7C7691)}
+.issue-nav select{font:inherit;font-size:13px;padding:6px 10px;border:1px solid var(--line,#E7E2F3);border-radius:6px;background:#fff;color:inherit;cursor:pointer;max-width:100%}
+.issue-nav a{font-size:13px;color:var(--accent,#6B4EFF)}
+.issue-nav a:hover{text-decoration:underline}
+.issue-nav-hint{font-size:12px;color:var(--mute,#7C7691);margin-left:auto}
+@media(max-width:640px){.issue-nav-hint{margin-left:0}}
+`;
+
+function navBlock(current) {
+  const options = days.map((d) =>
+    `<option value="${d.file}"${d.file === current.file ? " selected" : ""}>${d.date}${d.file === days[0].file ? " · 最新" : ""}</option>`
+  ).join("");
+  return `${NAV_START}
+<style>${NAV_CSS}</style>
+<nav class="issue-nav" aria-label="切換期次">
+  <div class="issue-nav-inner">
+    <label for="issue-select">期次</label>
+    <select id="issue-select">${options}<option value="archive.html">全部期次 · 按日期篩選</option></select>
+    <a href="index.html">當日成果</a>
+    <a href="archive.html">全部期次 →</a>
+    <span class="issue-nav-hint">共 ${days.length} 期</span>
+  </div>
+</nav>
+<script>
+document.getElementById('issue-select').addEventListener('change',function(){if(this.value)location.href=this.value;});
+</script>
+${NAV_END}`;
+}
+
+let touched = 0;
+for (const d of days) {
+  const full = path.join(WS, d.file);
+  const html = fs.readFileSync(full, "utf8");
+  const clean = html.replace(NAV_RE, "");
+  if (!clean.includes("</header>")) {
+    console.warn(`! ${d.file} 没有 </header>，跳过导航注入`);
+    d.body = clean;
+    continue;
+  }
+  d.body = clean.replace("</header>", `</header>\n${navBlock(d)}`);
+  if (d.body !== html) {
+    fs.writeFileSync(full, d.body, "utf8");
+    touched++;
+  }
+}
+
+// 主页是当日成果的完整副本，打开根路径就能看内容，不依赖跳转
+fs.writeFileSync(path.join(WS, "index.html"), days[0].body, "utf8");
+
+const ARCHIVE_CSS = `
 *{box-sizing:border-box}
 :root{--accent:#6B4EFF;--ink:#1A1727;--ink2:#4A4560;--mute:#7C7691;--line:#E7E2F3;--soft:#F5F2FF}
 body{margin:0;background:#fff;color:var(--ink);font:15px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans CJK TC","Microsoft JhengHei",sans-serif;line-break:strict}
 a{color:inherit}
 .wrap{max-width:940px;margin:0 auto;padding:0 clamp(18px,5vw,40px)}
-header{padding:56px 0 30px;border-bottom:1px solid var(--line)}
+header{padding:44px 0 30px;border-bottom:1px solid var(--line)}
 .brand{font-size:13px;letter-spacing:.16em;color:var(--accent);font-weight:700}
+.back{display:inline-block;margin-top:16px;font-size:13px;color:var(--accent);text-decoration:none}
+.back:hover{text-decoration:underline}
 h1{margin:14px 0 8px;font-size:clamp(30px,5vw,42px);letter-spacing:-.02em}
 .lede{margin:0;color:var(--ink2);font-size:16px}
 .count{margin:12px 0 0;color:var(--mute);font-size:13px}
@@ -103,19 +163,20 @@ const cards = days.map((d) => {
 </a>`;
 }).join("\n");
 
-const html = `<!doctype html>
+const archive = `<!doctype html>
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>EveryNews · 全部期次</title>
 <meta name="description" content="按日期查 EveryNews 的历史期次。每天六条，每条三张卡。">
-<style>${CSS}</style>
+<style>${ARCHIVE_CSS}</style>
 </head>
 <body>
 <div class="wrap">
 <header>
   <div class="brand">EveryNews</div>
+  <a class="back" href="index.html">← 回到當日成果</a>
   <h1>全部期次</h1>
   <p class="lede">每天六条，每条三张卡。按日期找，或直接搜标题。</p>
   <p class="count">共 <strong>${days.length}</strong> 期 · 最新 ${days[0].date} · 最早 ${days[days.length - 1].date}</p>
@@ -139,7 +200,7 @@ ${cards}
 <p class="empty" id="empty" hidden>这一筛选下没有期次，换一个日期或清空条件。</p>
 <footer>
   <p>每期是自包含单文件 HTML，文案、事实表与 18 张卡全部内联，不依赖服务器。</p>
-  <p>新一期出稿后本页由 工具/make-index.mjs 自动刷新。</p>
+  <p>主页 index.html 是当日成果，顶部可以切换期次；本页由 工具/make-index.mjs 自动刷新。</p>
 </footer>
 </div>
 <script>
@@ -165,6 +226,5 @@ document.getElementById('reset').addEventListener('click',()=>{dateSel.value='';
 </body>
 </html>`;
 
-const out = path.join(WS, "index.html");
-fs.writeFileSync(out, html, "utf8");
-console.log(`✅ index.html　${days.length} 期（${days[days.length - 1].date} → ${days[0].date}）`);
+fs.writeFileSync(path.join(WS, "archive.html"), archive, "utf8");
+console.log(`✅ 期次导航 ${days.length} 期（改写 ${touched} 个）· index.html = ${days[0].date} 当日成果 · archive.html ${days.length} 期`);

@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EveryNews · 全部期次</title>
+<meta name="description" content="按日期查 EveryNews 的历史期次。每天六条，每条三张卡。">
+<style>
+*{box-sizing:border-box}
+:root{--accent:#6B4EFF;--ink:#1A1727;--ink2:#4A4560;--mute:#7C7691;--line:#E7E2F3;--soft:#F5F2FF}
+body{margin:0;background:#fff;color:var(--ink);font:15px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans CJK TC","Microsoft JhengHei",sans-serif;line-break:strict}
+a{color:inherit}
+.wrap{max-width:940px;margin:0 auto;padding:0 clamp(18px,5vw,40px)}
+header{padding:44px 0 30px;border-bottom:1px solid var(--line)}
+.brand{font-size:13px;letter-spacing:.16em;color:var(--accent);font-weight:700}
+.back{display:inline-block;margin-top:16px;font-size:13px;color:var(--accent);text-decoration:none}
+.back:hover{text-decoration:underline}
+h1{margin:14px 0 8px;font-size:clamp(30px,5vw,42px);letter-spacing:-.02em}
+.lede{margin:0;color:var(--ink2);font-size:16px}
+.count{margin:12px 0 0;color:var(--mute);font-size:13px}
+.count strong{color:var(--accent)}
+.filters{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;padding:22px 0;border-bottom:1px solid var(--line)}
+.filters label{display:flex;flex-direction:column;gap:5px;font-size:12px;color:var(--mute)}
+select,input[type=date],input[type=search]{font:inherit;font-size:14px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:6px;padding:8px 10px;min-height:38px}
+input[type=search]{min-width:200px}
+select:focus,input:focus{outline:2px solid var(--accent);outline-offset:1px}
+button{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--soft);color:var(--ink2);border-radius:6px;padding:8px 14px;min-height:38px;cursor:pointer}
+button:hover{border-color:var(--accent)}
+#hint{font-size:13px;color:var(--mute);margin-left:auto;padding-bottom:9px}
+main{padding:8px 0 40px}
+.day{display:grid;grid-template-columns:92px minmax(0,1fr) 76px;gap:22px;align-items:start;padding:26px 0;border-bottom:1px solid var(--line);text-decoration:none}
+.day[hidden]{display:none}
+.day:hover .body h2{color:var(--accent)}
+.when b{display:block;font-size:24px;letter-spacing:-.02em}
+.when span{display:block;color:var(--mute);font-size:12px;margin-top:2px}
+.body h2{margin:0 0 10px;font-size:17px;font-weight:650;transition:color .15s}
+.body h2 small{font-weight:400;color:var(--mute);font-size:12px;margin-left:8px}
+.body ol{margin:0;padding-left:1.3em;color:var(--ink2);font-size:14px}
+.body li{margin:2px 0}
+.go{color:var(--accent);font-size:13px;white-space:nowrap;padding-top:3px}
+.empty{padding:48px 0;color:var(--mute);text-align:center}
+.empty[hidden]{display:none}
+footer{border-top:1px solid var(--line);padding:26px 0 56px;color:var(--mute);font-size:13px}
+footer p{margin:0 0 6px}
+@media(max-width:640px){.day{grid-template-columns:1fr;gap:8px}.when{display:flex;align-items:baseline;gap:10px}.when span{margin:0}.go{padding:0}#hint{margin-left:0}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <div class="brand">EveryNews</div>
+  <a class="back" href="index.html">← 回到當日成果</a>
+  <h1>全部期次</h1>
+  <p class="lede">每天六条，每条三张卡。按日期找，或直接搜标题。</p>
+  <p class="count">共 <strong>4</strong> 期 · 最新 2026-11-06 · 最早 2026-11-03</p>
+</header>
+<section class="filters">
+  <label>期次
+    <select id="date"><option value="">全部期次</option><option value="2026-11-06">2026-11-06 · 6 条</option><option value="2026-11-05">2026-11-05 · 6 条</option><option value="2026-11-04">2026-11-04 · 6 条</option><option value="2026-11-03">2026-11-03 · 6 条</option></select>
+  </label>
+  <label>指定日期
+    <input type="date" id="pick" min="2026-11-03" max="2026-11-06">
+  </label>
+  <label>搜标题
+    <input type="search" id="q" placeholder="輸入日期或標題關鍵字">
+  </label>
+  <button type="button" id="reset">重置</button>
+  <span id="hint">显示 4 期</span>
+</section>
+<main id="list">
+<a class="day" href="20261106.html" data-date="2026-11-06" data-text="2026-11-06 6 条 · 18 张卡 · 2 篇讲解 ① 48.5% 的分數，暫時拿不到 ② claude 能看你的銀行帳了 ③ 權重下週才開，模型先上線了 ④ 剪片的人要先算秒數了 ⑤ 戒指上多了一塊螢幕 ⑥ 最關鍵的證據被塗黑了">
+  <div class="when"><b>11-06</b><span>2026 · 週五</span></div>
+  <div class="body">
+    <h2>2026-11-06<small>6 条 · 18 张卡 · 2 篇讲解 · 5.7 MB</small></h2>
+    <ol><li>① 48.5% 的分數，暫時拿不到</li><li>② Claude 能看你的銀行帳了</li><li>③ 權重下週才開，模型先上線了</li><li>④ 剪片的人要先算秒數了</li><li>⑤ 戒指上多了一塊螢幕</li><li>⑥ 最關鍵的證據被塗黑了</li></ol>
+  </div>
+  <div class="go">打开这一期 →</div>
+</a>
+<a class="day" href="20261105.html" data-date="2026-11-05" data-text="2026-11-05 6 条 · 18 张卡 · 2 篇讲解 ① kimi k3.1 pro 權重開放，放得下來跑不起來 ② openai 把挖洞的成本帳公開了 ③ 三億筆裡的四單 ④ 五年，三百萬台機器人 ⑤ 十個月，三輪融了三億美元 ⑥ 你說錯一句，它跟著改">
+  <div class="when"><b>11-05</b><span>2026 · 週四</span></div>
+  <div class="body">
+    <h2>2026-11-05<small>6 条 · 18 张卡 · 2 篇讲解 · 7.0 MB</small></h2>
+    <ol><li>① Kimi K3.1 Pro 權重開放，放得下來跑不起來</li><li>② OpenAI 把挖洞的成本帳公開了</li><li>③ 三億筆裡的四單</li><li>④ 五年，三百萬台機器人</li><li>⑤ 十個月，三輪融了三億美元</li><li>⑥ 你說錯一句，它跟著改</li></ol>
+  </div>
+  <div class="go">打开这一期 →</div>
+</a>
+<a class="day" href="20261104.html" data-date="2026-11-04" data-text="2026-11-04 6 条 · 18 张卡 · 2 篇讲解 ① 騰訊混元 hy4：能力翻版，價簽原樣 ② 百度 apollo world：世界模型當考官 ③ marvell 收購 lumentum：電加光 ④ openai 激活分類器：安全進了生產線 ⑤ 蘋果智能 beta 開測：千問真的能喊 ⑥ deepseek super-agent：agent 自己接活">
+  <div class="when"><b>11-04</b><span>2026 · 週三</span></div>
+  <div class="body">
+    <h2>2026-11-04<small>6 条 · 18 张卡 · 2 篇讲解 · 5.4 MB</small></h2>
+    <ol><li>① 騰訊混元 Hy4：能力翻版，價簽原樣</li><li>② 百度 Apollo World：世界模型當考官</li><li>③ Marvell 收購 Lumentum：電加光</li><li>④ OpenAI 激活分類器：安全進了生產線</li><li>⑤ 蘋果智能 Beta 開測：千問真的能喊</li><li>⑥ DeepSeek Super-agent：Agent 自己接活</li></ol>
+  </div>
+  <div class="go">打开这一期 →</div>
+</a>
+<a class="day" href="20261103.html" data-date="2026-11-03" data-text="2026-11-03 6 条 · 18 张卡 · 2 篇讲解 ① anthropic 修訂版 s-1：虧損比營收還多 ② openai 合併額度池：12 月起按 token 計量 ③ xai 給 grok 文本加隱形水印 ④ 蘋果 × 阿里：國行 apple 智能定檔 ⑤ meta 與傅利葉合作造出人形機器人原型 max ⑥ 四家廠商統一 robots.txt 訓練退出標記">
+  <div class="when"><b>11-03</b><span>2026 · 週二</span></div>
+  <div class="body">
+    <h2>2026-11-03<small>6 条 · 18 张卡 · 2 篇讲解 · 5.0 MB</small></h2>
+    <ol><li>① Anthropic 修訂版 S-1：虧損比營收還多</li><li>② OpenAI 合併額度池：12 月起按 Token 計量</li><li>③ xAI 給 Grok 文本加隱形水印</li><li>④ 蘋果 × 阿里：國行 Apple 智能定檔</li><li>⑤ Meta 與傅利葉合作造出人形機器人原型 Max</li><li>⑥ 四家廠商統一 robots.txt 訓練退出標記</li></ol>
+  </div>
+  <div class="go">打开这一期 →</div>
+</a>
+</main>
+<p class="empty" id="empty" hidden>这一筛选下没有期次，换一个日期或清空条件。</p>
+<footer>
+  <p>每期是自包含单文件 HTML，文案、事实表与 18 张卡全部内联，不依赖服务器。</p>
+  <p>主页 index.html 是当日成果，顶部可以切换期次；本页由 工具/make-index.mjs 自动刷新。</p>
+</footer>
+</div>
+<script>
+const cards=[...document.querySelectorAll('.day')];
+const dateSel=document.getElementById('date'),pick=document.getElementById('pick'),q=document.getElementById('q');
+const hint=document.getElementById('hint'),empty=document.getElementById('empty');
+function apply(){
+  const d=dateSel.value,p=pick.value,k=q.value.trim().toLowerCase();
+  let n=0;
+  cards.forEach(c=>{
+    const show=(!d||c.dataset.date===d)&&(!p||c.dataset.date===p)&&(!k||c.dataset.text.includes(k));
+    c.hidden=!show;
+    if(show)n++;
+  });
+  hint.textContent='显示 '+n+' 期';
+  empty.hidden=n>0;
+}
+dateSel.addEventListener('change',()=>{pick.value='';apply()});
+pick.addEventListener('change',()=>{dateSel.value='';apply()});
+q.addEventListener('input',apply);
+document.getElementById('reset').addEventListener('click',()=>{dateSel.value='';pick.value='';q.value='';apply()});
+</script>
+</body>
+</html>

@@ -67,6 +67,30 @@ main{padding:0 clamp(18px,5vw,64px) 80px;max-width:1280px;margin:0 auto}
 </head>
 <body>
 <header class="top"><span class="brand">EveryNews</span><span class="tag">每天六条 · 每条三张卡 · 2026-11-04</span></header>
+<!-- ISSUE-NAV:START -->
+<style>
+.issue-nav{border-bottom:1px solid var(--line,#E7E2F3);background:rgba(255,255,255,.5)}
+.issue-nav-inner{max-width:1280px;margin:0 auto;padding:10px clamp(18px,5vw,64px);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.issue-nav label{font-size:12px;color:var(--mute,#7C7691)}
+.issue-nav select{font:inherit;font-size:13px;padding:6px 10px;border:1px solid var(--line,#E7E2F3);border-radius:6px;background:#fff;color:inherit;cursor:pointer;max-width:100%}
+.issue-nav a{font-size:13px;color:var(--accent,#6B4EFF)}
+.issue-nav a:hover{text-decoration:underline}
+.issue-nav-hint{font-size:12px;color:var(--mute,#7C7691);margin-left:auto}
+@media(max-width:640px){.issue-nav-hint{margin-left:0}}
+</style>
+<nav class="issue-nav" aria-label="切換期次">
+  <div class="issue-nav-inner">
+    <label for="issue-select">期次</label>
+    <select id="issue-select"><option value="20261106.html">2026-11-06 · 最新</option><option value="20261105.html">2026-11-05</option><option value="20261104.html" selected>2026-11-04</option><option value="20261103.html">2026-11-03</option><option value="archive.html">全部期次 · 按日期篩選</option></select>
+    <a href="index.html">當日成果</a>
+    <a href="archive.html">全部期次 →</a>
+    <span class="issue-nav-hint">共 4 期</span>
+  </div>
+</nav>
+<script>
+document.getElementById('issue-select').addEventListener('change',function(){if(this.value)location.href=this.value;});
+</script>
+<!-- ISSUE-NAV:END -->
 <main class="daypage">
   <section class="hero">
     <h1>2026-11-04</h1>

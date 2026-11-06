@@ -21,15 +21,16 @@
 ├── 配图/NN-slug-MM.png    NN = 选题序号，MM = 页序，1080×1350
 └── 预览图.png             <YYYYMMDD>.html 的整页截图
 
-<YYYYMMDD>.html            单文件公开页，落在项目根目录，往期一律保留
-index.html                 全部期次归档页，可按日期筛选，每次出稿自动刷新
+<YYYYMMDD>.html            单文件公开页，落在项目根目录，往期一律保留，顶部带期次导航
+index.html                 当日成果主页，最新一期的完整副本，顶部可切换期次
+archive.html               全部期次归档页，可按日期筛选，每次出稿自动刷新
 preview.png                同上，根目录的当期预览
 工具/复审/<日期>.md         复审回执，闸门要验，不进当天目录
 
 工具/
 ├── sets/<slug>.json       每套页面的数据，有图就带 "image": "img/<slug>-01.jpg"
 ├── img/<slug>-NN.ext      一手源图，相对 工具/ 的路径
-├── make-index.mjs         扫描根目录 <YYYYMMDD>.html 生成归档页
+├── make-index.mjs         注入期次导航、同步主页、生成 archive.html
 └── out/                   渲染中间产物，出稿后清
 
 HANDOFF.md                 跨天交接：上次做到哪、什么没定
@@ -49,13 +50,13 @@ HANDOFF.md                 跨天交接：上次做到哪、什么没定
 | 3 | 抓图 | `./工具/grab.sh <slug> <一手源 URL> --save 1`，挑正文里的信息图 | `工具/img/<slug>-NN.ext` + set 里的 `image` | 图能看出数字、结构或界面状态，不是 logo 与装饰 |
 | 4 | 排版 | 填信息规划表 → 选页型 → 定张数 → 写 `sets/<slug>.json` | 每套 3 页（1–5 页都允许） | `check-layouts.mjs` |
 | 5 | 写稿 | 读 `WRITING.md` §4 → 事实表 → X 主帖 → Threads → 讲解 2 篇 → 候选池 / 剔除 / 自查表 | `文案.md` | `review.py --check` |
-| 6 | 出稿 | `./出稿.sh <date> <slug...>` | 当天目录三件套 + 公开页 + 归档索引 + 交接 | 脚本内置闸门 |
+| 6 | 出稿 | `./出稿.sh <date> <slug...>` | 当天目录三件套 + 公开页 + 主页 + 归档页 + 交接 | 脚本内置闸门 |
 
 **预览图每次必出，不用问、不用等确认**。`出稿.sh` 一步做完，不用手动补。
 
 ```bash
 node 工具/make-public.mjs <date>            # 根目录 <YYYYMMDD>.html
-node 工具/make-index.mjs                    # 扫描全部期次，刷新根目录 index.html
+node 工具/make-index.mjs                    # 注入期次导航、同步 index.html、生成 archive.html
 # 出稿.sh ④ 截这个页面的整页图，落 <日期>/预览图.png 并同步 preview.png
 ```
 
