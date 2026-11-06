@@ -1,0 +1,47 @@
+{
+  "brand": "@gsspai",
+  "source": "DeepSeek Harness · 10-31",
+  "date": "2026.11.04",
+  "noImageReason": "查過 GitHub 倉庫頁與 InfoQ、智東西報導頁，倉庫無架構示意圖，報導配圖為版式圖與界面截圖拼貼，無可直接使用的架構信息圖。",
+  "slides": [
+    {
+      "type": "cover-min",
+      "kicker": "Agent · 10-31",
+      "headline": ["等指令的 Agent", "開始自己找活"],
+      "accentLine": 1,
+      "sub": "DeepSeek Harness 開源 Super-agent 研究原型，把調度、緩存、看門狗這些系統老辦法搬進 Agent 架構。",
+      "chips": ["MIT 許可", "可接 GitHub 與飛書", "設備休眠不掉線"],
+      "num": "5",
+      "numLabel": "大模塊 · 雙層架構、事件驅動、異步多信道、存算分離、Watchdog",
+      "note": "官方定位是研究原型而非產品，需要自行部署。"
+    },
+    {
+      "type": "diagram",
+      "kicker": "活是怎麼接的",
+      "headline": ["Router 分活", "Watchdog 兜底"],
+      "sub": "監聽群聊與 CI，沒人艾特也能主動復現修復，兩級過濾擋噪音。",
+      "nodes": [
+        { "box": "Router", "lab": "統一調度", "tone": "fill" },
+        { "box": "Worker", "lab": "上下文隔離", "tone": "fill" },
+        { "box": "Watchdog", "lab": "異常自愈", "tone": "dim" }
+      ],
+      "arrows": [
+        { "label": "任務分發" },
+        { "label": "卡死即重啟", "dash": true }
+      ],
+      "note": "多任務並行靠系統層硬保證分工，不靠提示詞約定。",
+      "verdict": "人的位置上移到決策與驗收，盯梢交給系統。"
+    },
+    {
+      "type": "columns",
+      "kicker": "快在哪",
+      "headline": ["多任務並行", "長尾砍掉一半"],
+      "cols2": [
+        { "k": "實測數字", "items": ["任務完成 P50 12.4 分鐘", "P95 僅 15.7 分鐘", "單 Session 方案長尾 29.5 分鐘"] },
+        { "k": "邊界", "items": ["研究原型，需自行部署", "面向軟件開發場景", "在授權範圍內接 GitHub 與飛書"] }
+      ],
+      "note": "倉庫上線幾天已收 8,300 星。",
+      "verdict": "瓶頸從模型能力挪到了人的注意力，這套架構先把盯梢的活接走。"
+    }
+  ]
+}

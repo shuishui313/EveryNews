@@ -1,0 +1,51 @@
+{
+  "brand": "@gsspai",
+  "source": "Thinking Machines Lab · 11-05",
+  "date": "2026.11.06",
+  "noImageReason": "查過 thinkingmachines.ai/news/inkling-2-small/ 全文，grab.sh 回 0 張候選；頁上的評測都是 HTML 表格與互動圖，沒有可直接當配圖的靜態資訊圖。",
+  "slides": [
+    {
+      "type": "bigfact",
+      "kicker": "模型 · 11-05",
+      "headline": ["先關上權重", "下週再開"],
+      "accentLine": 1,
+      "sub": "Thinking Machines Lab 發布第二代模型 Inkling 2 Small，目前只能在自家 Tinker 上用，權重仍閉門。",
+      "num": "594",
+      "unit": "B 總參數",
+      "numLabel": "單 token 激活 17B",
+      "rows": [
+        { "k": "AA 智能指數", "v": "31 分" },
+        { "k": "聯合 RL", "v": "9 天 1,075 步" },
+        { "k": "rollouts", "v": "逾 1,700 萬次" }
+      ],
+      "note": "官方說下週完成外部安全測試與紅隊後，以 Apache 2.0 放出完整權重。"
+    },
+    {
+      "type": "specs",
+      "kicker": "訓練帳",
+      "headline": ["六十八小時", "加九天"],
+      "sub": "官方把預訓練與強化學習的規模逐項列出來，這在模型發布稿裡不多見。",
+      "cells": [
+        { "k": "預訓練", "t": "68 小時", "d": "8.4 兆 token，GB300 NVL72 機架，原生 NVFP4" },
+        { "k": "聯合 RL", "t": "9 天", "d": "2,048 張 GPU，逾 4×10²³ FLOPs，3 兆 token" },
+        { "k": "現在能用的", "t": "Tinker", "d": "推論、微調與採樣，檢查點要等權重發布" }
+      ],
+      "note": "支援圖像輸入與可調思考力度，不支援音訊。",
+      "verdict": "開源時間表綁在安全測試後面，不綁在發布日。"
+    },
+    {
+      "type": "table",
+      "kicker": "時間表",
+      "headline": ["說好的開源", "還差一步"],
+      "sub": "同一篇部落格把現在、下週與之後分成三段落寫。",
+      "head": ["階段", "官方說法", "還差什麼"],
+      "rows": [
+        { "a": "11-05 起", "b": "Tinker Playground 可試", "c": "權重未公開，只能 API 用" },
+        { "a": "下週", "b": "Apache 2.0 全權重", "c": "外部安全測試與紅隊要先做完" },
+        { "a": "往後幾週", "b": "上架更多平台", "c": "檢查點隨權重一起開放下載" }
+      ],
+      "note": "官方自列限制，不支援音訊、聊天排版較弱、對心理健康提問過度反應。",
+      "verdict": "想自己部署，等的是那份模型卡，不是這篇榜單。"
+    }
+  ]
+}

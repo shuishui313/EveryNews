@@ -20,37 +20,41 @@
 
 - **规则驱动，风格稳定**。写什么、怎么写、交出什么，全部写在一份规则表里，谁跑都是同一个味道。
 - **闸门质检**。字数区间、冒号破折号、翻案腔、来源层级、版式查重自动校验，不过闸门出不了稿。
-- **一条命令出稿，一条命令出公开页**。渲染、归档、台账、复审回执、交接文档一次跑完。
+- **一条命令出稿**。渲染、公开页、预览图、闸门、台账、交接文档一次跑完。
 - **纯本地运行**。node + python + playwright，没有云端依赖，产出归你自己。
 
 ## 快速开始
 
-前置：node 20+、python3、playwright-cli（卡片截图渲染用）。
+前置：node 20+、python3、playwright-cli（卡片渲染与公开页整页截图用）。
 
 ```bash
 git clone https://github.com/<你的用户名>/EveryNews.git
 cd EveryNews
 
-# 出一轮当天的稿（渲染、闸门、归档、交接一次跑完）
+# 出一轮当天的稿（渲染、公开页、预览图、闸门、台账、交接一次跑完）
 ./出稿.sh <YYYY-MM-DD> <slug...>
-
-# 把当天产出压成单文件公开页
-node 工具/make-public.mjs <YYYY-MM-DD>   # 不给日期就取最新一期
 ```
 
-生成 `<YYYYMMDD>.html`，图片内联、CSS 内联，5 MB 左右，单文件拿走就能开。
+生成 `<YYYYMMDD>.html`，图片内联、CSS 内联，5–7 MB，单文件拿走就能开。`<日期>/预览图.png` 和根目录 `preview.png` 都是这个页面的整页截图。
+
+## 按日期查历史
+
+根目录 `index.html` 是全部期次的归档入口，可以按期次下拉、指定日期或标题关键词筛选。它由 `工具/make-index.mjs` 扫描 `<YYYYMMDD>.html` 自动生成，`出稿.sh` 每跑一轮刷新一次，新一期自动排在最前。
+
+每天的内容留在两个地方。根目录的 `<YYYYMMDD>.html` 是自包含单文件，当期文案、事实表、两篇讲解和 18 张卡全在里面，往期不删；`选题台账.md` 按日期存六条选题的摘要，供下一轮去重。日期目录按规则只保留当天，往期内容以根目录页面为准。
 
 ## 放到自己的 GitHub Pages
 
 仓库推上去之后，进 Settings → Pages → Source 选 `Deploy from a branch`（main / root），链接就是：
 
 ```
-https://<你的用户名>.github.io/<仓库名>/YYYYMMDD.html
+https://<你的用户名>.github.io/<仓库名>/                 # 全部期次，可按日期筛选
+https://<你的用户名>.github.io/<仓库名>/YYYYMMDD.html    # 指定某一期
 ```
 
-在线示例：<https://shuishui313.github.io/EveryNews/20261103.html>
+在线示例：<https://shuishui313.github.io/EveryNews/>，单期如 <https://shuishui313.github.io/EveryNews/20261103.html>
 
-每天跑完出稿和 make-public，push 一次就是新一期。
+每天跑一次出稿，push 一次就是新一期，归档页跟着刷新。
 
 ## 改成你自己的
 
@@ -63,11 +67,12 @@ https://<你的用户名>.github.io/<仓库名>/YYYYMMDD.html
 - `SOURCES.md` — 去哪找、哪一级能引用
 - `工具/PROMPT.md` — 配图版式与渲染
 - `工具/render.mjs` — 卡片渲染（1080×1350）
-- `工具/review.py` — 出稿闸门与复审回执
+- `工具/review.py` — 出稿闸门，回执写在 `工具/复审/<日期>.md`
 - `工具/grab.sh` — 一手源配图抓取
-- `工具/preview.mjs` · `工具/make-preview.py` — 本地总览页与整页缩略图
+- `工具/preview.mjs` · `工具/make-preview.py` — 已退出每日流水线，留作备用
 - `工具/site.mjs` — 多期归档静态站
 - `工具/make-public.mjs` — 单文件公开页生成
+- `工具/make-index.mjs` — 全部期次归档页，按日期筛选
 - `human-writing/` — 文风本体
 - `选题台账.md` — 每期选题与实际数据回写
 

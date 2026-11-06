@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
-# 一条命令出当天稿：渲染 → 归档 → 总览页 → 预览图 → 台账 → 清旧
+# 一条命令出当天稿：渲染 → 归档 → 公开页 → 预览图 → 台账 → 闸门 → 清旧
 # 用法: ./出稿.sh 2026-10-28 eth simulmt g1-robot muse-sg trending-ai genie4-v2
-# 产物: <工作区>/<日期>/{预览图.png, preview.html, 文案.md, 配图/}
+# 产物: <日期>/{文案.md, 配图/, 预览图.png} + <YYYYMMDD>.html + preview.png
+# 不出 preview.html 与 复审.md；复审回执留在 工具/复审/<日期>.md，不进当天目录
 # 纪律: 旧日目录与旧配图一律删除，只留「选题台账.md」用于后续去重
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -42,8 +43,9 @@ done
 
 echo "② 归档到 $DATE/"
 cd "$WS"
-# 只清生成物：配图、预览图、总览页。文案.md 原地不动，和配图放在同一层
-rm -rf "$DAY/配图" "$DAY/preview.html" "$DAY/预览图.png"
+# 只清生成物：配图、预览图，顺手清掉旧版留下的总览页。文案.md 原地不动
+rm -rf "$DAY/配图" "$DAY/预览图.png"
+rm -f "$DAY/preview.html"
 mkdir -p "$DAY/配图"
 i=0
 for s in "${SLUGS[@]}"; do
@@ -73,22 +75,43 @@ else
   echo "   ! 还没有 $DATE 的文稿，放一份到 $DATE/文案.md"
 fi
 
-echo "③ 总览页"
-node "$T/preview.mjs" "$DATE" "${SLUGS[@]}"
+echo "③ 公开页与归档索引"
+STAMP="${DATE//-/}"
+SITE="$WS/$STAMP.html"
+if [ -f "$DAY/文案.md" ]; then
+  node "$T/make-public.mjs" "$DATE"
+  node "$T/make-index.mjs"
+else
+  echo "   ! 没有 $DATE/文案.md，跳过公开页与归档索引"
+fi
 
-echo "④ 预览图"
-pkill -f "http.server $PORT" 2>/dev/null || true
-sleep 0.4
-( nohup python3 -m http.server "$PORT" --directory "$WS" >/tmp/everynews-preview.log 2>&1 & )
-sleep 1.2
-playwright-cli open "http://127.0.0.1:$PORT/$DATE/preview.html" >/dev/null 2>&1 || true
-playwright-cli resize 1240 800 >/dev/null 2>&1
-playwright-cli goto "http://127.0.0.1:$PORT/$DATE/preview.html" >/dev/null 2>&1 || true
-# 等所有缩略图解码完再截，否则后面几张会是空框
-playwright-cli eval "() => Promise.all(Array.from(document.images).map(i => i.complete ? 0 : i.decode().catch(() => 0)))" >/dev/null 2>&1 || true
-playwright-cli screenshot --full-page --filename="$DAY/预览图.png" >/dev/null 2>&1
-playwright-cli close >/dev/null 2>&1 || true
-pkill -f "http.server $PORT" 2>/dev/null || true
+echo "④ 预览图（公开页整页截图）"
+if [ ! -f "$SITE" ]; then
+  echo "   ! 没有 $STAMP.html，跳过预览图"
+else
+  pkill -f "http.server $PORT" 2>/dev/null || true
+  sleep 0.4
+  ( nohup python3 -m http.server "$PORT" --directory "$WS" >/tmp/everynews-preview.log 2>&1 & )
+  sleep 1.2
+  # 服务没起来就别往下走，否则浏览器停在 about:blank，会截出一张空白当预览图
+  curl -sf "http://127.0.0.1:$PORT/$STAMP.html" -o /dev/null || {
+    echo "✗ 本地服务没起来，取不到 $STAMP.html"; exit 1;
+  }
+  playwright-cli open "http://127.0.0.1:$PORT/$STAMP.html" >/dev/null 2>&1 || true
+  playwright-cli resize 1240 800 >/dev/null 2>&1
+  playwright-cli goto "http://127.0.0.1:$PORT/$STAMP.html" >/dev/null 2>&1 || true
+  # 等所有内联图片解码完再截，否则下半页会是空框
+  playwright-cli eval "() => Promise.all(Array.from(document.images).map(i => i.complete ? 0 : i.decode().catch(() => 0)))" >/dev/null 2>&1 || true
+  playwright-cli screenshot --full-page --filename="$DAY/预览图.png" >/dev/null 2>&1
+  playwright-cli close >/dev/null 2>&1 || true
+  pkill -f "http.server $PORT" 2>/dev/null || true
+  if [ ! -s "$DAY/预览图.png" ]; then
+    echo "✗ 预览图没截出来，检查 playwright-cli 与 $STAMP.html"
+    exit 1
+  fi
+  cp "$DAY/预览图.png" "$WS/preview.png"
+  echo "   · $DATE/预览图.png 与 preview.png 已更新"
+fi
 
 echo "⑤ 选题台账"
 node "$T/ledger.mjs" "$DATE" "${SLUGS[@]}"
@@ -102,7 +125,7 @@ if [ -f "$DAY/文案.md" ]; then
   if ! python3 "$T/review.py" "$DATE" --check; then
     echo
     echo "✗ 复审没做完，不出稿。"
-    echo "   打开 $DATE/复审.md，按自动段改正文，再把人工表四行填满；"
+    echo "   打开 工具/复审/$DATE.md，按自动段改正文，再把人工表四行填满；"
     echo "   只验复审：python3 工具/review.py $DATE --check"
     exit 1
   fi
@@ -124,13 +147,17 @@ done
 find "$T/out" -name "slide-*.html" -delete 2>/dev/null || true
 find "$T/out" -name "slide-*.png" -delete 2>/dev/null || true
 find "$WS" -name ".DS_Store" -delete 2>/dev/null || true
+# 闸门已过，回执归档在 工具/复审/，当天目录只留交付物
+rm -f "$DAY/preview.html" "$DAY/复审.md"
 
 echo "⑨ 交接"
 python3 "$T/handoff.py" "$DATE" || echo "   ! 交接没写成，手工补 HANDOFF.md 的人工段"
 
 echo
 echo "✅ 完成"
-echo "   预览图  $DATE/预览图.png"
-echo "   总览页  $DATE/preview.html"
+echo "   文案    $DATE/文案.md"
 echo "   配图    $DATE/配图/（$(ls "$DAY/配图" | wc -l | tr -d ' ') 张）"
+echo "   预览图  $DATE/预览图.png（$STAMP.html 整页截图）"
+echo "   公开页  $STAMP.html · preview.png"
+echo "   归档    index.html（全部期次，按日期筛选）"
 echo "   台账    选题台账.md"

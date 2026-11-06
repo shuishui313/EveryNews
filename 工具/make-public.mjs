@@ -199,7 +199,7 @@ const CSS = `
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
-  line-height:1.75;font-size:16px;-webkit-font-smoothing:antialiased}
+  line-height:1.75;font-size:16px;-webkit-font-smoothing:antialiased;line-break:strict}
 a{color:inherit;text-decoration:none}
 code{font:inherit;background:#ECE6DA;padding:.1em .35em;border-radius:3px}
 .top{display:flex;align-items:baseline;gap:14px;padding:22px clamp(18px,5vw,64px);
@@ -209,7 +209,8 @@ code{font:inherit;background:#ECE6DA;padding:.1em .35em;border-radius:3px}
 main{padding:0 clamp(18px,5vw,64px) 80px;max-width:1280px;margin:0 auto}
 .hero{padding:clamp(44px,7vw,88px) 0 48px;border-bottom:1px solid var(--line)}
 .hero h1{font-size:clamp(30px,5.2vw,54px);line-height:1.14;letter-spacing:-.03em;margin:0 0 18px;font-weight:700}
-.lede{color:var(--ink2);font-size:clamp(15px,1.6vw,18px);max-width:56ch;margin:0 0 14px}
+.lede{color:var(--ink2);font-size:clamp(15px,1.6vw,18px);margin:0 0 14px}
+.lede .clause{display:inline-block;white-space:nowrap}
 .stat{color:var(--accent);font-size:14px;font-weight:600;margin:0}
 .jump{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0 8px}
 .jump a{font-size:13px;color:var(--ink2);border:1px solid var(--line);border-radius:99px;
@@ -233,14 +234,14 @@ main{padding:0 clamp(18px,5vw,64px) 80px;max-width:1280px;margin:0 auto}
 .facts[open] summary::before{content:"▾ "}
 .facts table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13.5px}
 .facts th{text-align:left;vertical-align:top;white-space:nowrap;color:var(--mute);font-weight:600;padding:7px 18px 7px 0;width:1%}
-.facts td{padding:7px 0;border-bottom:1px solid var(--line);color:var(--ink2)}
+.facts td{padding:7px 0;border-bottom:1px solid var(--line);color:var(--ink2);overflow-wrap:anywhere}
 .lects{padding-top:20px}
 .lects>h2{font-size:15px;letter-spacing:.12em;color:var(--mute);font-weight:600;margin:44px 0 8px}
-.lect{padding:36px 0;border-bottom:1px solid var(--line);max-width:70ch}
+.lect{padding:36px 0;border-bottom:1px solid var(--line)}
 .lect h3{font-size:clamp(19px,2.2vw,24px);margin:0 0 16px;letter-spacing:-.02em;font-weight:700}
-.meta{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:0 0 22px;font-size:13px}
+.meta{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 16px;margin:0 0 22px;font-size:13px}
 .meta dt{color:var(--mute);font-weight:600;white-space:nowrap}
-.meta dd{margin:0;color:var(--ink2)}
+.meta dd{margin:0;min-width:0;color:var(--ink2);overflow-wrap:anywhere}
 .prose p{margin:0 0 1em;font-size:16px}
 .best{margin-top:18px;padding:14px 16px;background:#EFEAFD;border-left:3px solid var(--accent);font-size:14px;color:var(--ink2)}
 .best strong{color:var(--accent)}
@@ -255,7 +256,7 @@ main{padding:0 clamp(18px,5vw,64px) 80px;max-width:1280px;margin:0 auto}
 const body = `<main class="daypage">
   <section class="hero">
     <h1>${esc(date)}</h1>
-    <p class="lede">每天六条，每条三张卡。一个人加一套脚本，把当天的 AI 新闻做成能发的图文。</p>
+    <p class="lede"><span class="clause">每天六条，每条三张卡。</span><wbr><span class="clause">一个人加一套脚本，</span><wbr><span class="clause">把当天的 AI 新闻</span><wbr><span class="clause">做成能发的图文。</span></p>
     <p class="stat">${items.length} 条 · ${items.reduce((a, x) => a + x.pics.length, 0)} 张卡 · ${lectures.length} 篇讲解</p>
   </section>
   <nav class="jump">${items.map((it) => `<a href="#${esc(it.slug || it.num)}">${esc(it.num)} ${esc(it.title)}</a>`).join("")}</nav>

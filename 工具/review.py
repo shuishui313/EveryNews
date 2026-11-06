@@ -2,8 +2,10 @@
 """出稿闸门。机器能判的自动判，判不了的逼着留下回执。
 
 用法
-  python3 工具/review.py 2026-10-30           刷新 <日期>/复审.md（自动段重写，人工段保留）
+  python3 工具/review.py 2026-10-30           刷新 工具/复审/<日期>.md（自动段重写，人工段保留）
   python3 工具/review.py 2026-10-30 --check   只校验，未通过返回 1（出稿.sh 用这个）
+
+回执不进当天交付目录；老期次的 <日期>/复审.md 首次运行时自动迁入 工具/复审/。
 
 闸门三道
   1 文字硬禁令：check_prose.py，只喂成稿正文（代码块），不管事实表和说明
@@ -353,11 +355,18 @@ def main() -> int:
     check_only = "--check" in sys.argv[2:]
     day = WS / date
     prose_md = day / "文案.md"
-    receipt = day / "复审.md"
+    receipt = TOOLS / "复审" / f"{date}.md"
+    legacy = day / "复审.md"
 
     if not prose_md.exists():
         print(f"✗ 没有 {date}/文案.md，没东西可复审")
         return 1
+
+    receipt.parent.mkdir(parents=True, exist_ok=True)
+    if not receipt.exists() and legacy.exists():
+        receipt.write_text(legacy.read_text(encoding="utf-8"), encoding="utf-8")
+        legacy.unlink()
+        print(f"复审回执迁移 → {receipt.relative_to(WS)}")
 
     raw_text = prose_md.read_text(encoding="utf-8")
     sections = blocks(raw_text)
@@ -386,7 +395,7 @@ def main() -> int:
 
     if not ok:
         print("! 硬禁令有失败项，先按自动段改")
-    print(f"   下一步：填 复审.md 人工表 → python3 工具/review.py {date} --check")
+    print(f"   下一步：填 {receipt.relative_to(WS)} 人工表 → python3 工具/review.py {date} --check")
     return 0
 
 

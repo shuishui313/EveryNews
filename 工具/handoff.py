@@ -127,7 +127,7 @@ def main() -> int:
     lines.append(
         f"- 目录　`{date}/`　文案 {'有' if prose.exists() else '缺'} · 配图 {n_imgs} 张"
         f" · 预览图 {'有' if (day / '预览图.png').exists() else '缺'}"
-        f" · 复审 {'有' if (day / '复审.md').exists() else '缺'}"
+        f" · 公开页 {'有' if (WS / (date.replace('-', '') + '.html')).exists() else '缺'}"
     )
     if heads:
         lines.append("- 条目　" + "　".join(heads))
@@ -137,7 +137,15 @@ def main() -> int:
         lines.append(f"- 讲解　{len(lt)} 篇（{'　'.join(lt)}）")
     if slugs:
         lines.append(f"- 配图　带图 {len(with_img)} 套（{'、'.join(with_img) or '无'}）· 纯卡片 {len(cards)} 套（{'、'.join(cards) or '无'}）")
-    lines.append(f"- 闸门　`python3 工具/review.py {date} --check`" + ("　已过" if (day / "复审.md").exists() else "　还没跑"))
+    receipt = TOOLS / "复审" / f"{date}.md"
+    gate_ok = False
+    if receipt.exists():
+        rows = [l for l in receipt.read_text(encoding="utf-8").splitlines()
+                if re.match(r"^\|\s*[一二三四]\s*\|", l)]
+        gate_ok = len(rows) == 4 and all(
+            all(c.strip() for c in r.split("|")[3:6]) for r in rows
+        )
+    lines.append(f"- 闸门　`python3 工具/review.py {date} --check`" + ("　已过" if gate_ok else "　还没跑"))
     lines += [AUTO_END, ""]
 
     OUT.write_text(

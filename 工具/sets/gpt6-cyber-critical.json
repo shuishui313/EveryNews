@@ -1,0 +1,49 @@
+{
+  "brand": "@gsspai",
+  "source": "OpenAI · 11-05",
+  "date": "2026.11.06",
+  "noImageReason": "查過 openai.com/index/introducing-gpt-6-cyber/ 全文，grab.sh 回 0 張候選；官方頁只有文字、客戶引語輪播與摺疊章節，沒有放出流程圖或評測圖。",
+  "slides": [
+    {
+      "type": "ledger",
+      "kicker": "安全 · 11-05",
+      "headline": ["評到關鍵級", "只給少數人"],
+      "accentLine": 1,
+      "sub": "OpenAI 發布 GPT-6 Cyber，準備框架裡的網路安全風險從 High 升到 Critical，目前只開放給審核過的 Daybreak Red 客戶。",
+      "rows": [
+        { "k": "ExploitGym", "v": "48.5%", "d": "上一代 GPT-5.6 Cyber 是 32.1%" },
+        { "k": "Firefox 新漏洞", "v": "81 個", "d": "Mozilla 列為高危，已開始修", "on": true }
+      ],
+      "note": "另判定 30 個已知問題比原本通報的更嚴重；1,724 個 Linux 漏洞複現，做出 948 個提權利用。"
+    },
+    {
+      "type": "steps",
+      "kicker": "三道實測",
+      "headline": ["找得到", "也守得住範圍"],
+      "sub": "官方把能力與對齊放在同一份發布頁裡量，三組數字分開看。",
+      "steps": [
+        { "n": "01", "t": "找漏洞", "d": "無源碼的網頁滲透新評測，召回率 40.3%，GPT-6 Astra 是 32.0%", "g": "40.3%" },
+        { "n": "02", "t": "寫利用", "d": "RemoteExploitBench 完成 95%，同一組任務 Astra 配 Daybreak Blue 全數拒絕", "g": "95%" },
+        { "n": "03", "t": "不越界", "d": "蜜罐測試未加安全提示時 99.93% 不碰範圍外服務，加了提示是 100%", "g": "99.93%" }
+      ],
+      "note": "上一代蜜罐數字是 94.49%。304 個關鍵 Linux 發現已連同候選補丁交給維護者。",
+      "verdict": "能力往上跳一級，能拿到手的團隊反而更少。"
+    },
+    {
+      "type": "quote",
+      "kicker": "門檻在哪",
+      "headline": ["申請制", "加上白名單"],
+      "quote": [
+        "用前沿模型加固軟體的",
+        "[[窗口是有限的]]",
+        "先把能動手的人圈起來"
+      ],
+      "by": "整理自 OpenAI 11-05 發布頁",
+      "rows": [
+        { "k": "開放渠道", "v": "API 與 Codex，先給一小批 Daybreak Red 客戶" },
+        { "k": "預設限制", "v": "API 存取要 IP 白名單，另有誤用監控" },
+        { "k": "未公布", "v": "全面放開時間表與一般開發者申請條件" }
+      ]
+    }
+  ]
+}
