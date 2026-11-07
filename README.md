@@ -7,8 +7,6 @@ eg：https://shuishui313.github.io/EveryNews/index.html
 
 [它能做什么](#它能做什么) · [为什么用它](#为什么用它) · [快速开始](#快速开始) · [主页与期次切换](#主页与期次切换) · [放到自己的 GitHub Pages](#放到自己的-github-pages) · [改成你自己的](#改成你自己的) · [验证范围](#验证范围) · [已知限制](#已知限制) · [目录](#目录)
 
-![当天产出预览](https://shuishui313.github.io/EveryNews/index.html)
-
 ## 它能做什么
 
 跑一轮出稿，你会得到：
