@@ -1,12 +1,13 @@
 # EveryNews
 
 一条本地流水线，把每天的 AI 新闻做成能发的图文包：六条选题，每条三张 1080×1350 竖版卡，配好 X 主帖、Threads 文案、事实表和两篇讲解长文，再压成一个拿到网址就能开的单文件网页。
+eg：https://shuishui313.github.io/EveryNews/index.html
 
 **中文** | [English](README.en.md)
 
 [它能做什么](#它能做什么) · [为什么用它](#为什么用它) · [快速开始](#快速开始) · [主页与期次切换](#主页与期次切换) · [放到自己的 GitHub Pages](#放到自己的-github-pages) · [改成你自己的](#改成你自己的) · [验证范围](#验证范围) · [已知限制](#已知限制) · [目录](#目录)
 
-![当天产出预览](preview.png)
+![当天产出预览](https://shuishui313.github.io/EveryNews/index.html)
 
 ## 它能做什么
 
