@@ -1,0 +1,51 @@
+{
+  "brand": "@gsspai",
+  "source": "OpenAI · 11-06",
+  "date": "2026.11.07",
+  "noImageReason": "查過 openai.com/index/measuring-how-ai-agents-handle-wet-lab-science/ 全文，grab.sh 回 0 張候選，頁面圖像由元件動態載入，document.images 裡沒有可用的靜態圖；轉述頁只有 AI 生成的抽象插畫與黏土風示意圖，按規則不用。",
+  "slides": [
+    {
+      "type": "matrix",
+      "kicker": "評測 · 11-06",
+      "headline": ["六成六", "還會數錯菌落"],
+      "sub": "OpenAI 與 Ligo 推出 BioBasicsBench，用 100 道日常濕實驗題考智能體讀原始實驗證據的能力。",
+      "groups": [
+        { "label": "GPT-6 Astra", "value": "66.7%", "filled": 67, "tone": "fill" },
+        { "label": "GPT-5.6 Sol", "value": "43.8%", "filled": 44, "tone": "dim" }
+      ],
+      "note": "xhigh 推理強度，95% 信賴區間分別是 60.3 到 73.1 與 37.6 到 50.0。"
+    },
+    {
+      "type": "stack",
+      "kicker": "七個模型",
+      "headline": ["分數往上", "輸出字數往下"],
+      "sub": "同一份評測給了七個模型的平均獎勵與每題輸出字數，兩條線要一起看。",
+      "bars": [
+        { "label": "GPT-6 Astra", "price": "66.7%", "width": "67%" },
+        { "label": "GPT-6.1 Sol", "price": "62.0%", "width": "62%" },
+        { "label": "GPT-5.6 Sol", "price": "43.8%", "width": "44%" },
+        { "label": "GPT-5.2", "price": "31.2%", "width": "31%", "muted": true }
+      ],
+      "rows": [
+        { "k": "評測規模", "v": "7 個模型、37 種推理強度設定" },
+        { "k": "總結果數", "v": "18,500 個，每題跑 5 次" },
+        { "k": "每題輸出", "v": "Astra 4,704 字，GPT-5.2 27,620 字" }
+      ],
+      "note": "誤差線是對整道題重抽得到的 95% 信賴區間。",
+      "verdict": "看分數時，把信賴區間與輸出成本一起放進去。"
+    },
+    {
+      "type": "specs",
+      "kicker": "題目長什麼樣",
+      "headline": ["不給整理好的", "只給原始數據"],
+      "sub": "科學家用自己實驗的資料出題，附專家寫的評分標準，並經三道審查。",
+      "cells": [
+        { "k": "凝膠與墨點", "t": "31 題", "d": "DNA 凝膠、SDS-PAGE、Western blot 原始圖" },
+        { "k": "顯微與儀器", "t": "14 題", "d": "z-stack、多通道影像、儀器螢幕與導出曲線" },
+        { "k": "對照與否", "t": "要能說不", "d": "證據不足時拒絕下結論，也計入給分" }
+      ],
+      "note": "Astra 挑出了一題培養皿標錯抗生素的對照，菌落計數仍比參考多算約 12%。",
+      "verdict": "分數變高，不等於能在實驗室裡替人做判斷。"
+    }
+  ]
+}
