@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# 一条命令出当天稿：渲染 → 归档 → 公开页 → 预览图 → 台账 → 闸门 → 清旧
-# 用法: ./出稿.sh 2026-10-28 eth simulmt g1-robot muse-sg trending-ai genie4-v2
-# 产物: <日期>/{文案.md, 配图/, 预览图.png} + <YYYYMMDD>.html + preview.png
-# 不出 preview.html 与 复审.md；复审回执留在 工具/复审/<日期>.md，不进当天目录
+# 一条命令出当天稿：写稿自检 → 渲染 → 归档 → 公开页 → 主页/归档页 → 预览图 → 台账 → 闸门 → 清旧
+# 用法: ./出稿.sh <YYYY-MM-DD> <slug...>
+# 产物: <日期>/{文案.md, 配图/, 预览图.png, X热议.md} + <YYYYMMDD>.html + index.html + archive.html + preview.png
+# 不出 preview.html 与 复审.md；复审回执在 工具/复审/，立意稿在 工具/立意/，都不进当天目录
 # 纪律: 旧日目录与旧配图一律删除，只留「选题台账.md」用于后续去重
 set -euo pipefail
 cd "$(dirname "$0")"
@@ -27,7 +27,14 @@ fi
 
 DAY="$WS/$DATE"
 
-echo "⓪ 版式与图源检查"
+echo "⓪ 写稿顺序与 AI 味自检 + 版式图源查重"
+# 写在最前面：立意稿先于文案、写完自检没味，才准进入渲染。
+# 命中只能改稿，不许改检查器阈值放水（WRITING.md §4.1 / §7.4）。
+node "$T/check-voice.mjs" "$DATE" || {
+  echo "✗ 写稿自检没过，不出稿。先按提示改稿，不许调阈值放行。"
+  echo "   只回看历史批次：node 工具/check-voice.mjs $DATE --voice-only"
+  exit 1
+}
 cd "$T"
 node check-layouts.mjs "${SLUGS[@]}" ${ALLOW_CARD_ONLY:+--allow-card-only} || {
   echo "✗ 版式或图源没过：先回一手源找图（工具/img/），确实没有就在 set 里写 noImageReason；当天确认全批纯卡片，加 ALLOW_CARD_ONLY=1 重跑"

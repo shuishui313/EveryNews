@@ -32,7 +32,9 @@
 
 生成顺序固定：材料 → 这条最想说的那一句 → 顺着动作写 → 写完才归类查重。不许先挑「开头 A / 结构 3 / 收尾 c」再往里填。
 
-初稿完成后读 `.codebuddy/skills/human-writing/references/revision.md`，按 `WRITING.md` §7.3 的三遍走。
+顺序落成两个文件，不靠自觉。先写 `工具/立意/<日期>.md` 六句，才写 `<日期>/文案.md`。倒填、缺稿、先填类型，`工具/check-voice.mjs` 都判不过。
+
+初稿完成后读 `.codebuddy/skills/human-writing/references/revision.md`，按 `WRITING.md` §7.3 的三遍走。三遍改完自己跑一次 `node 工具/check-voice.mjs <日期>`，过了才动配图和出稿；`出稿.sh` 在渲染前会再跑一次兜底。命中只改稿，不许调阈值放行。
 
 ## 3 · 出稿只有一条命令
 

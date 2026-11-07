@@ -16,6 +16,7 @@ Agents editing this repo follow the rules below. User-facing prose lives in both
 
 脚本按这个顺序做事，改动时保持产物名不变：
 
+0. `工具/check-voice.mjs <日期>` 验立意稿先于文案、六句与首句对得上，再查 AI 味。排在任何渲染之前，不过 `exit 1`。写稿阶段自己也要先跑一次。
 1. `工具/check-layouts.mjs` 查版式和图源。全批纯卡片要显式加上 `ALLOW_CARD_ONLY=1`。
 2. 对每个 slug 跑 `工具/make.sh`，渲染 1080×1350。
 3. 归档到 `<日期>/配图/NN-slug-MM.png`。已有的 `<日期>/文案.md` 留在原地。根目录或 `稿件/` 里的 `<日期>.md` 会挪进 `<日期>/文案.md`。
@@ -39,3 +40,5 @@ Agents editing this repo follow the rules below. User-facing prose lives in both
 - 文档只写仓库里核对过的范围：本地 `node`、`python3`、`playwright-cli`。云端 CI，以及 X 或 Threads 账号发布，没有端到端记录就不写成已测过。
 - 公开说明里的 Issue 编号只引用已经存在的 Issue。没有就写「请开一个 Issue」，不编造号码。
 - 结构取舍写进 `docs/decisions.md`，否决项写进 `docs/declined.md`。
+- `check-voice.mjs` 命中时只改稿。不许改阈值、不许加放行开关、不许事后补一份立意稿倒填顺序。那个脚本故意没有阈值参数。
+- 复审回执人工表是改稿记录，不是写前计划表。先按 `revision.md` 三遍改，再填「改了哪一句、怎么改」。

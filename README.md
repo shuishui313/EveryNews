@@ -70,7 +70,7 @@ https://<你的用户名>.github.io/<仓库名>/YYYYMMDD.html    # 指定某一�
 
 ## 验证范围
 
-本仓库站得住的，是本机这条路径：`node`、`python3`、`playwright-cli`。`./出稿.sh` 一次跑完渲染、公开页、主页、归档页、预览图、闸门、台账和交接；`工具/make-index.mjs` 给每期页面注入顶部期次导航，把最新一期写成 `index.html`，并生成 `archive.html`。上面的在线示例是已经放在 GitHub Pages 上的静态 HTML。云端 CI，以及用 X 或 Threads 账号把稿发出去，仓库里没有端到端记录。
+本仓库站得住的，是本机这条路径：`node`、`python3`、`playwright-cli`。`./出稿.sh` 一次跑完渲染、公开页、主页、归档页、预览图、闸门、台账和交接；`工具/make-index.mjs` 给每期页面注入顶部期次导航，把最新一期写成 `index.html`，并生成 `archive.html`。上面的在线示例是已经放在 GitHub Pages 上的静态 HTML。云端 CI，以及用 X 或 Threads 账号把稿发出去，仓库里没有端到端记录。`工具/check-voice.mjs` 用 2026-11-07 的稿件作反例、另造一份干净样本作正例验过；它只认文件顺序与句式，不能代替人工读稿。
 
 ## 已知限制
 
@@ -105,6 +105,7 @@ MIT
 | `工具/render.mjs` | 卡片渲染（1080×1350） |
 | `工具/make.sh` | 单套渲染并截图 |
 | `工具/review.py` | 出稿闸门与复审回执 |
+| `工具/check-voice.mjs` | 写稿顺序与 AI 味自检，`出稿.sh` 首道闸门 |
 | `工具/check-post.mjs` | 文案篇幅与句式自查 |
 | `工具/check-layouts.mjs` | 版式与图源检查 |
 | `工具/grab.sh` | 一手源配图抓取 |

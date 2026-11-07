@@ -71,7 +71,7 @@ Writing rules are in [`WRITING.md`](WRITING.md) (in Chinese), card layouts in [`
 
 ## What's verified
 
-What this repo stands behind is the local path: `node`, `python3`, and `playwright-cli`. `./出稿.sh` renders the cards, writes `<YYYYMMDD>.html`, refreshes `index.html`, `archive.html` and preview, runs the gate, updates the ledger and the handoff. `工具/make-index.mjs` injects the top issue nav into every issue page, copies the latest issue to `index.html`, and builds `archive.html`. The live example above is static HTML already on GitHub Pages. This repo has no end-to-end record of a cloud CI run, or of publishing through an X or Threads account.
+What this repo stands behind is the local path: `node`, `python3`, and `playwright-cli`. `./出稿.sh` renders the cards, writes `<YYYYMMDD>.html`, refreshes `index.html`, `archive.html` and preview, runs the gate, updates the ledger and the handoff. `工具/make-index.mjs` injects the top issue nav into every issue page, copies the latest issue to `index.html`, and builds `archive.html`. The live example above is static HTML already on GitHub Pages. This repo has no end-to-end record of a cloud CI run, or of publishing through an X or Threads account. `工具/check-voice.mjs` was checked against the 2026-11-07 draft as a negative case and a separate clean sample as a positive case; it only reads file order and sentence shapes and does not replace human proofreading.
 
 ## Known limitations
 
@@ -106,6 +106,7 @@ MIT
 | `工具/render.mjs` | Card rendering (1080×1350) |
 | `工具/make.sh` | Render and screenshot one set |
 | `工具/review.py` | Production gate and review receipts |
+| `工具/check-voice.mjs` | Draft-order and AI-tell gate; the first check in `出稿.sh` |
 | `工具/check-post.mjs` | Copy length and sentence-shape checks |
 | `工具/check-layouts.mjs` | Layout and image-source checks |
 | `工具/grab.sh` | Grabbing images from primary sources |
