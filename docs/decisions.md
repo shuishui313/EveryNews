@@ -17,9 +17,12 @@
 
 ## 本地优先的出稿路径
 
+- 日期：2026-11-07 更新
 - 出稿、闸门、单文件页都在本机完成，依赖 `node`、`python3`、`playwright-cli`。
-- 出稿契约是 `./出稿.sh <YYYY-MM-DD> <slug...>`。日期目录、`文案.md`、`配图/`、`preview.html`、`预览图.png`、`选题台账.md` 的名字由脚本写死。
-- 公开页是单独的 `node 工具/make-public.mjs`。GitHub Pages 只托管已经生成的静态 HTML。
+- 出稿契约是 `./出稿.sh <YYYY-MM-DD> <slug...>`。当天目录只留 `文案.md`、`配图/`、`预览图.png`、`X热议.md`；复审回执在 `工具/复审/<日期>.md`。
+- `make-public.mjs` 出根目录 `<YYYYMMDD>.html`，`make-index.mjs` 注入期次导航、同步 `index.html` 并生成 `archive.html`，两者都由 `出稿.sh` 自动调用。主页是当日成果的完整内容，往期公开页一律保留。
+- 预览图是公开页的整页截图。旧的 `preview.html`、卡片拼图与 `site/` 多期站方案已移除。
+- GitHub Pages 只托管已经生成的静态 HTML。
 
 ## 公开说法只覆盖核对过的范围
 

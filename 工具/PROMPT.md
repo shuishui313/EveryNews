@@ -10,15 +10,15 @@
 
 在**同一个工作区**开的任意新会话里，直接说：
 
-> 用 `cards/PROMPT.md` 的规范，把这条新闻做成图：<链接>
+> 用 `工具/PROMPT.md` 的规范，把这条新闻做成图：<链接>
 
-AI 会自己读这份文件 → 拆信息点 → 填规划表 → 写 `sets/<slug>.json` → 渲染截图。
+AI 会自己读这份文件 → 拆信息点 → 填规划表 → 写 `工具/sets/<slug>.json` → 渲染截图。
 也可以加约束：`只要 3 张` / `页型别重复` / `换成 pink`。
 
 ### 方式二：自己跑（不经过 AI）
 
 ```bash
-cd cards
+cd 工具
 cp sets/ant-ipo.json sets/我的选题.json   # 照着改文案和数字
 ./make.sh 我的选题                      # 渲染 + 截图，一条命令
 ```
@@ -35,7 +35,7 @@ cp sets/ant-ipo.json sets/我的选题.json   # 照着改文案和数字
 | `render.mjs` | 把 JSON 变成卡片 |
 | `sets/*.json` | 每篇新闻的内容 |
 
-拷走 `cards/` 整个目录，装好 `node` + `npm i -g @playwright/cli` 即可。
+拷走 `工具/` 整个目录，装好 `node` + `npm i -g @playwright/cli` 即可。
 只想让别的 AI「按风格出图」而不跑模板：把 `PROMPT.md` 整份贴给它当系统提示。
 
 ---
@@ -252,7 +252,7 @@ playwright-cli resize 1080 1350
 playwright-cli screenshot --filename=out/ipo/slide-01.png
 ```
 
-**页脚账号**：优先读 `cards/brand.txt`（一行，如 `@gsspai`），其次环境变量 `BRAND`，最后回落到 JSON 的 `brand`。换账号只改这一个文件。
+**页脚账号**：优先环境变量 `BRAND`，其次读 `工具/brand.txt`（一行，如 `@gsspai`），最后回落到 JSON 的 `brand`。换账号只改这一个文件。
 
 `schema`：顶层 `brand` `source` `date` + `slides[]`（取前 5 张）。每张：`type` `kicker` `headline`
 （`accentLine:1` 染色某行 / `stamp:["關鍵詞"]` 内联色块 / `small:true` 缩字号），再按页型补：

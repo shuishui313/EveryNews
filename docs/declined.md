@@ -17,11 +17,6 @@
 - 日期：2026-11-05
 - 否决。没有对应 Issue 时，README 写明值得开哪一条，并留出补链接的位置。
 
-## 默认把静态站生成到 `docs/`
-
-- `工具/site.mjs` 会先删除整个输出目录，默认写出 `site/`。
-- `docs/` 留给 `decisions.md` 和 `declined.md`。`node 工具/site.mjs --out docs` 会把这两份记录一起删掉，不作为用法。
-
 ## 默认抓登录后的 X 时间线
 
 - 否决作为默认抓取。`x.com` 的搜索页和时间线需要登录态。选题线索走公开镜像和趋势页，事实回到一手源。边界写在 `.codebuddy/skills/daily-6/SKILL.md`。

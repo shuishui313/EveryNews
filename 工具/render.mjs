@@ -8,7 +8,7 @@ const file = path.isAbsolute(arg) ? arg : path.join(ROOT, arg);
 const data = JSON.parse(fs.readFileSync(file, "utf8"));
 const slug = path.basename(file, ".json");
 
-// 页脚账号：优先环境变量 BRAND，其次 cards/brand.txt，最后回落到各 JSON 的 brand 字段
+// 页脚账号：优先环境变量 BRAND，其次同目录 brand.txt，最后回落到各 JSON 的 brand 字段
 const BRAND_FILE = path.join(ROOT, "brand.txt");
 const BRAND =
   process.env.BRAND ||

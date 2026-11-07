@@ -19,13 +19,14 @@ Agents editing this repo follow the rules below. User-facing prose lives in both
 1. `工具/check-layouts.mjs` 查版式和图源。全批纯卡片要显式加上 `ALLOW_CARD_ONLY=1`。
 2. 对每个 slug 跑 `工具/make.sh`，渲染 1080×1350。
 3. 归档到 `<日期>/配图/NN-slug-MM.png`。已有的 `<日期>/文案.md` 留在原地。根目录或 `稿件/` 里的 `<日期>.md` 会挪进 `<日期>/文案.md`。
-4. `工具/preview.mjs` 写 `<日期>/preview.html`，再用 playwright-cli 截 `<日期>/预览图.png`。预览服务端口默认 `PORT=8778`。
-5. `工具/ledger.mjs` 回写 `选题台账.md`。
-6. 当天有 `文案.md` 时跑 `工具/check-post.mjs`，再跑 `工具/review.py`。`python3 工具/review.py <日期> --check` 失败则 `exit 1`，这一轮不算出完。没有文案就跳过闸门，图仍然归档。
-7. 删掉仓库根目录里其他 `YYYY-MM-DD` 目录，并清掉本批之外的 `工具/out` 中间图。
-8. `工具/handoff.py` 刷新 `HANDOFF.md` 的自动段。人工段不要让脚本覆盖。
+4. `工具/make-public.mjs` 出根目录 `<YYYYMMDD>.html`，接着 `工具/make-index.mjs` 给每期页面注入带标记的期次导航、把最新一期写进 `index.html`、生成 `archive.html`。
+5. 用 playwright-cli 截 `<YYYYMMDD>.html` 整页图到 `<日期>/预览图.png`，同步根目录 `preview.png`。预览服务端口默认 `PORT=8778`。预览图是公开页截图，不是卡片拼图。
+6. `工具/ledger.mjs` 回写 `选题台账.md`。
+7. 当天有 `文案.md` 时跑 `工具/check-post.mjs`，再跑 `工具/review.py`。`python3 工具/review.py <日期> --check` 失败则 `exit 1`，这一轮不算出完。回执写在 `工具/复审/<日期>.md`，不进当天目录。
+8. 删掉仓库根目录里其他 `YYYY-MM-DD` 目录，清掉本批之外的 `工具/out` 中间图。当天目录只留 `文案.md`、`配图/`、`预览图.png`、`X热议.md`。
+9. `工具/handoff.py` 刷新 `HANDOFF.md` 的自动段。人工段不要让脚本覆盖。
 
-公开页是另一条命令：`node 工具/make-public.mjs [YYYY-MM-DD]`，写出 `<YYYYMMDD>.html`。不要把它并进出稿脚本，除非两份 README 和 `SHORTNEWS-V1.md` 一起改。
+站点契约：根路径 `index.html` 就是当日成果的完整内容，顶部下拉可切任意一期；`archive.html` 保留按日期与标题的筛选；往期 `<YYYYMMDD>.html` 一律保留，是每天内容的留存载体。日期目录不入库。
 
 跑 `./出稿.sh` 会删除其他日期目录。只在明确要出那一天的稿时跑。
 
@@ -38,4 +39,3 @@ Agents editing this repo follow the rules below. User-facing prose lives in both
 - 文档只写仓库里核对过的范围：本地 `node`、`python3`、`playwright-cli`。云端 CI，以及 X 或 Threads 账号发布，没有端到端记录就不写成已测过。
 - 公开说明里的 Issue 编号只引用已经存在的 Issue。没有就写「请开一个 Issue」，不编造号码。
 - 结构取舍写进 `docs/decisions.md`，否决项写进 `docs/declined.md`。
-- `工具/site.mjs` 默认输出 `site/`，并且会先删掉整个输出目录。不要执行 `node 工具/site.mjs --out docs`，那会删掉 `docs/` 里的决策记录。

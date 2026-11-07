@@ -109,10 +109,8 @@ MIT
 | `工具/check-post.mjs` | Copy length and sentence-shape checks |
 | `工具/check-layouts.mjs` | Layout and image-source checks |
 | `工具/grab.sh` | Grabbing images from primary sources |
-| `工具/preview.mjs` · `工具/make-preview.py` | Retired from the daily pipeline, kept as fallbacks |
 | `工具/make-public.mjs` | Single-file public page |
 | `工具/make-index.mjs` | Issue nav, today's homepage, and archive.html |
-| `工具/site.mjs` | Multi-issue static site. Writes to `site/` by default |
 | `工具/ledger.mjs` | Writes the story ledger back |
 | `工具/handoff.py` | Refreshes the auto section of `HANDOFF.md` |
 | [`.codebuddy/skills/human-writing/`](.codebuddy/skills/human-writing/) (in Chinese) | The voice itself. The rules call it human-writing. Cite it; do not rewrite it |

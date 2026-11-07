@@ -60,7 +60,7 @@ node 工具/make-index.mjs                    # 注入期次导航、同步 inde
 # 出稿.sh ④ 截这个页面的整页图，落 <日期>/预览图.png 并同步 preview.png
 ```
 
-`工具/preview.mjs` 与 `工具/make-preview.py` 已退出每日流水线，只留作备用，不再产出 `preview.html`。
+当天目录不再产出 `preview.html`，预览图就是公开页的整页截图。
 
 **阶段 3 的判据**（缺一条就算没做）
 

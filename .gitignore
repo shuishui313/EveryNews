@@ -10,9 +10,7 @@
 工具/img/
 工具/out/
 
-# 站点产物。工具/site.mjs 默认写 site/，并会先删掉整个输出目录。
-# docs/ 只入库决策记录。不要用 site.mjs --out docs。
-site/
+# docs/ 只入库决策记录
 docs/*
 !docs/decisions.md
 !docs/declined.md

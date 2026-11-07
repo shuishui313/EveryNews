@@ -109,10 +109,8 @@ MIT
 | `工具/check-post.mjs` | 文案篇幅与句式自查 |
 | `工具/check-layouts.mjs` | 版式与图源检查 |
 | `工具/grab.sh` | 一手源配图抓取 |
-| `工具/preview.mjs` · `工具/make-preview.py` | 已退出每日流水线，留作备用 |
 | `工具/make-public.mjs` | 单文件公开页 |
 | `工具/make-index.mjs` | 期次导航、当日成果主页与 archive.html |
-| `工具/site.mjs` | 多期静态站，默认写到 `site/` |
 | `工具/ledger.mjs` | 回写选题台账 |
 | `工具/handoff.py` | 刷新 `HANDOFF.md` 自动段 |
 | `.codebuddy/skills/human-writing/` | 文风本体。规则里称作 human-writing，只引用不改写 |
