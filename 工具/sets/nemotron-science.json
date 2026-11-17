@@ -1,0 +1,47 @@
+{
+  "brand": "@gsspai",
+  "source": "NVIDIA Developer Blog · SC26 · 11-16",
+  "date": "2026.11.17",
+  "noImageReason": "查過英偉達開發者博客，grab.sh 回 9 張候選全判為推薦位縮略圖，SC26 圖表未在正文，走純卡片。",
+  "slides": [
+    {
+      "type": "matrix",
+      "kicker": "科學 AI · SC26",
+      "headline": ["一份題庫", "把模型帶進實驗室"],
+      "accentLine": 1,
+      "sub": "開源模型配近五萬道化學題與後訓練配方。",
+      "groups": [
+        { "label": "SFT 提升", "value": 12, "filled": 24, "tone": "fill" },
+        { "label": "RL 再提升", "value": 17, "filled": 34 }
+      ],
+      "note": "藥物代謝任務，輸出預算 16,384 token。"
+    },
+    {
+      "type": "blocks",
+      "kicker": "打包了什麼",
+      "headline": ["模型、題庫", "和練法一起給"],
+      "accentLine": 1,
+      "sub": "Nemotron for Science 讓開源模型能進化學與藥物研發場景。",
+      "items": [
+        { "value": "3.5 Super VL", "label": "開源多模態模型", "size": 100 },
+        { "value": "近 5 萬題", "label": "LitmusBench v0.2 化學題庫", "size": 70 },
+        { "value": "配方", "label": "NeMo Gym 與 NeMo RL", "size": 45 }
+      ],
+      "big": "SC26",
+      "bigLabel": "芝加哥超算會議發布"
+    },
+    {
+      "type": "before-after",
+      "kicker": "兩段提升",
+      "headline": ["先監督微調", "再強化學習"],
+      "accentLine": 1,
+      "sub": "同一個藥物代謝任務，分兩步往上推。",
+      "segs": [
+        { "label": "第一步", "from": { "box": "SFT" }, "arrow": "+12%", "to": { "box": "準確率", "tone": "fill" } },
+        { "label": "第二步", "from": { "box": "RL" }, "arrow": "+17%", "to": { "box": "再提升" } }
+      ],
+      "note": "Argonne、RIKEN、Lila Sciences 已拿去搭科學智能體。",
+      "verdict": "兩個幅度只在單一任務上量過。"
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "brand": "@gsspai",
+  "source": "Google Developers Blog · 11-16",
+  "date": "2026.11.17",
+  "noImageReason": "查過 Google 開發者博客，grab.sh 回 9 張候選全判為推薦位縮略圖，正文裡的 figure 由前端載入未進正文，走純卡片。",
+  "slides": [
+    {
+      "type": "overlap",
+      "kicker": "強化學習 · 11-16",
+      "headline": ["同一個權重", "算出不同數"],
+      "accentLine": 1,
+      "ghost": "0",
+      "num": "0",
+      "numLabel": "sampler 與 trainer 的 logprob 平均絕對差",
+      "sub": "Tunix 的 Zero-TIM 要求三條路徑對同一動作逐位相同。",
+      "rows": [
+        { "k": "驗證", "v": "64 張 TPU v5p" },
+        { "k": "配置", "v": "DP8 × TP8" }
+      ],
+      "verdict": "名義上的 on-policy，其實可能已經 off-policy。"
+    },
+    {
+      "type": "diagram",
+      "kicker": "差在哪裡",
+      "headline": ["加法順序", "偷走了 on-policy"],
+      "accentLine": 1,
+      "sub": "浮點加法不服從結合律，reduction 順序不同就對不上。",
+      "nodes": [
+        { "box": "sampler decode", "lab": "採樣路徑" },
+        { "box": "serving prefill", "lab": "服務路徑" },
+        { "box": "trainer forward", "lab": "訓練路徑" }
+      ],
+      "arrows": [
+        { "label": "逐位相同" },
+        { "label": "零容差" }
+      ],
+      "note": "bfloat16 例子，0.0078125 接近 2.0 時被捨入丟掉。"
+    },
+    {
+      "type": "specs",
+      "kicker": "四部分配方",
+      "headline": ["從 kernel", "一路統一到反向"],
+      "accentLine": 1,
+      "sub": "把數值路徑固定下來，而不是事後修正更新權重。",
+      "cells": [
+        { "k": "一", "t": "固定 shard 內", "d": "分塊遍歷順序與 float32 累加" },
+        { "k": "二", "t": "固定跨 shard", "d": "所有 rank 按同源順序相加" },
+        { "k": "三", "t": "統一 logprob", "d": "採樣、prefill、訓練共用路徑" },
+        { "k": "四", "t": "自定義微分", "d": "trainer 複用 serving prefill 計算" }
+      ],
+      "note": "單 seed、合成環境、200 步驗證，原型開源。"
+    }
+  ]
+}

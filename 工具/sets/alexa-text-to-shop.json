@@ -1,0 +1,42 @@
+{
+  "brand": "@gsspai",
+  "source": "Amazon Newsroom · 11-06",
+  "date": "2026.11.09",
+  "slides": [
+    {
+      "type": "cover-img-top",
+      "kicker": "消費 · 11-06",
+      "headline": ["發一條簡訊", "買三樣東西"],
+      "accentLine": 1,
+      "image": "img/alexa-text-to-shop-01.jpg",
+      "sub": "美國部分受邀用戶可以把購物需求發給簡訊裡的 Alexa Shopping。",
+      "chips": ["搜商品與比價", "給建議並加購物車", "下單前要人授權", "推送物流更新", "一年價格歷史"]
+    },
+    {
+      "type": "steps",
+      "kicker": "一條簡訊之後",
+      "headline": ["誰動手", "誰點頭"],
+      "sub": "官方例句把狗糧、妹妹的生日禮物與紙巾放進同一句話。",
+      "steps": [
+        { "n": "01", "t": "發簡訊", "d": "聯絡人顯示為 Alexa Shopping，用文字下需求", "g": "使用者" },
+        { "n": "02", "t": "找貨與比較", "d": "搜商品、比價、給建議、加進購物車", "g": "Alexa" },
+        { "n": "03", "t": "下單", "d": "完成購買前要人授權，之後推送物流更新", "g": "人要點頭" }
+      ],
+      "note": "還可設目標價自動買、看一年價格歷史、上傳照片找相似商品。",
+      "verdict": "官方說過去 12 個月有 4 億客戶用過 Alexa for Shopping。"
+    },
+    {
+      "type": "quote",
+      "kicker": "官方例句",
+      "headline": ["一句話", "塞了三件事"],
+      "accentLine": 1,
+      "quote": ["I'm out of dog food, need a birthday gift for my sister, and we're [[low on paper towels]]"],
+      "by": "Amazon Newsroom 11-06 刊出的示例簡訊",
+      "rows": [
+        { "k": "範圍", "v": "美國部分受邀客戶，未來數週擴大" },
+        { "k": "用量", "v": "agentic 功能年初以來增至八倍以上" },
+        { "k": "未公布", "v": "全美放開的具體日期" }
+      ]
+    }
+  ]
+}

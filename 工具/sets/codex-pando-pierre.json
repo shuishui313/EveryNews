@@ -1,0 +1,54 @@
+{
+  "brand": "@gsspai",
+  "source": "Axios · Anthropic · 11-02 / 11-04",
+  "date": "2026.11.08",
+  "noImageReason": "查過 Anthropic 工程博客與 Axios 報道頁，an|thropic 頁只抓到一張粉色底的抽象幾何插圖，遮住圖上字之後沒有任何資訊，按規則刪掉；Axios 頁正文圖全是分享卡，三頁走純卡片。",
+  "slides": [
+    {
+      "type": "versus",
+      "kicker": "開發者基建 · 11-02",
+      "headline": ["推一次代碼", "省了八成"],
+      "accentLine": 1,
+      "sub": "OpenAI 換掉自建 Git 後端之後，一次推送的中位耗時降了近 80%。",
+      "bars": [
+        { "label": "一次推送中位耗時", "price": "降 80%", "width": "88" },
+        { "label": "Anthropic 日合併量", "price": "2,500 → 3 萬", "width": "62" },
+        { "label": "CI 每天取碼", "price": "約 2,500 萬次", "width": "44", "tone": "muted" }
+      ],
+      "rows": [
+        { "k": "Pando", "v": "OpenAI 自建 Git 後端，4 月起承接真實開發流量" },
+        { "k": "Scion", "v": "Anthropic 7 名工程師加 Claude 花 5 個月寫出，主代碼庫已遷移" }
+      ],
+      "note": "負載變重的原因是 Codex 讓一個工程師同時推進多份改動，每推一次都有任務來取碼。"
+    },
+    {
+      "type": "brick",
+      "kicker": "為什麼自己造",
+      "headline": ["改動變多", "故障照舊"],
+      "sub": "三件事撞在一起，自建從可選變成必選。",
+      "bricks": [
+        { "i": "01", "t": "推送量漲", "d": "一個工程師手上同時幾份改動，每次推送都觸發一串自動化任務取碼" },
+        { "i": "02", "t": "平台掉線", "d": "GitHub 11-03 一天記錄兩起故障，11-04 合併請求等服務異常" },
+        { "i": "03", "t": "各家自建", "d": "Pando、Scion、Origin 分別在 OpenAI、Anthropic、Cursor 內部上線" }
+      ],
+      "note": "GitHub 10-28 也公布了自己的擴容，今年新增 400 萬個 CPU 核心與 160PB 高速存儲，並把讀寫資源分開。",
+      "verdict": "10-28 剛說擴容，11-03 與 11-04 又各掛了一次。"
+    },
+    {
+      "type": "stack",
+      "kicker": "客戶那一端",
+      "headline": ["一週八百萬個", "新倉庫"],
+      "sub": "Pierre 的客戶 Lovable 每週新建超過 800 萬個倉庫，峰值每秒 250 個。",
+      "bars": [
+        { "label": "Lovable 每週新建倉庫", "price": "800 萬個", "width": "92" },
+        { "label": "峰值建倉速度", "price": "每秒 250 個", "width": "58" }
+      ],
+      "rows": [
+        { "k": "Pierre", "v": "Trees 與 Diffs 已接進 Codex，收購待交割" },
+        { "k": "金額", "v": "未披露" }
+      ],
+      "note": "OpenAI 的設想是收購完成後把 Code Storage 帶進 Codex，寫碼、看改動與存版本都在同一個地方。",
+      "verdict": "800 萬個倉庫一週，托管方的排隊機制跟不上這種寫入。"
+    }
+  ]
+}

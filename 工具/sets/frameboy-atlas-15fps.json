@@ -1,0 +1,47 @@
+{
+  "brand": "@gsspai",
+  "source": "World Labs · 11-05",
+  "date": "2026.11.09",
+  "noImageReason": "查過 World Labs 官方博客，grab.sh 只回 1 張 1113×628 的推薦位圖，是「World Labs is Joining AMD」公告的配圖；博客裡的場景對照圖由前端動態載入，不在 document.images 裡，三頁走純卡片。",
+  "slides": [
+    {
+      "type": "bigfact",
+      "kicker": "世界模型 · 11-05",
+      "headline": ["每秒十五幀", "邊走邊改"],
+      "accentLine": 1,
+      "sub": "Frameboy 把 Atlas 的優化版變成雲端串流，鏡頭由使用者控制。",
+      "num": "15",
+      "unit": "fps",
+      "numLabel": "雲端 GPU 逐幀生成後串流到瀏覽器的上限",
+      "rows": [
+        { "k": "輸入", "v": "單張圖片或一段文字" },
+        { "k": "官方承認", "v": "成本比本地渲染高" },
+        { "k": "Viewfinder", "v": "仍在封閉測試" }
+      ],
+      "note": "Frameboy 目前必須跑在雲端高效能 GPU 伺服器上，公開 Demo 只給策展場景。"
+    },
+    {
+      "type": "before-after",
+      "kicker": "做法變了",
+      "headline": ["先想好路徑", "變成邊走邊拐"],
+      "sub": "官方博客把改動理由寫在速度上。",
+      "segs": [
+        { "label": "先前", "from": { "box": "按下生成", "tone": "dim" }, "arrow": "等幾十秒到幾分鐘", "to": { "box": "收到一段影片" }, "dash": true },
+        { "label": "現在", "from": { "box": "轉動鏡頭", "tone": "fill" }, "arrow": "畫面連續回來", "to": { "box": "當場改角度" } }
+      ],
+      "verdict": "慢生成時得先把鏡頭路徑想妥，現在試錯跟著轉鏡頭一起發生。"
+    },
+    {
+      "type": "columns",
+      "kicker": "開放到哪一步",
+      "headline": ["能用的", "與要排隊的"],
+      "sub": "官方把兩邊分得很清楚。",
+      "cols2": [
+        { "k": "現在能用", "items": ["Frameboy 公開 Demo", "策展好的場景清單", "瀏覽器裡自己轉鏡頭", "最高 15 fps 串流"] },
+        { "k": "還要等", "items": ["Viewfinder 自建場景", "封閉測試與候補名單", "本地渲染等級的成本", "全量開放日期未公布"] }
+      ],
+      "note": "去年的 RTFM 主要在已有視角間插值，Atlas 能從單圖或文字從零生成場景。",
+      "verdict": "公開 Demo 給的是策展場景，從自己的一張圖搭世界還在封測。"
+    }
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "brand": "@gsspai",
+  "source": "新浪科技 · 11-16",
+  "date": "2026.11.16",
+  "noImageReason": "查過新浪科技 11-16 報道頁，grab.sh 回 14 張候選全是推薦位縮略圖與廣告位，正文沒有配圖；第三方評測頁為數據表單，無可引用的正文插圖。走純卡片。",
+  "slides": [
+    {
+      "type": "bigfact",
+      "kicker": "模型 · 11-16",
+      "headline": ["同一個模型", "帳單差了六成"],
+      "accentLine": 1,
+      "sub": "官方說單任務平均費用降六成，第三方評測給的數是 58%。",
+      "num": "58",
+      "unit": "%",
+      "numLabel": "Cost per Task 降幅，Terminal-Bench 4.0 同為 Xhigh 檔",
+      "rows": [
+        { "k": "Token 用量", "v": "289K → 151K" },
+        { "k": "評測得分", "v": "38.9 → 48.5" }
+      ],
+      "note": "2.4T 總參數、激活 71B、百萬上下文，已上 API。"
+    },
+    {
+      "type": "table",
+      "kicker": "兩代對照",
+      "headline": ["同樣的基準", "不同的帳單"],
+      "accentLine": 1,
+      "sub": "Terminal-Bench 4.0，兩代模型都跑 Xhigh 思考檔。",
+      "head": ["口徑", "Qwen3.8-Max", "Qwen4-Max"],
+      "rows": [
+        { "a": "每次 Token", "b": "289K", "c": "151K" },
+        { "a": "評測得分", "b": "38.9", "c": "48.5", "hot": true },
+        { "a": "單任務費用", "b": "上代水準", "c": "降 58%" }
+      ],
+      "note": "快取命中每百萬 Tokens 低至 0.5 元。",
+      "verdict": "用量減半、得分上升，成本才一起降下來。"
+    },
+    {
+      "type": "specs",
+      "kicker": "帳本怎麼算",
+      "headline": ["六成是約數", "58% 帶條件"],
+      "accentLine": 1,
+      "sub": "一句在公司概述，一句在第三方評測，出處不同。",
+      "cells": [
+        { "k": "官方說法", "t": "降六成", "d": "完成單任務平均費用較上代，未帶基準與檔位" },
+        { "k": "第三方評測", "t": "降 58%", "d": "Cost per Task，Terminal-Bench 4.0 Xhigh 檔" },
+        { "k": "榜單口徑", "t": "第六", "d": "CodeArena 指的 Qwen4 系列，未指明 Max" }
+      ],
+      "verdict": "整數好記，帶條件的數才適合核算。"
+    }
+  ]
+}

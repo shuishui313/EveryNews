@@ -1,0 +1,42 @@
+{
+  "brand": "@gsspai",
+  "source": "百度文心 · 11-05",
+  "date": "2026.11.08",
+  "slides": [
+    {
+      "type": "cover-split",
+      "kicker": "開源 · 11-05",
+      "headline": ["放出來的是", "預訓練終點"],
+      "accentLine": 1,
+      "sub": "ERNIE 5.5 Flash Base 開源，2800 億總參數，每個 token 只啟動 140 億。",
+      "hero": { "num": "2800", "unit": "億總參數 · 每 token 激活 140 億" },
+      "chips": ["33.5 萬億 token 預訓練", "訓練上下文 128K", "微調與推理支持 1M", "未做中訓練與後訓練", "Muon 優化器與 FP8 混合精度", "FP8 權重已接 vLLM 與 SGLang"]
+    },
+    {
+      "type": "shot",
+      "kicker": "官方架構圖",
+      "headline": ["四十三層", "怎麼分工"],
+      "image": "img/ernie-55-flash-base-01.png",
+      "cap": "左邊是 43 層主幹，右邊拆出 Multi-Router Latent MoE 與 Latent-Gated Sparse Attention",
+      "caption": "官方發布頁刊出的模型架構示意，含 ECHO 與 R2L Tokenizer 兩個模組",
+      "creditLabel": "圖",
+      "credit": "ernie.baidu.com",
+      "fit": "contain",
+      "bg": "paper",
+      "sub": "圖上標了各段的重複次數，×6、×5、×1 分別對應不同層組。"
+    },
+    {
+      "type": "specs",
+      "kicker": "三格看規格",
+      "headline": ["權重停在哪", "三格說清"],
+      "sub": "同一份權重，三個欄位決定了它能怎麼用。",
+      "cells": [
+        { "k": "預訓練", "t": "33.5 萬億 token", "d": "從零訓練，Muon 優化器與 FP8 混合精度，最長上下文 128K" },
+        { "k": "上下文", "t": "128K 到 1M", "d": "微調與推理階段可外擴，不等於預訓練見過那麼長" },
+        { "k": "權重狀態", "t": "未後訓練", "d": "停在中訓練與指令微調之前，官方定位為後訓練起點" }
+      ],
+      "note": "HF 上是 baidu/ERNIE-5.5-Flash-Base，FP8 版本已接進 vLLM 與 SGLang。",
+      "verdict": "官方說後訓練版隨後推出，這一版只給到預訓練終點。"
+    }
+  ]
+}

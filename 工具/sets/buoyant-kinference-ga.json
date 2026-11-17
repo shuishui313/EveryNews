@@ -1,0 +1,47 @@
+{
+  "brand": "@gsspai",
+  "source": "Buoyant · 11-04",
+  "date": "2026.11.09",
+  "slides": [
+    {
+      "type": "cover-min",
+      "kicker": "開發者基建 · 11-04",
+      "headline": ["同一段前綴", "送去哪一張卡"],
+      "accentLine": 1,
+      "sub": "Kinference 把請求送到已經存著那段前綴的 vLLM pod。",
+      "num": "95",
+      "numLabel": "共享前綴工作負載的中位首 token 時間降幅，單位是百分比",
+      "chips": ["6.88 秒降到 0.31 秒", "多輪約 65%", "獨立 prompt 幾乎沒差", "峰值 goodput 約 7.4 倍", "基準與 SLO 由 Buoyant 自定", "新聞稿 GA，README 仍標 alpha"],
+      "note": "對照組是完全獨立的 prompt，Kubernetes Service 6.92 秒，Kinference 6.83 秒。"
+    },
+    {
+      "type": "shot",
+      "kicker": "官方對照圖",
+      "headline": ["有前綴", "才拉得開"],
+      "image": "img/buoyant-kinference-ga-01.webp",
+      "cap": "三組工作負載的中位與 p95 首 token 時間，藍色是 Kubernetes Service，綠色是 Kinference",
+      "caption": "Buoyant 基準博客刊出的 TTFT 對照圖，control 組 6.92 秒對 6.83 秒",
+      "creditLabel": "圖表",
+      "credit": "buoyant.io",
+      "fit": "contain",
+      "bg": "paper"
+    },
+    {
+      "type": "versus",
+      "kicker": "同一組硬體",
+      "headline": ["隨機挑", "與看快取"],
+      "accentLine": 1,
+      "sub": "兩組各 3 個 vLLM pod，每張 L40S 跑 Qwen-3.8-27B-FP8。",
+      "bars": [
+        { "label": "Kubernetes Service 中位 TTFT", "price": "6.88 秒", "width": "100" },
+        { "label": "Kinference 中位 TTFT", "price": "0.31 秒", "width": "5" }
+      ],
+      "rows": [
+        { "k": "Service", "v": "kube-proxy 對新連線隨機挑 pod，前綴快取白存" },
+        { "k": "Kinference", "v": "先估各 pod 的 TTFT，送到已存著前綴的 worker" }
+      ],
+      "note": "完全獨立的 prompt 對照組是 6.92 秒對 6.83 秒，沒有可量出的差別。",
+      "verdict": "基準由 Buoyant 自己跑，SLO 也照空閒機台的未快取時間定。"
+    }
+  ]
+}

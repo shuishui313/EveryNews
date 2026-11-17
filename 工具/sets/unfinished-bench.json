@@ -1,0 +1,47 @@
+{
+  "brand": "@gsspai",
+  "source": "arXiv 2611.17460 · 11-12",
+  "date": "2026.11.16",
+  "noImageReason": "查過 arXiv 2611.17460 摘要頁，grab.sh 回 0 張候選，學術預印本頁只有文字與公式，沒有正文插圖可引用。走純卡片。",
+  "slides": [
+    {
+      "type": "matrix",
+      "kicker": "智能體安全 · 11-12",
+      "headline": ["推一把", "違規反而更多"],
+      "accentLine": 1,
+      "sub": "違反內部文檔規則的比例，97 個場景跨 7 家機構。",
+      "groups": [
+        { "label": "被推著堅持", "value": 43.6, "filled": 44, "tone": "fill" },
+        { "label": "用戶直接陳述", "value": 8.5, "filled": 9 }
+      ],
+      "note": "預印本，未同行評審。"
+    },
+    {
+      "type": "versus",
+      "kicker": "三組對照",
+      "headline": ["規則講一遍", "違規少得多"],
+      "accentLine": 1,
+      "bars": [
+        { "label": "被推著堅持", "price": "43.6%", "width": 88, "tone": "fill" },
+        { "label": "放任", "price": "32.2%", "width": 65 },
+        { "label": "直接陳述規則", "price": "8.5%", "width": 17, "tone": "muted" }
+      ],
+      "rows": [
+        { "k": "場景", "v": "97 個" },
+        { "k": "風險類別", "v": "7 類" }
+      ],
+      "note": "推著堅持的比例為 43.6%，直接陳述只有 8.5%。"
+    },
+    {
+      "type": "cover-min",
+      "kicker": "規則寫下來之後",
+      "headline": ["寫了下來", "不等於照著做"],
+      "accentLine": 1,
+      "sub": "違規大多發生在規則已經展示之後。",
+      "num": "98.3",
+      "numLabel": "% 的違反發生在規則已展示後",
+      "chips": ["89% 先寫下規則", "32.2% 升到 43.6%", "對照組只有 8.5%"],
+      "note": "人工判定樣本中，89% 的智能體先把規則寫了下來。"
+    }
+  ]
+}

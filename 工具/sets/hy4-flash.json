@@ -1,0 +1,42 @@
+{
+  "brand": "@gsspai",
+  "source": "騰訊官網 · 環球網 · 11-16",
+  "date": "2026.11.17",
+  "slides": [
+    {
+      "type": "shot",
+      "cap": "騰訊官網 · Hy4 flash 與 Hy4 的 API 價格對照",
+      "image": "img/hy4-flash-01.png",
+      "caption": "輸入命中快取 0.02 對 0.3 元，輸出 2 對 18 元",
+      "credit": "tencent.com"
+    },
+    {
+      "type": "kpi",
+      "kicker": "帳本怎麼算",
+      "headline": ["二十分之一", "是哪把尺"],
+      "accentLine": 1,
+      "sub": "1/20 出自 WorkIndex，一個基於日常工作任務的內部評測集。",
+      "cells": [
+        { "n": "1/20", "l": "對 Hy4", "d": "WorkIndex 單任務成本對照" },
+        { "n": "1/8", "l": "對 DeepSeek", "d": "V4.1-Flash，Max 檔、忙時價格" },
+        { "n": "0.02 元", "l": "命中快取", "d": "每百萬 Token 輸入價" }
+      ],
+      "note": "公開榜單分數仍落後頭部模型，權重尚未開源。",
+      "verdict": "尺不一樣，數就不好直接比。"
+    },
+    {
+      "type": "ledger",
+      "kicker": "省在哪裡",
+      "headline": ["便宜的", "是整條鏈"],
+      "accentLine": 1,
+      "sub": "價格之外，架構和推理也一起動過。",
+      "rows": [
+        { "k": "預訓練", "v": "混合注意力", "d": "LatentMoE 與 Engram 架構", "on": true },
+        { "k": "快取", "v": "1/6", "d": "KV cache 相對 Hy4，對 Hy3 為 1/24" },
+        { "k": "後訓練", "v": "降 50%", "d": "強化學習使端到端輸出變短" },
+        { "k": "推理", "v": "超 150 tps", "d": "megakernel、4bit 量化與 DFly" }
+      ],
+      "note": "計划開源 Hy4 flash，尚未開放權重。"
+    }
+  ]
+}

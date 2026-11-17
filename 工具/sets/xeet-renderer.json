@@ -1,0 +1,52 @@
+{
+  "brand": "@gsspai",
+  "source": "@rauchg · 11-16",
+  "date": "2026.11.16",
+  "noImageReason": "xeet 一條源頭是 X 原帖，grab.sh 對演示站 xeet-rs.vercel.app 回 0 張候選，頁上只有輸入框與渲染結果，沒有可引用的正文插圖；原帖只有示範帖截圖。走純卡片。",
+  "slides": [
+    {
+      "type": "overlap",
+      "kicker": "開發者工具 · 11-16",
+      "headline": ["一張圖", "一毫秒"],
+      "accentLine": 1,
+      "ghost": "1ms",
+      "num": "1",
+      "numLabel": "毫秒渲染一張 X 帖",
+      "sub": "Rust 與 wasm 寫的渲染器，不開瀏覽器、不聯網、不讀系統字型。",
+      "rows": [
+        { "k": "對照", "v": "快 100 至 1000 倍" }
+      ],
+      "verdict": "把開啟瀏覽器那段的時間省掉了。"
+    },
+    {
+      "type": "before-after",
+      "kicker": "同一張帖子",
+      "headline": ["從開瀏覽器", "到直接畫"],
+      "accentLine": 1,
+      "sub": "零瀏覽器、零網路、零檔案系統、零系統字型。",
+      "segs": [
+        { "label": "平常", "from": { "box": "開瀏覽器" }, "arrow": "載入頁面", "to": { "box": "截圖" } },
+        { "label": "xeet", "from": { "box": "Rust / wasm" }, "arrow": "直接畫", "to": { "box": "PNG", "tone": "fill" } }
+      ],
+      "note": "0.4 毫秒是 @jack 那條最短示範。",
+      "verdict": "省掉的是整條瀏覽器啟動鏈。"
+    },
+    {
+      "type": "diagram",
+      "kicker": "細節",
+      "headline": ["紋理與斷行", "都自己重現"],
+      "accentLine": 1,
+      "sub": "像素級對齊的字形與排版規則寫在渲染器裡。",
+      "nodes": [
+        { "box": "Blink / HarfBuzz", "lab": "文字整形" },
+        { "box": "1/64px", "lab": "斷行精度" },
+        { "box": "28 組", "lab": "Chirp 字型子集" }
+      ],
+      "arrows": [
+        { "label": "重現" },
+        { "label": "回退" }
+      ],
+      "note": "原帖未提開源、原始碼倉庫或授權。"
+    }
+  ]
+}

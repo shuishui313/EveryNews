@@ -1,0 +1,50 @@
+{
+  "brand": "@gsspai",
+  "source": "IBM Research · 11-05",
+  "date": "2026.11.09",
+  "slides": [
+    {
+      "type": "mosaic",
+      "kicker": "量子 · 11-05",
+      "headline": ["解碼器", "搬到隔壁"],
+      "accentLine": 1,
+      "sub": "Nighthawk r2 與 Umbra 放進 Poughkeepsie 同一間機房。",
+      "cells": [
+        { "n": "1", "t": "解碼器", "d": "每輪讀校驗量測、判斷出錯位元並即時回饋的經典軟體", "main": true },
+        { "n": "2", "t": "Nighthawk r2", "d": "方格連通性與即時脈衝控制" },
+        { "n": "3", "t": "Umbra", "d": "MI355X 加第五代 EPYC" }
+      ],
+      "verdict": "博客用了 keep pace 這個說法，解碼器得跟上量子處理器。"
+    },
+    {
+      "type": "photo-split",
+      "kicker": "機房裡",
+      "headline": ["兩套機器", "一間屋"],
+      "image": "img/ibm-amd-ornl-qec-01.jpg",
+      "sub": "ORNL 的 Umbra 機櫃，用 AMD Instinct MI355X 與第五代 EPYC。",
+      "facts": [
+        "IBM Quantum Nighthawk r2 放在同一處",
+        "先前靠雲端與不同 API 相接",
+        "每次交接都添一點延遲"
+      ],
+      "note": "圖為 IBM Research 博客刊出的機櫃照片。"
+    },
+    {
+      "type": "diagram",
+      "kicker": "即時那一圈",
+      "headline": ["量測到回饋", "要趕在一步內"],
+      "sub": "糾錯每一輪都要走完這一段，慢一拍就來不及。",
+      "nodes": [
+        { "box": "量子位元校驗", "lab": "量測", "tone": "fill" },
+        { "box": "經典電腦讀結果", "lab": "解碼", "tone": "dim" },
+        { "box": "回給量子晶片", "lab": "回饋", "tone": "fill" }
+      ],
+      "arrows": [
+        { "label": "每一輪" },
+        { "label": "下一步操作之前" }
+      ],
+      "note": "階層式糾錯有內外兩層碼，兩層各自解碼，上一層結果餵給下一層。",
+      "verdict": "平台自己的糾錯基準博客沒公布，70 個邏輯量子位元與 438 次操作是引用既有實驗。"
+    }
+  ]
+}
