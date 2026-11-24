@@ -505,11 +505,11 @@ button{cursor:pointer}
 }
 .story.is-lead .story-title{font-size:clamp(25px,3.2vw,36px)}
 
-/* 图版阵列：统一左对齐与满宽瑞士网格，夜读模式柔和降亮避免刺眼 */
-.plate-wrap{margin:0 0 24px}
-.strip{display:grid;gap:clamp(12px,1.6vw,18px)}
-.strip-1{grid-template-columns:minmax(0,420px)}
-.strip-2{grid-template-columns:repeat(2,minmax(0,360px))}
+/* 图版阵列：统一左对齐与满宽瑞士网格，与正文、档案卡、分割线右边缘严丝合缝对齐 */
+.plate-wrap{margin:0 0 24px;width:100%}
+.strip{display:grid;gap:clamp(12px,1.8vw,20px);width:100%}
+.strip-1{grid-template-columns:minmax(0,1fr);max-width:480px}
+.strip-2{grid-template-columns:repeat(2,minmax(0,1fr))}
 .strip-3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .plate{margin:0;display:flex;flex-direction:column;gap:7px}
 .plate.wide{grid-column:span 2}
@@ -536,9 +536,9 @@ html[data-theme="dark"] .shot:hover img{filter:brightness(1)}
   font-size:10.5px;letter-spacing:.08em;color:var(--mute);padding:0 2px;
 }
 
-/* 正文与按钮区 */
-.story-body{max-width:72ch}
-.post p{margin:0 0 1em;font-size:16.5px;line-height:1.86;color:var(--ink)}
+/* 正文与按钮区：100% 撑满主阅读栏，消除右侧参差留白 */
+.story-body{width:100%}
+.post p{margin:0 0 1em;font-size:16.5px;line-height:1.9;color:var(--ink);text-align:justify}
 .story-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:16px 0 4px}
 .src-btn{
   display:inline-flex;align-items:center;gap:9px;padding:7px 14px;border-radius:6px;
@@ -613,15 +613,15 @@ html[data-theme="dark"] .shot:hover img{filter:brightness(1)}
 .brief-cell{display:flex;flex-direction:column;gap:5px}
 .brief-cell .bk{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--stamp);font-weight:700}
 .brief-cell .bv{font-size:13px;line-height:1.58;color:var(--ink2);overflow-wrap:anywhere}
-.essay-prose{max-width:72ch}
-.essay-prose p{margin:0 0 1.12em;font-size:16.5px;line-height:1.9;color:var(--ink)}
+.essay-prose{width:100%}
+.essay-prose p{margin:0 0 1.12em;font-size:16.5px;line-height:1.92;color:var(--ink);text-align:justify}
 .essay-prose p.essay-lead{
   font-size:17.2px;font-weight:500;padding-left:16px;
   border-left:3px solid var(--accent);color:var(--ink);
 }
 .editor-note{
   margin:22px 0 16px;padding:14px 18px;border-left:3px solid var(--stamp);
-  background:var(--paper-elev);border-radius:0 6px 6px 0;max-width:72ch;
+  background:var(--paper-elev);border-radius:0 6px 6px 0;width:100%;
 }
 .editor-note .en-head{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--stamp);font-weight:700;margin-bottom:5px}
 .editor-note p{margin:0;font-size:14.5px;line-height:1.68;color:var(--ink2)}
