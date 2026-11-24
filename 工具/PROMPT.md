@@ -281,11 +281,11 @@ playwright-cli screenshot --filename=out/ipo/slide-01.png
 - `before-after` → `segs[{label,from{box,tone?},arrow,dash?,to{box,tone?}}]` `sub?` `verdict?`（tone 同 diagram：`fill` / `dim`）
 - `timeline-icons` → `events[{date,t,d,state?}]`（state：`now` / `todo`，`todo` 的节点画成虚线空心点）`sub?` `verdict?`
 - `range-bar` → `bars[{label,value,from,to,muted?,ticks[]}]`（from/to 为 0–100 百分比）
-- `shot` → `image`（必填）`cap?`（图上一句，26px）`caption?`（图下左）`creditLabel?`（默认「截图」）`credit?`（图下右，写来源域名）`fit?`（`cover` 会裁边，只给视频帧用；默认 contain）`bg?`（`dark` 暗底信箱 / `paper` 浅灰底）`sub?` `verdict?`
+- `shot` → `image`（必填）`cap?`（图上一句，26px）`caption?`（图下左）`creditLabel?`（默认「截图」）`credit?`（图下右，写来源域名）`wide?`（设为 `true` 时使用 1440×810 的 16:9 横版画框，适合官方横版架构图与价格表，避免竖框大留白）`fit?`（`cover` 会裁边，只给视频帧用；默认 contain）`bg?`（`dark` 暗底信箱 / `paper` 浅灰底）`sub?` `verdict?`
 
-页型共 30 种（v10：新增 `shot`，用于真实截图；v9 新增 `photo-cover` / `photo-annot` / `photo-split` / `diagram` / `blocks` / `specs` / `before-after` / `timeline-icons` / `range-bar`）。当前在用的六套（`工具/sets/`）：`eth`（`cover-min`+`ledger`+`statement`）、`simulmt`（`bigfact`+`table`+`list`）、`g1-robot`（`cover-img-side`+`specs`+`brick`）、`muse-sg`（`cover-img-top`+`specs`+`quote`）、`trending-ai`（`cover-split`+`stack`+`statement`）、`genie4-v2`（`kpi`+`timeline`+`triad`）。
+页型共 30 种。`make.sh` 渲染截图后自动同步生成 `.webp`，`make-public.mjs` 发布时统一输出外置 WebP 到 `cards/<YYYYMMDD>/`。
 
-**张数按内容给**：有官方图表/界面/视频帧就 1–3 张（截图优先，卡片只补缺口），没有就纯卡片 1–3 张。不再固定三张。样例见 `sets/_demo-shot.json`。
+**张数按内容给**：推荐每条 **1–2 张高密度信息卡**（上限 3–5 张），有官方图表/界面就截图优先，没有就纯数据卡，不再为了凑满 3 张硬塞水页。
 
 ---
 

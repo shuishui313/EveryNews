@@ -36,6 +36,14 @@
 ## 公开说法只覆盖核对过的范围
 
 - 日期：2026-11-05
-- README 的「验证范围 / What's verified」只写本地 node / python / playwright 路径。
-- 在线示例是 GitHub Pages 上的静态页。云端 CI，以及 X 或 Threads 账号发布，仓库里没有端到端记录，文档里就不写成已测过。
+- README 的「验证范围 / What's verified」只写本地路径。
+- 在线示例是 GitHub Pages 上的静态页。云端 CI 与社交平台自动发布，仓库里没有端到端记录，文档里就不写成已测过。
 - Issue 编号只在该 Issue 已经存在时写进 README。
+
+## 网页版轻量化与原生编辑台规范（V3）
+
+- 日期：2026-11-24
+- 自研写作规范 `.codebuddy/skills/everynews-editorial/`：移除外部写作插件，改为同行读报笔记体（取消首句 ≤15 字与 `A-3-a` 组合填空体操，拦截孤立短残句钩子，90–280 字 1–3 段自然行文）+ 每日 2 篇问题链长文讲解（600–950 汉字），配套原生 Node 红线检查器 `scripts/lint.mjs`。
+- 外置 WebP 配图与横版画框：保留 `render.mjs` 深紫暖白卡片体系，新增 `shot` 横版 16:9 画框（`wide: true`），`make-public.mjs` 自动将卡片转码为 `cards/<YYYYMMDD>/*.webp`，单期 HTML 本体压至 ~25 KB，18 张配图合计约 350–450 KB（比旧 4.8 MB 省约 90%）；移除无人引用的 `preview.png` 长截图。
+- 抽离全站期次导航到 `issues.js`：历史 `<YYYYMMDD>.html` 只注入一次静态 `<script src="issues.js"></script>`，后续出稿不再改写历史 HTML。
+- 闸门前置并去重：`出稿.sh <YYYY-MM-DD> [slug...]` 先过 `check-voice.mjs` 与单次 `review.py --check`，传 slug 渲染卡片、不传复用已有配图，最后生成网页并由 `ledger.mjs` 直接从 `文案.md` 回写 `选题台账.md`。

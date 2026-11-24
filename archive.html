@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>EveryNews · 全部期次</title>
-<meta name="description" content="按日期查 EveryNews 的历史期次。每天六条，每条三张卡。">
+<meta name="description" content="按日期查 EveryNews 的歷史期次。每日 AI 一手消息與兩篇長文講解。">
 <style>
 *{box-sizing:border-box}
-:root{--accent:#6B4EFF;--ink:#1A1727;--ink2:#4A4560;--mute:#7C7691;--line:#E7E2F3;--soft:#F5F2FF}
-body{margin:0;background:#fff;color:var(--ink);font:15px/1.7 -apple-system,BlinkMacSystemFont,"PingFang SC","Noto Sans CJK TC","Microsoft JhengHei",sans-serif;line-break:strict}
+:root{--accent:#5B3FD1;--ink:#121118;--ink2:#4A4659;--mute:#8E88A0;--line:#E2DCD0;--paper:#F7F4EE;--soft:#EFEAFD}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.75 -apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;line-break:strict}
 a{color:inherit}
-.wrap{max-width:940px;margin:0 auto;padding:0 clamp(18px,5vw,40px)}
+.wrap{max-width:860px;margin:0 auto;padding:0 clamp(18px,5vw,40px)}
 header{padding:44px 0 30px;border-bottom:1px solid var(--line)}
 .brand{font-size:13px;letter-spacing:.16em;color:var(--accent);font-weight:700}
 .back{display:inline-block;margin-top:16px;font-size:13px;color:var(--accent);text-decoration:none}
@@ -51,30 +51,30 @@ footer p{margin:0 0 6px}
   <div class="brand">EveryNews</div>
   <a class="back" href="index.html">← 回到當日成果</a>
   <h1>全部期次</h1>
-  <p class="lede">每天六条，每条三张卡。按日期找，或直接搜标题。</p>
+  <p class="lede">每日精選 AI 一手消息與兩篇長文講解。按日期找，或直接搜標題。</p>
   <p class="count">共 <strong>15</strong> 期 · 最新 2026-11-24 · 最早 2026-11-03</p>
 </header>
 <section class="filters">
   <label>期次
-    <select id="date"><option value="">全部期次</option><option value="2026-11-24">2026-11-24 · 6 条</option><option value="2026-11-23">2026-11-23 · 6 条</option><option value="2026-11-22">2026-11-22 · 6 条</option><option value="2026-11-21">2026-11-21 · 6 条</option><option value="2026-11-19">2026-11-19 · 6 条</option><option value="2026-11-18">2026-11-18 · 6 条</option><option value="2026-11-17">2026-11-17 · 6 条</option><option value="2026-11-16">2026-11-16 · 6 条</option><option value="2026-11-09">2026-11-09 · 6 条</option><option value="2026-11-08">2026-11-08 · 6 条</option><option value="2026-11-07">2026-11-07 · 6 条</option><option value="2026-11-06">2026-11-06 · 6 条</option><option value="2026-11-05">2026-11-05 · 6 条</option><option value="2026-11-04">2026-11-04 · 6 条</option><option value="2026-11-03">2026-11-03 · 6 条</option></select>
+    <select id="date"><option value="">全部期次</option><option value="2026-11-24">2026-11-24 · 6 條</option><option value="2026-11-23">2026-11-23 · 6 條</option><option value="2026-11-22">2026-11-22 · 6 條</option><option value="2026-11-21">2026-11-21 · 6 條</option><option value="2026-11-19">2026-11-19 · 6 條</option><option value="2026-11-18">2026-11-18 · 6 條</option><option value="2026-11-17">2026-11-17 · 6 條</option><option value="2026-11-16">2026-11-16 · 6 條</option><option value="2026-11-09">2026-11-09 · 6 條</option><option value="2026-11-08">2026-11-08 · 6 條</option><option value="2026-11-07">2026-11-07 · 6 條</option><option value="2026-11-06">2026-11-06 · 6 條</option><option value="2026-11-05">2026-11-05 · 6 條</option><option value="2026-11-04">2026-11-04 · 6 條</option><option value="2026-11-03">2026-11-03 · 6 條</option></select>
   </label>
   <label>指定日期
     <input type="date" id="pick" min="2026-11-03" max="2026-11-24">
   </label>
-  <label>搜标题
+  <label>搜標題
     <input type="search" id="q" placeholder="輸入日期或標題關鍵字">
   </label>
   <button type="button" id="reset">重置</button>
-  <span id="hint">显示 15 期</span>
+  <span id="hint">顯示 15 期</span>
 </section>
 <main id="list">
-<a class="day" href="20261124.html" data-date="2026-11-24" data-text="2026-11-24 6 条 · 18 张卡 · 2 篇讲解 ① 同一批參數，跑第二遍 ② 補丁還要等幾天幾週 ③ 資料留在客戶那裡 ④ 一千兩百四十億，能放進筆電 ⑤ 估值半年翻了一倍 ⑥ 十吉位元組，跑同一個模型">
+<a class="day" href="20261124.html" data-date="2026-11-24" data-text="2026-11-24 6 條快訊 · 18 張配圖 · 2 篇講解 ① 同一批參數，跑第二遍 ② 補丁還要等幾天幾週 ③ 資料留在客戶那裡 ④ 一千兩百四十億，能放進筆電 ⑤ 估值半年翻了一倍 ⑥ 十吉位元組，跑同一個模型">
   <div class="when"><b>11-24</b><span>2026 · 週二</span></div>
   <div class="body">
-    <h2>2026-11-24<small>6 条 · 18 张卡 · 2 篇讲解 · 4.6 MB</small></h2>
+    <h2>2026-11-24<small>6 條快訊 · 18 張配圖 · 2 篇講解 · 27 KB</small></h2>
     <ol><li>① 同一批參數，跑第二遍</li><li>② 補丁還要等幾天幾週</li><li>③ 資料留在客戶那裡</li><li>④ 一千兩百四十億，能放進筆電</li><li>⑤ 估值半年翻了一倍</li><li>⑥ 十吉位元組，跑同一個模型</li></ol>
   </div>
-  <div class="go">打开这一期 →</div>
+  <div class="go">打開這一期 →</div>
 </a>
 <a class="day" href="20261123.html" data-date="2026-11-23" data-text="2026-11-23 6 条 · 18 张卡 · 2 篇讲解 ① 這把尺，先量出來再談煞車 ② 畫面換了，號稱快二十五倍 ③ 論文和碼放出來了，離驗證還差一包 ④ 公開漏洞報告，被做成了技能 ⑤ 近兩百萬條提示詞，全是誘餌 ⑥ 兩個讀副本同時倒下">
   <div class="when"><b>11-23</b><span>2026 · 週一</span></div>
@@ -82,7 +82,7 @@ footer p{margin:0 0 6px}
     <h2>2026-11-23<small>6 条 · 18 张卡 · 2 篇讲解 · 4.1 MB</small></h2>
     <ol><li>① 這把尺，先量出來再談煞車</li><li>② 畫面換了，號稱快二十五倍</li><li>③ 論文和碼放出來了，離驗證還差一包</li><li>④ 公開漏洞報告，被做成了技能</li><li>⑤ 近兩百萬條提示詞，全是誘餌</li><li>⑥ 兩個讀副本同時倒下</li></ol>
   </div>
-  <div class="go">打开这一期 →</div>
+  <div class="go">打開這一期 →</div>
 </a>
 <a class="day" href="20261122.html" data-date="2026-11-22" data-text="2026-11-22 6 条 · 18 张卡 · 2 篇讲解 ① 證明宣稱了，複核才剛開始 ② 26b 的模型，每 token 跑 48 層 ③ 它替你打電話，先報自己是 ai ④ 站外點擊少了，滿意度沒動 ⑤ 開源的是權重，不是第一次發布 ⑥ 護盤的手，一天就收了">
   <div class="when"><b>11-22</b><span>2026 · 週日</span></div>
@@ -90,7 +90,7 @@ footer p{margin:0 0 6px}
     <h2>2026-11-22<small>6 条 · 18 张卡 · 2 篇讲解 · 3.7 MB</small></h2>
     <ol><li>① 證明宣稱了，複核才剛開始</li><li>② 26B 的模型，每 token 跑 48 層</li><li>③ 它替你打電話，先報自己是 AI</li><li>④ 站外點擊少了，滿意度沒動</li><li>⑤ 開源的是權重，不是第一次發布</li><li>⑥ 護盤的手，一天就收了</li></ol>
   </div>
-  <div class="go">打开这一期 →</div>
+  <div class="go">打開這一期 →</div>
 </a>
 <a class="day" href="20261121.html" data-date="2026-11-21" data-text="2026-11-21 6 条 · 18 张卡 · 2 篇讲解 ① 防護升級的降幅漂亮，對手還在 ② 工商變更不等於錢已到帳 ③ 獨立窗口裡跑，隨時能喊停 ④ 工具太多，參數定義改用時才調 ⑤ 自動排查的漏斗，層層都要分母 ⑥ 32g 記憶體跑得動 1800 億參數，但不快">
   <div class="when"><b>11-21</b><span>2026 · 週六</span></div>
@@ -98,7 +98,7 @@ footer p{margin:0 0 6px}
     <h2>2026-11-21<small>6 条 · 18 张卡 · 2 篇讲解 · 3.9 MB</small></h2>
     <ol><li>① 防護升級的降幅漂亮，對手還在</li><li>② 工商變更不等於錢已到帳</li><li>③ 獨立窗口裡跑，隨時能喊停</li><li>④ 工具太多，參數定義改用時才調</li><li>⑤ 自動排查的漏斗，層層都要分母</li><li>⑥ 32G 記憶體跑得動 1800 億參數，但不快</li></ol>
   </div>
-  <div class="go">打开这一期 →</div>
+  <div class="go">打開這一期 →</div>
 </a>
 <a class="day" href="20261119.html" data-date="2026-11-19" data-text="2026-11-19 6 条 · 18 张卡 · 2 篇讲解 ① 模型改的是工程師調了多年的電路 ② 八十三美元一股，要算的是兩筆帳 ③ 一幀三十五毫秒，代價是還沒到院線 ④ 三個人裡有一個，把 ai 當朋友 ⑤ 研究員一天花兩千四讓智能體跑腿 ⑥ 卡住進化的不是想不出，是看不出">
   <div class="when"><b>11-19</b><span>2026 · 週四</span></div>
@@ -106,7 +106,7 @@ footer p{margin:0 0 6px}
     <h2>2026-11-19<small>6 条 · 18 张卡 · 2 篇讲解 · 4.4 MB</small></h2>
     <ol><li>① 模型改的是工程師調了多年的電路</li><li>② 八十三美元一股，要算的是兩筆帳</li><li>③ 一幀三十五毫秒，代價是還沒到院線</li><li>④ 三個人裡有一個，把 AI 當朋友</li><li>⑤ 研究員一天花兩千四讓智能體跑腿</li><li>⑥ 卡住進化的不是想不出，是看不出</li></ol>
   </div>
-  <div class="go">打开这一期 →</div>
+  <div class="go">打開這一期 →</div>
 </a>
 <a class="day" href="20261118.html" data-date="2026-11-18" data-text="2026-11-18 6 条 · 18 张卡 · 2 篇讲解 ① 同一場發布，說出兩種手感 ② 快八到十倍，前面掛著條件 ③ 五十億美元，押在還沒交付藥物的公司 ④ 單季營收第一次破千億 ⑤ 不需要 transformer，標題下還寫著條件 ⑥ 做銷售的人，明天多一個外接要裝">
   <div class="when"><b>11-18</b><span>2026 · 週三</span></div>
@@ -114,7 +114,7 @@ footer p{margin:0 0 6px}
     <h2>2026-11-18<small>6 条 · 18 张卡 · 2 篇讲解 · 4.3 MB</small></h2>
     <ol><li>① 同一場發布，說出兩種手感</li><li>② 快八到十倍，前面掛著條件</li><li>③ 五十億美元，押在還沒交付藥物的公司</li><li>④ 單季營收第一次破千億</li><li>⑤ 不需要 Transformer，標題下還寫著條件</li><li>⑥ 做銷售的人，明天多一個外接要裝</li></ol>
   </div>
-  <div class="go">打开这一期 →</div>
+  <div class="go">打開這一期 →</div>
 </a>
 <a class="day" href="20261117.html" data-date="2026-11-17" data-text="2026-11-17 6 条 · 18 张卡 · 2 篇讲解 ① 二十分之一，是哪把尺量出來的 ② 開源權重，四個月從 7.3% 到 30.9% ③ 同一個權重，兩條路徑算出的數不一樣 ④ 一份題庫，把模型帶進實驗室 ⑤ 認購截止那天，文件還寫了另一件事 ⑥ 監控一張網頁，多少錢一次">
   <div class="when"><b>11-17</b><span>2026 · 週二</span></div>
@@ -122,7 +122,7 @@ footer p{margin:0 0 6px}
     <h2>2026-11-17<small>6 条 · 18 张卡 · 2 篇讲解 · 4.5 MB</small></h2>
     <ol><li>① 二十分之一，是哪把尺量出來的</li><li>② 開源權重，四個月從 7.3% 到 30.9%</li><li>③ 同一個權重，兩條路徑算出的數不一樣</li><li>④ 一份題庫，把模型帶進實驗室</li><li>⑤ 認購截止那天，文件還寫了另一件事</li><li>⑥ 監控一張網頁，多少錢一次</li></ol>
   </div>
-  <div class="go">打开这一期 →</div>
+  <div class="go">打開這一期 →</div>
 </a>
 <a class="day" href="20261116.html" data-date="2026-11-16" data-text="2026-11-16 6 条 · 18 张卡 · 2 篇讲解 ① 同一個模型，帳單差了六成 ② 開源的不只是模型，還有訓練框架 ③ 一張圖，一毫秒 ④ 推一把，違規反而更多 ⑤ 收購公告沒寫的那一欄 ⑥ 一半弱點，藏在附錄裡">
   <div class="when"><b>11-16</b><span>2026 · 週一</span></div>
@@ -130,7 +130,7 @@ footer p{margin:0 0 6px}
     <h2>2026-11-16<small>6 条 · 18 张卡 · 2 篇讲解 · 4.6 MB</small></h2>
     <ol><li>① 同一個模型，帳單差了六成</li><li>② 開源的不只是模型，還有訓練框架</li><li>③ 一張圖，一毫秒</li><li>④ 推一把，違規反而更多</li><li>⑤ 收購公告沒寫的那一欄</li><li>⑥ 一半弱點，藏在附錄裡</li></ol>
   </div>
-  <div class="go">打开这一期 →</div>
+  <div class="go">打開這一期 →</div>
 </a>
 <a class="day" href="20261109.html" data-date="2026-11-09" data-text="2026-11-09 6 条 · 18 张卡 · 2 篇讲解 ① 接手的是別人兩年前下的訂單 ② 發一條簡訊，買三樣東西 ③ 每秒十五幀，邊走邊改 ④ 整條軌跡一次畫完 ⑤ 解碼器得跟上量子處理器 ⑥ 同一段前綴，送去哪一張卡">
   <div class="when"><b>11-09</b><span>2026 · 週一</span></div>
@@ -138,7 +138,7 @@ footer p{margin:0 0 6px}
     <h2>2026-11-09<small>6 条 · 18 张卡 · 2 篇讲解 · 8.7 MB</small></h2>
     <ol><li>① 接手的是別人兩年前下的訂單</li><li>② 發一條簡訊，買三樣東西</li><li>③ 每秒十五幀，邊走邊改</li><li>④ 整條軌跡一次畫完</li><li>⑤ 解碼器得跟上量子處理器</li><li>⑥ 同一段前綴，送去哪一張卡</li></ol>
   </div>
-  <div class="go">打开这一期 →</div>
+  <div class="go">打開這一期 →</div>
 </a>
 <a class="day" href="20261108.html" data-date="2026-11-08" data-text="2026-11-08 6 条 · 18 张卡 · 2 篇讲解 ① 一個月前還按兩萬億在談 ② 1380 核心年，跑完一把簽名 ③ 百度把權重停在預訓練終點 ④ 兩個月，清理 ai 微短劇 ⑤ 推一次代碼，中位耗時少了八成 ⑥ 同一批 89 道題，換了問法">
   <div class="when"><b>11-08</b><span>2026 · 週日</span></div>
@@ -146,7 +146,7 @@ footer p{margin:0 0 6px}
     <h2>2026-11-08<small>6 条 · 18 张卡 · 2 篇讲解 · 6.2 MB</small></h2>
     <ol><li>① 一個月前還按兩萬億在談</li><li>② 1380 核心年，跑完一把簽名</li><li>③ 百度把權重停在預訓練終點</li><li>④ 兩個月，清理 AI 微短劇</li><li>⑤ 推一次代碼，中位耗時少了八成</li><li>⑥ 同一批 89 道題，換了問法</li></ol>
   </div>
-  <div class="go">打开这一期 →</div>
+  <div class="go">打開這一期 →</div>
 </a>
 <a class="day" href="20261107.html" data-date="2026-11-07" data-text="2026-11-07 6 条 · 18 张卡 · 2 篇讲解 ① 一百一十億只是首筆 ② 菌落計數多算了一成二 ③ 淘寶 mnn 團隊把四條約束寫在一起 ④ 喬治亞廠的料箱數 ⑤ 兩百美元一個月 ⑥ lean 接受了形式化推導">
   <div class="when"><b>11-07</b><span>2026 · 週六</span></div>
@@ -154,7 +154,7 @@ footer p{margin:0 0 6px}
     <h2>2026-11-07<small>6 条 · 18 张卡 · 2 篇讲解 · 6.6 MB</small></h2>
     <ol><li>① 一百一十億只是首筆</li><li>② 菌落計數多算了一成二</li><li>③ 淘寶 MNN 團隊把四條約束寫在一起</li><li>④ 喬治亞廠的料箱數</li><li>⑤ 兩百美元一個月</li><li>⑥ Lean 接受了形式化推導</li></ol>
   </div>
-  <div class="go">打开这一期 →</div>
+  <div class="go">打開這一期 →</div>
 </a>
 <a class="day" href="20261106.html" data-date="2026-11-06" data-text="2026-11-06 6 条 · 18 张卡 · 2 篇讲解 ① 48.5% 的分數，暫時拿不到 ② claude 能看你的銀行帳了 ③ 權重下週才開，模型先上線了 ④ 剪片的人要先算秒數了 ⑤ 戒指上多了一塊螢幕 ⑥ 最關鍵的證據被塗黑了">
   <div class="when"><b>11-06</b><span>2026 · 週五</span></div>
@@ -162,7 +162,7 @@ footer p{margin:0 0 6px}
     <h2>2026-11-06<small>6 条 · 18 张卡 · 2 篇讲解 · 5.7 MB</small></h2>
     <ol><li>① 48.5% 的分數，暫時拿不到</li><li>② Claude 能看你的銀行帳了</li><li>③ 權重下週才開，模型先上線了</li><li>④ 剪片的人要先算秒數了</li><li>⑤ 戒指上多了一塊螢幕</li><li>⑥ 最關鍵的證據被塗黑了</li></ol>
   </div>
-  <div class="go">打开这一期 →</div>
+  <div class="go">打開這一期 →</div>
 </a>
 <a class="day" href="20261105.html" data-date="2026-11-05" data-text="2026-11-05 6 条 · 18 张卡 · 2 篇讲解 ① kimi k3.1 pro 權重開放，放得下來跑不起來 ② openai 把挖洞的成本帳公開了 ③ 三億筆裡的四單 ④ 五年，三百萬台機器人 ⑤ 十個月，三輪融了三億美元 ⑥ 你說錯一句，它跟著改">
   <div class="when"><b>11-05</b><span>2026 · 週四</span></div>
@@ -170,7 +170,7 @@ footer p{margin:0 0 6px}
     <h2>2026-11-05<small>6 条 · 18 张卡 · 2 篇讲解 · 7.0 MB</small></h2>
     <ol><li>① Kimi K3.1 Pro 權重開放，放得下來跑不起來</li><li>② OpenAI 把挖洞的成本帳公開了</li><li>③ 三億筆裡的四單</li><li>④ 五年，三百萬台機器人</li><li>⑤ 十個月，三輪融了三億美元</li><li>⑥ 你說錯一句，它跟著改</li></ol>
   </div>
-  <div class="go">打开这一期 →</div>
+  <div class="go">打開這一期 →</div>
 </a>
 <a class="day" href="20261104.html" data-date="2026-11-04" data-text="2026-11-04 6 条 · 18 张卡 · 2 篇讲解 ① 騰訊混元 hy4：能力翻版，價簽原樣 ② 百度 apollo world：世界模型當考官 ③ marvell 收購 lumentum：電加光 ④ openai 激活分類器：安全進了生產線 ⑤ 蘋果智能 beta 開測：千問真的能喊 ⑥ deepseek super-agent：agent 自己接活">
   <div class="when"><b>11-04</b><span>2026 · 週三</span></div>
@@ -178,7 +178,7 @@ footer p{margin:0 0 6px}
     <h2>2026-11-04<small>6 条 · 18 张卡 · 2 篇讲解 · 5.4 MB</small></h2>
     <ol><li>① 騰訊混元 Hy4：能力翻版，價簽原樣</li><li>② 百度 Apollo World：世界模型當考官</li><li>③ Marvell 收購 Lumentum：電加光</li><li>④ OpenAI 激活分類器：安全進了生產線</li><li>⑤ 蘋果智能 Beta 開測：千問真的能喊</li><li>⑥ DeepSeek Super-agent：Agent 自己接活</li></ol>
   </div>
-  <div class="go">打开这一期 →</div>
+  <div class="go">打開這一期 →</div>
 </a>
 <a class="day" href="20261103.html" data-date="2026-11-03" data-text="2026-11-03 6 条 · 18 张卡 · 2 篇讲解 ① anthropic 修訂版 s-1：虧損比營收還多 ② openai 合併額度池：12 月起按 token 計量 ③ xai 給 grok 文本加隱形水印 ④ 蘋果 × 阿里：國行 apple 智能定檔 ⑤ meta 與傅利葉合作造出人形機器人原型 max ⑥ 四家廠商統一 robots.txt 訓練退出標記">
   <div class="when"><b>11-03</b><span>2026 · 週二</span></div>
@@ -186,13 +186,13 @@ footer p{margin:0 0 6px}
     <h2>2026-11-03<small>6 条 · 18 张卡 · 2 篇讲解 · 5.0 MB</small></h2>
     <ol><li>① Anthropic 修訂版 S-1：虧損比營收還多</li><li>② OpenAI 合併額度池：12 月起按 Token 計量</li><li>③ xAI 給 Grok 文本加隱形水印</li><li>④ 蘋果 × 阿里：國行 Apple 智能定檔</li><li>⑤ Meta 與傅利葉合作造出人形機器人原型 Max</li><li>⑥ 四家廠商統一 robots.txt 訓練退出標記</li></ol>
   </div>
-  <div class="go">打开这一期 →</div>
+  <div class="go">打開這一期 →</div>
 </a>
 </main>
-<p class="empty" id="empty" hidden>这一筛选下没有期次，换一个日期或清空条件。</p>
+<p class="empty" id="empty" hidden>這一篩選下沒有期次，換一個日期或清空條件。</p>
 <footer>
-  <p>每期是自包含单文件 HTML，文案、事实表与 18 张卡全部内联，不依赖服务器。</p>
-  <p>主页 index.html 是当日成果，顶部可以切换期次；本页由 工具/make-index.mjs 自动刷新。</p>
+  <p>每期為獨立靜態 HTML，頂部期次切換由 issues.js 動態載入。</p>
+  <p>主頁 index.html 是當日成果；本頁由 工具/make-index.mjs 自動刷新。</p>
 </footer>
 </div>
 <script>
@@ -207,7 +207,7 @@ function apply(){
     c.hidden=!show;
     if(show)n++;
   });
-  hint.textContent='显示 '+n+' 期';
+  hint.textContent='顯示 '+n+' 期';
   empty.hidden=n>0;
 }
 dateSel.addEventListener('change',()=>{pick.value='';apply()});

@@ -1,12 +1,11 @@
 # EveryNews
 
-One local pipeline turns each day's AI news into a ready-to-post package: six stories, three 1080×1350 portrait cards each, with an X main post, Threads copy, a fact sheet, and two explainer essays, then one single-file webpage that opens from a URL.
+One streamlined local pipeline turns each day's primary-source AI news into a fast, readable static webpage: 3–6 editorial briefing notes (external WebP visual cards + single cohesive body copy + collapsible fact sheet + primary link) plus two long-form explainers.
+Live example: https://shuishui313.github.io/EveryNews/index.html
 
 [中文](README.md) | **English**
 
 [What it does](#what-it-does) · [Why use it](#why-use-it) · [Quick start](#quick-start) · [Homepage and issue switcher](#homepage-and-issue-switcher) · [Put it on your own GitHub Pages](#put-it-on-your-own-github-pages) · [Make it your own](#make-it-your-own) · [What's verified](#whats-verified) · [Known limitations](#known-limitations) · [Directory](#directory)
-
-![Today's output preview](preview.png)
 
 ## What it does
 
@@ -14,42 +13,44 @@ Run one production pass and you get:
 
 | Output | Description |
 |---|---|
-| 18 portrait cards | Six stories × three cards, 14 layouts; the six lead images are deduped automatically so the layouts don't collide |
-| X main post + Threads copy | Traditional Chinese, zero colons and zero dashes. X main post 120–200 characters; the Threads target in the rule sheet is 150–250, and the gate accepts 120–260 |
-| Fact sheet | One table per story, with time, subject, figures, sources, and unconfirmed boundaries written out line by line |
-| Explainer essays | Two pieces, 600–900 Chinese characters (han count), clear enough to read and then do |
-| Single-file public page | Images fully inlined; drop one HTML file on any static host and it is reachable |
-| Homepage | `index.html` is the full content of the latest issue; the site root shows today's work and has an issue switcher at the top |
-| All-issues archive | `archive.html` filters past issues by issue, exact date, or title keyword |
+| Editorial briefing notes | 3–6 stories (typically 6), Traditional Chinese, natural cohesive prose (90–280 characters, 1–3 paragraphs) without clipped hook fragments or duplicate X/Threads columns |
+| External WebP cards | Deep-violet & warm-paper visual system, 1–3 flexible cards per story (supporting 4:5 portrait and 16:9 landscape frames), transcoded to `cards/<YYYYMMDD>/*.webp` (~90% smaller than legacy double-inlined PNGs) |
+| Fact sheet | One collapsible table per story with time, subject, figures, sources, and unconfirmed boundaries |
+| Explainer essays | Two pieces every day, 600–950 Chinese characters (han count) each, walking through mechanisms, costs, and boundaries |
+| Lightweight public page | `<YYYYMMDD>.html` (~25 KB HTML shell) with lazy-loaded WebP cards and click-to-zoom lightbox |
+| Homepage & archive | `index.html` shows the latest issue in full; `archive.html` filters by date and keyword; `issues.js` drives the top issue switcher so historical HTML files are never rewritten |
 
 ## Why use it
 
-- **Rule-driven, stable voice.** What to write, how to write it, and what to hand off all live in one rule sheet, so whoever runs it gets the same flavor.
-- **Gated checks.** Character-count ranges, colons and dashes, source tiers, layout dedup, and most reversal phrasing are checked automatically. Fail the gate and no draft goes out.
-- **One command for the package.** Rendering, the public page, the homepage, the archive, the full-page preview, the gate, the ledger, and the handoff docs all finish in a single run.
-- **Runs entirely locally.** node + python + playwright, no cloud dependency, and the output stays yours.
+- **First-party editorial voice (`everynews-editorial`).** Drops social-media hook fragments and rigid combo templates in favor of clear, connected peer-to-peer reporting.
+- **Automated red-line linter.** Prompt-style colons, dashes, reversal clichés, 3-part parallelisms, numbered outline grids, and corporate buzzwords are blocked automatically by the built-in Node linter.
+- **Lightweight and incremental.** Separating the ~25 KB HTML from external WebP cards makes copy re-runs finish in ~3 seconds with clean text-only Git diffs, while `issues.js` leaves past issues untouched.
+- **Runs entirely locally.** Uses `node` and `python3` (plus `playwright-cli` when rendering new cards), with no cloud lock-in.
 
 ## Quick start
 
-Prerequisites: node 20+, python3, playwright-cli (used for card screenshots and the full-page preview).
+Prerequisites: node 18+, python3 (with Pillow), playwright-cli (only needed when rendering new card sets).
 
 ```bash
 git clone https://github.com/<your-username>/EveryNews.git
 cd EveryNews
 
-# Produce one day's package (render, public page, homepage, archive, preview, gate, ledger, handoff)
+# Full production run (including card rendering)
 ./出稿.sh <YYYY-MM-DD> <slug...>
+
+# Copy-only re-run (reuses existing cards, finishes in ~3s)
+./出稿.sh <YYYY-MM-DD>
 ```
 
-This writes `<YYYYMMDD>.html`, with images and CSS inlined, about 5–7 MB. `<date>/预览图.png` and the root `preview.png` are full-page screenshots of that page. `index.html` is a full copy of this issue and becomes the site homepage.
+This writes `<YYYYMMDD>.html` (~25 KB) and `cards/<YYYYMMDD>/*.webp` (~350–450 KB for 18 cards), and refreshes `issues.js`, `index.html`, `archive.html`, `选题台账.md`, and `HANDOFF.md`.
 
 ## Homepage and issue switcher
 
-The site root `/` is today's work. Open it and you see the six stories, 18 cards and two explainers directly, with no directory page to click through. Every issue page has an issue nav at the top: a dropdown jumps to any other issue, and two links go back to today's homepage or to the full archive.
+The site root `/` is today's work. Open it and you see today's stories, visual cards, collapsible fact sheets, and two explainers directly. Every issue page has an issue nav at the top populated dynamically from root `issues.js`, plus links back to today's homepage and to the full archive.
 
-`archive.html` keeps the filtering ability, with an issue dropdown, an exact date picker and a title keyword search. All three surfaces — the homepage, the nav on every issue, and `archive.html` — are generated by `工具/make-index.mjs`, which scans every root `<YYYYMMDD>.html`. `出稿.sh` refreshes them on each run, and the newest issue becomes the homepage. Injection is marked, so running twice does not stack duplicate navs.
+`archive.html` supports filtering by issue dropdown, exact date picker, and title keyword search. Historical issue HTML files reference `issues.js` statically and are not rewritten on future runs.
 
-Each day's content stays in two places. A root `<YYYYMMDD>.html` is self-contained: the copy, fact sheets, two explainers and all 18 cards are inlined, and past issues are kept. `选题台账.md` stores the six-story summary by date for deduplication. The dated folder holds only the current day; older content lives in the root pages.
+Each day's content lives in `<YYYYMMDD>.html`, `cards/<YYYYMMDD>/`, and `选题台账.md`; the dated working directory holds only the current day.
 
 ## Put it on your own GitHub Pages
 
@@ -61,21 +62,21 @@ https://<your-username>.github.io/<repo-name>/archive.html  # all issues, filter
 https://<your-username>.github.io/<repo-name>/YYYYMMDD.html  # one issue
 ```
 
-Live example: <https://shuishui313.github.io/EveryNews/>, the full archive at <https://shuishui313.github.io/EveryNews/archive.html>, or a single issue at <https://shuishui313.github.io/EveryNews/20261103.html>
+Live example: <https://shuishui313.github.io/EveryNews/>, the full archive at <https://shuishui313.github.io/EveryNews/archive.html>, or a single issue at <https://shuishui313.github.io/EveryNews/20261124.html>
 
-Run `出稿.sh` once a day and push; the homepage, public page and archive refresh together. Pages hosts static files that were already generated; there is no cloud build.
+Run `出稿.sh` once a day and push `<YYYYMMDD>.html`, `cards/<YYYYMMDD>/`, `index.html`, `archive.html`, `issues.js`, and `选题台账.md`. Pages hosts static files directly with no cloud build.
 
 ## Make it your own
 
-Writing rules are in [`WRITING.md`](WRITING.md) (in Chinese), card layouts in [`工具/PROMPT.md`](工具/PROMPT.md) (in Chinese), source tiers in [`SOURCES.md`](SOURCES.md) (in Chinese), and the voice itself in [`.codebuddy/skills/human-writing/`](.codebuddy/skills/human-writing/) (in Chinese; the rules call this tree human-writing). Change those files and the same pipeline works for any subject. What it produces is your own column.
+The editorial voice and prose linter live in [`.codebuddy/skills/everynews-editorial/`](.codebuddy/skills/everynews-editorial/) (in Chinese), output contracts in [`WRITING.md`](WRITING.md) (in Chinese), card layouts in [`工具/PROMPT.md`](工具/PROMPT.md) (in Chinese), and source tiers in [`SOURCES.md`](SOURCES.md) (in Chinese). Change those files and the same pipeline works for any beat.
 
 ## What's verified
 
-What this repo stands behind is the local path: `node`, `python3`, and `playwright-cli`. `./出稿.sh` renders the cards, writes `<YYYYMMDD>.html`, refreshes `index.html`, `archive.html` and preview, runs the gate, updates the ledger and the handoff. `工具/make-index.mjs` injects the top issue nav into every issue page, copies the latest issue to `index.html`, and builds `archive.html`. The live example above is static HTML already on GitHub Pages. This repo has no end-to-end record of a cloud CI run, or of publishing through an X or Threads account. `工具/check-voice.mjs` was checked against the 2026-11-07 draft as a negative case and a separate clean sample as a positive case; it only reads file order and sentence shapes and does not replace human proofreading.
+What this repo stands behind is the local path: `node`, `python3`, and `playwright-cli`. `./出稿.sh` runs the outline-order check, editorial red-line gate, card rendering, WebP transcoding, public page, homepage/archive refresh, ledger update, and handoff end to end. The live example above is static HTML on GitHub Pages. This repo has no end-to-end record of a cloud CI run or automated social-account posting.
 
 ## Known limitations
 
-There is no public Issue yet. These are worth opening, then linking from this section: the copyright line for press images is still unset; `工具/grab.sh` times out on some sites; the gate only warns on the「不在 A，在 B」and「不是 A，是 B」reversal patterns; Threads length is 150–250 in the rule sheet and 120–260 at the gate. Link only an Issue that already exists. Background notes are in [`HANDOFF.md`](HANDOFF.md) (in Chinese).
+There is no public Issue yet. These are worth opening, then linking from this section: `工具/grab.sh` may miss images on client-rendered pages; early archived issues (20261103–20261123) retain their original inlined PNG format, while issues from 20261124 onward use external WebP cards. Link only an Issue that already exists. Background notes are in [`HANDOFF.md`](HANDOFF.md) (in Chinese).
 
 ## License
 
@@ -94,28 +95,30 @@ MIT
 | [`docs/decisions.md`](docs/decisions.md) (in Chinese) | Structure choices already adopted |
 | [`docs/declined.md`](docs/declined.md) (in Chinese) | Approaches already declined |
 | `index.html` | Today's work: full copy of the latest issue, with an issue switcher on top |
-| `archive.html` | All-issues archive, filterable by date |
-| `<YYYYMMDD>.html` | Self-contained single-issue page; past issues are kept |
-| [`WRITING.md`](WRITING.md) (in Chinese) | What to write, how to write it, and what to hand off. The only rule sheet |
-| [`SHORTNEWS-V1.md`](SHORTNEWS-V1.md) (in Chinese) | Order of the six short-form stages, and the output contract |
+| `archive.html` | All-issues archive, filterable by date and title |
+| `issues.js` | Site-wide issue list and switcher script generated by `make-index.mjs` |
+| `<YYYYMMDD>.html` | Single-issue static public page; past issues are kept |
+| `cards/<YYYYMMDD>/` | External WebP visual cards for each issue |
+| [`.codebuddy/skills/everynews-editorial/`](.codebuddy/skills/everynews-editorial/) (in Chinese) | First-party EveryNews editorial skill and prose linter `lint.mjs` |
+| [`WRITING.md`](WRITING.md) (in Chinese) | Output contract, fact-checking rules, story scoring, and gates |
+| [`SHORTNEWS-V1.md`](SHORTNEWS-V1.md) (in Chinese) | Five-stage workflow order and directory contract |
 | [`SOURCES.md`](SOURCES.md) (in Chinese) | Where to look, and which tier may be cited |
 | [`CODEBUDDY.md`](CODEBUDDY.md) (in Chinese) | Steps required at the start of each round |
 | [`HANDOFF.md`](HANDOFF.md) (in Chinese) | Cross-day handoff. The script rewrites the auto section |
-| `出稿.sh` | Production entry. Date, slug, and directory names are the contract |
-| [`工具/PROMPT.md`](工具/PROMPT.md) (in Chinese) | Image layouts and rendering |
-| `工具/render.mjs` | Card rendering (1080×1350) |
-| `工具/make.sh` | Render and screenshot one set |
-| `工具/review.py` | Production gate and review receipts |
-| `工具/check-voice.mjs` | Draft-order and AI-tell gate; the first check in `出稿.sh` |
-| `工具/check-post.mjs` | Copy length and sentence-shape checks |
-| `工具/check-layouts.mjs` | Layout and image-source checks |
-| `工具/grab.sh` | Grabbing images from primary sources |
-| `工具/make-public.mjs` | Single-file public page |
-| `工具/make-index.mjs` | Issue nav, today's homepage, and archive.html |
-| `工具/ledger.mjs` | Writes the story ledger back |
+| `出稿.sh` | Production entry |
+| [`工具/PROMPT.md`](工具/PROMPT.md) (in Chinese) | Card layouts and visual rendering spec |
+| `工具/render.mjs` | Card HTML renderer (1080×1350 portrait & 1440×810 landscape) |
+| `工具/make.sh` | Renders and screenshots a card set to PNG + WebP |
+| `工具/grab.sh` | Grabs primary-source figures |
+| `工具/check-layouts.mjs` | Card layout and image-source checker |
+| `工具/check-voice.mjs` | Outline-order, clipped-hook, and cross-story boilerplate gate |
+| `工具/check-post.mjs` | Copy structure and length validator |
+| `工具/review.py` | Production gate and review receipt generator |
+| `工具/make-public.mjs` | External WebP transcoder and lightweight single-page builder |
+| `工具/make-index.mjs` | Generates `issues.js`, syncs `index.html`, and builds `archive.html` |
+| `工具/ledger.mjs` | Updates `选题台账.md` |
 | `工具/handoff.py` | Refreshes the auto section of `HANDOFF.md` |
-| [`.codebuddy/skills/human-writing/`](.codebuddy/skills/human-writing/) (in Chinese) | The voice itself. The rules call it human-writing. Cite it; do not rewrite it |
-| [`选题台账.md`](选题台账.md) (in Chinese) | Each issue's stories, with actual figures written back |
+| [`选题台账.md`](选题台账.md) (in Chinese) | Per-issue story ledger for cross-day deduplication |
 | [`.github/PULL_REQUEST_TEMPLATE.md`](.github/PULL_REQUEST_TEMPLATE.md) (in Chinese) | The three questions a pull request answers |
 
 </details>

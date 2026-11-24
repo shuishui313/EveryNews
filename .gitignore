@@ -16,5 +16,4 @@ docs/*
 !docs/declined.md
 
 # 日期目录不入库；每天的内容以根目录 <YYYYMMDD>.html、index.html 与 选题台账.md 为准
-# 抓来的新闻配图有版权，不进公开仓库
 2026-*/*

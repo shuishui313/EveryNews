@@ -1,8 +1,8 @@
 {
   "name": "everynews",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
-  "description": "每天六条 AI 新闻，每条三张竖版卡；根目录就是静态站点。",
+  "description": "每日 AI 新闻与长文讲解静态站点，纯文本单页出稿。",
   "type": "module",
   "license": "MIT",
   "scripts": {
@@ -11,6 +11,7 @@
     "gate": "python3 工具/review.py",
     "public": "node 工具/make-public.mjs",
     "index": "node 工具/make-index.mjs",
+    "ledger": "node 工具/ledger.mjs",
     "serve": "python3 -m http.server 4321"
   },
   "engines": {

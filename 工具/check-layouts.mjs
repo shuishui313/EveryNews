@@ -106,7 +106,7 @@ for (const f of files) {
     errors.push(`${slug} 没有 slides`);
     continue;
   }
-  if (types.length !== 3) warnings.push(`${slug} 有 ${types.length} 页（常规 3 页一套，1–5 页都允许）`);
+  if (types.length > 5) warnings.push(`${slug} 有 ${types.length} 页（推荐 1–3 页，上限 5 页）`);
   if (new Set(types).size !== types.length) errors.push(`${slug} 套内页型重复：${types.join(" / ")}`);
 
   slides.forEach((s, i) => {

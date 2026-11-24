@@ -36,9 +36,11 @@ fs.mkdirSync(OUT, { recursive: true });
 const CSS = `
 *{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
 html,body{width:1080px;height:1350px;overflow:hidden}
+html[data-wide="1"],html[data-wide="1"] body{width:1440px;height:810px}
 body{font-family:"PingFang SC","Hiragino Sans GB","Noto Sans SC",sans-serif;color:#121118}
 
 .slide{width:1080px;height:1350px;display:flex;flex-direction:column;background:PAPER;overflow:hidden}
+html[data-wide="1"] .slide{width:1440px;height:810px}
 .slide.dark{background:DEEP;color:#fff}
 .band{height:12px;background:ACCENT;flex:none}
 .page{flex:1;display:flex;flex-direction:column;padding:40px 64px 0;min-height:0}
@@ -1055,7 +1057,8 @@ const builders = {
 const css = CSS.replaceAll("ACCTX", theme.acctx).replaceAll("ONACC", theme.onAcc).replaceAll("ACCENT", theme.accent).replaceAll("PAPER", theme.paper).replaceAll("DEEP", theme.deep).replaceAll("SOFT", theme.soft);
 const files = [];
 data.slides.slice(0, 5).forEach((s, i) => {
-  const html = `<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><title>${i + 1}</title><style>${css}</style></head><body>${builders[s.type](s, i)}</body></html>`;
+  const wideAttr = s.wide ? ' data-wide="1"' : "";
+  const html = `<!doctype html><html lang="zh-Hant"${wideAttr}><head><meta charset="utf-8"><title>${i + 1}</title><style>${css}</style></head><body>${builders[s.type](s, i)}</body></html>`;
   const f = path.join(OUT, `slide-${String(i + 1).padStart(2, "0")}.html`);
   fs.writeFileSync(f, html);
   files.push(f);
