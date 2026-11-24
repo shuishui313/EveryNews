@@ -3,158 +3,1012 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>2026-11-24 · EveryNews</title>
-<meta name="description" content="每日精選 AI 一手消息與兩篇長文講解，逐條附配圖、事實表與原始來源。">
+<title>EveryNews · Issue No.015 (2026-11-24)</title>
+<meta name="description" content="EveryNews 每日 AI 線上雜誌：讀報筆記體快訊、視覺圖版與兩篇深度專欄。">
+<script>
+(function(){try{var t=localStorage.getItem('everynews-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
 <style>
-:root{--ink:#121118;--ink2:#4A4659;--mute:#8E88A0;--paper:#F7F4EE;--paper2:#FFFFFF;
-  --line:#E2DCD0;--accent:#5B3FD1;--soft:#EFEAFD;
-  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif}
+:root{
+  --paper:#F6F3EC;
+  --paper-elev:#FCFBF8;
+  --paper-feature:#EFEBE1;
+  --ink:#141318;
+  --ink2:#3F3B4D;
+  --mute:#787287;
+  --line:rgba(20,19,24,.12);
+  --line-strong:#141318;
+  --accent:#3B28CC;
+  --accent-soft:rgba(59,40,204,.07);
+  --stamp:#C84B31;
+  --shadow:0 8px 24px rgba(20,19,24,.05),0 1px 3px rgba(20,19,24,.04);
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI","PingFang TC","PingFang SC","Noto Sans TC","Hiragino Sans GB","Microsoft JhengHei",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+html[data-theme="dark"]{
+  --paper:#0F0F13;
+  --paper-elev:#17171F;
+  --paper-feature:#1C1B26;
+  --ink:#EFECE4;
+  --ink2:#B8B3C7;
+  --mute:#857F96;
+  --line:rgba(255,255,255,.11);
+  --line-strong:#E2DDD2;
+  --accent:#9688FF;
+  --accent-soft:rgba(150,136,255,.12);
+  --stamp:#E06348;
+  --shadow:0 14px 34px rgba(0,0,0,.4),0 2px 6px rgba(0,0,0,.28);
+}
 *{box-sizing:border-box}
-html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
-  line-height:1.82;font-size:16px;-webkit-font-smoothing:antialiased;line-break:strict}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-variant-numeric:tabular-nums;line-height:1.82;font-size:16px;
+  -webkit-font-smoothing:antialiased;line-break:strict;
+  transition:background-color .3s var(--ease),color .3s var(--ease);
+}
 a{color:inherit;text-decoration:none}
-code{font:inherit;background:#ECE6DA;padding:.1em .35em;border-radius:3px}
-.top{display:flex;align-items:baseline;gap:14px;padding:20px clamp(18px,5vw,64px);
-  border-bottom:1px solid var(--line)}
-.brand{font-weight:700;letter-spacing:-.02em;font-size:19px}
-.tag{color:var(--mute);font-size:13px}
-main{padding:0 clamp(18px,5vw,64px) 80px;max-width:1120px;margin:0 auto}
-.hero{padding:clamp(36px,6vw,72px) 0 38px;border-bottom:1px solid var(--line)}
-.hero h1{font-size:clamp(30px,5vw,50px);line-height:1.14;letter-spacing:-.03em;margin:0 0 14px;font-weight:700}
-.lede{color:var(--ink2);font-size:clamp(15px,1.6vw,17.5px);margin:0 0 12px}
-.stat{color:var(--accent);font-size:14px;font-weight:600;margin:0}
-.jump{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 6px}
-.jump a{font-size:13px;color:var(--ink2);border:1px solid var(--line);border-radius:99px;
-  padding:5px 13px;background:var(--paper2);transition:border-color .15s,color .15s}
-.jump a:hover{border-color:var(--accent);color:var(--accent)}
-.item{padding:42px 0;border-bottom:1px solid var(--line)}
-.item .head{display:flex;gap:12px;align-items:baseline;margin-bottom:18px}
-.no{color:var(--accent);font-size:20px;font-weight:700;flex:none}
-.item h3{margin:0;font-size:clamp(20px,2.4vw,27px);letter-spacing:-.02em;line-height:1.35;font-weight:700}
-.strip{display:grid;gap:clamp(10px,1.6vw,18px);margin-bottom:24px}
+button,select{font:inherit}
+button{cursor:pointer}
+
+/* 顶部阅读进度条 */
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2.5px;z-index:100;background:transparent}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--stamp),var(--accent));transition:width .1s linear}
+
+/* 唯一合并的单层毛玻璃杂志顶栏（整合期次切换、归档入口、进度与日夜开关） */
+.topbar{
+  position:sticky;top:0;z-index:80;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  background:color-mix(in srgb,var(--paper) 86%,transparent);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{
+  max-width:1260px;margin:0 auto;padding:9px clamp(18px,4vw,52px);
+  display:flex;align-items:center;gap:14px;justify-content:space-between;flex-wrap:wrap;
+}
+.topbar-left{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.mini-brand{font-weight:800;font-size:15.5px;letter-spacing:-.02em}
+.topbar-sep{color:var(--line);user-select:none}
+.issue-switcher{display:inline-flex;align-items:center;gap:8px}
+.issue-switcher select{
+  font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:99px;
+  border:1px solid var(--line);background:var(--paper-elev);color:var(--ink);cursor:pointer;
+}
+.issue-switcher select:focus{outline:2px solid var(--accent);outline-offset:1px}
+.archive-link{font-size:12.5px;font-weight:600;color:var(--accent);padding:3px 6px}
+.archive-link:hover{text-decoration:underline}
+.topbar-right{display:flex;align-items:center;gap:12px;margin-left:auto}
+.issue-nav-hint{font-family:var(--mono);font-size:11px;color:var(--mute);display:none}
+@media(min-width:900px){.issue-nav-hint{display:inline}}
+.read-pct{font-family:var(--mono);font-size:11.5px;color:var(--mute);min-width:36px;text-align:right}
+.theme-btn{
+  display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:99px;
+  border:1px solid var(--line);background:var(--paper-elev);color:var(--ink2);
+  font-size:12px;font-weight:600;transition:border-color .2s,transform .2s var(--ease);
+}
+.theme-btn:hover{border-color:var(--accent);transform:translateY(-1px)}
+.theme-dot{width:7px;height:7px;border-radius:50%;background:var(--stamp)}
+
+/* 瑞士现代杂志报头 Masthead */
+.masthead{max-width:1260px;margin:0 auto;padding:clamp(28px,4.2vw,52px) clamp(18px,4vw,52px) 0}
+.masthead-meta{
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+  padding-bottom:12px;border-bottom:1px solid var(--line);
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--mute);text-transform:uppercase;
+}
+.stamp-pill{display:inline-flex;align-items:center;gap:8px;color:var(--stamp);font-weight:700}
+.stamp-pill::before{content:"";width:7px;height:7px;border-radius:1.5px;background:var(--stamp)}
+.masthead-hero{
+  display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end;
+  padding:clamp(24px,3.6vw,42px) 0 clamp(24px,3.2vw,36px);
+  border-bottom:2px solid var(--line-strong);
+}
+.journal-name{
+  font-size:clamp(42px,6.8vw,82px);font-weight:900;
+  line-height:.95;letter-spacing:-.045em;margin:0;
+}
+.journal-name span{color:var(--accent)}
+.journal-sub{
+  margin:14px 0 0;font-size:clamp(15px,1.4vw,17.5px);color:var(--ink2);max-width:52ch;line-height:1.68;
+}
+.issue-box{
+  text-align:right;border-left:1px solid var(--line);padding-left:28px;
+  display:flex;flex-direction:column;justify-content:flex-end;gap:4px;
+}
+.issue-box .ib-kicker{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--stamp);font-weight:700}
+.issue-box .ib-date{font-size:clamp(26px,2.8vw,34px);font-weight:800;line-height:1.08;letter-spacing:-.03em}
+.stat{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin:4px 0 0}
+
+.jump-compat{display:none}
+
+/* 双栏瑞士网格：左侧吸附目录 + 右侧主内容区 */
+.mag-shell{
+  max-width:1260px;margin:0 auto;padding:0 clamp(18px,4vw,52px) 80px;
+  display:grid;grid-template-columns:240px minmax(0,1fr);gap:clamp(28px,4.5vw,60px);align-items:start;
+}
+.toc-rail{
+  position:sticky;top:64px;padding:32px 22px 24px 0;
+  border-right:1px solid var(--line);
+}
+.toc-head{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--mute);
+  text-transform:uppercase;margin:0 0 14px;display:flex;justify-content:space-between;
+}
+.toc-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.toc-link{
+  display:grid;grid-template-columns:24px 1fr;gap:8px;align-items:baseline;
+  padding:7px 10px;border-radius:5px;font-size:13px;line-height:1.45;color:var(--ink2);
+  border-left:2px solid transparent;transition:all .2s var(--ease);
+}
+.toc-link:hover{background:var(--accent-soft);color:var(--ink)}
+.toc-link.is-active{
+  background:var(--accent-soft);color:var(--ink);font-weight:700;
+  border-left-color:var(--stamp);transform:translateX(2px);
+}
+.toc-no{font-family:var(--mono);font-size:11px;color:var(--mute)}
+.toc-link.is-active .toc-no{color:var(--stamp);font-weight:700}
+.toc-sec-label{
+  margin:18px 0 8px;padding-top:14px;border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--mute);
+}
+.toc-kbd{
+  margin-top:20px;padding-top:14px;border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:10.5px;color:var(--mute);line-height:1.6;
+}
+.toc-kbd kbd{
+  padding:1px 5px;border:1px solid var(--line);border-radius:3px;background:var(--paper-elev);font-size:10px;
+}
+
+/* 新闻条目版面 */
+.mag-main{min-width:0}
+.story{padding:clamp(34px,4.2vw,52px) 0;border-bottom:1px solid var(--line)}
+.story.is-lead{padding-top:clamp(28px,3.4vw,42px)}
+.story-meta{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.story-folio{
+  font-size:24px;font-weight:900;line-height:1;color:var(--accent);letter-spacing:-.04em;
+}
+.story-rubric{
+  font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 9px;border:1px solid var(--line);border-radius:4px;color:var(--ink2);background:var(--paper-elev);
+}
+.lead-badge{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;font-weight:700;
+  padding:3px 9px;border-radius:4px;background:var(--stamp);color:#FAF8F4;
+}
+.story-title{
+  font-size:clamp(22px,2.8vw,32px);font-weight:800;
+  line-height:1.28;letter-spacing:-.025em;margin:0 0 22px;color:var(--ink);
+}
+.story.is-lead .story-title{font-size:clamp(25px,3.2vw,36px)}
+
+/* 图版阵列：统一左对齐与满宽瑞士网格，夜读模式柔和降亮避免刺眼 */
+.plate-wrap{margin:0 0 24px}
+.strip{display:grid;gap:clamp(12px,1.6vw,18px)}
 .strip-1{grid-template-columns:minmax(0,420px)}
-.strip-2{grid-template-columns:repeat(2,minmax(0,380px))}
-.strip-3{grid-template-columns:repeat(3,1fr)}
-.shot{display:block;border-radius:5px;overflow:hidden;border:1px solid var(--line);background:#fff;cursor:zoom-in}
-.shot img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
-.shot.wide{grid-column:span 2}
-.shot.wide img{aspect-ratio:16/9;object-fit:contain}
-.strip-1 .shot.wide{grid-column:span 1;max-width:680px}
-.post{max-width:74ch}
-.post p{margin:0 0 .95em;font-size:16.5px;color:var(--ink)}
-.src{display:inline-block;margin-top:4px;font-size:13.5px;color:var(--accent);font-weight:600}
-.src:hover,.inline-url:hover{text-decoration:underline}
+.strip-2{grid-template-columns:repeat(2,minmax(0,360px))}
+.strip-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.plate{margin:0;display:flex;flex-direction:column;gap:7px}
+.plate.wide{grid-column:span 2}
+.strip-1 .plate.wide{grid-column:span 1;max-width:680px}
+.shot{
+  position:relative;display:block;border-radius:6px;overflow:hidden;
+  border:1px solid var(--line);background:var(--paper-elev);box-shadow:var(--shadow);
+  cursor:zoom-in;transition:transform .32s var(--ease),box-shadow .32s var(--ease),border-color .22s;
+}
+.shot:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 18px 36px rgba(20,19,24,.11)}
+.shot img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;transition:transform .45s var(--ease),filter .3s}
+html[data-theme="dark"] .shot img{filter:brightness(.93) contrast(1.02)}
+html[data-theme="dark"] .shot:hover img{filter:brightness(1)}
+.plate.wide .shot img{aspect-ratio:16/9;object-fit:contain}
+.shot:hover img{transform:scale(1.015)}
+.zoom-pill{
+  position:absolute;right:10px;bottom:10px;padding:4px 10px;border-radius:99px;
+  background:rgba(20,19,24,.78);color:#FAF8F4;font-size:11px;font-family:var(--mono);
+  opacity:0;transform:translateY(4px);transition:all .22s var(--ease);pointer-events:none;
+}
+.shot:hover .zoom-pill{opacity:1;transform:translateY(0)}
+.plate figcaption{
+  display:flex;justify-content:space-between;font-family:var(--mono);
+  font-size:10.5px;letter-spacing:.08em;color:var(--mute);padding:0 2px;
+}
+
+/* 正文与按钮区 */
+.story-body{max-width:72ch}
+.post p{margin:0 0 1em;font-size:16.5px;line-height:1.86;color:var(--ink)}
+.story-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:16px 0 4px}
+.src-btn{
+  display:inline-flex;align-items:center;gap:9px;padding:7px 14px;border-radius:6px;
+  border:1px solid var(--line);background:var(--paper-elev);font-size:13px;font-weight:600;
+  transition:all .22s var(--ease);
+}
+.src-btn small{font-family:var(--mono);font-size:11px;color:var(--mute);font-weight:400}
+.src-btn i{font-style:normal;color:var(--accent);transition:transform .22s var(--ease)}
+.src-btn:hover{border-color:var(--accent);transform:translateY(-1px)}
+.src-btn:hover i{transform:translate(2px,-2px)}
+.share-btn{
+  padding:7px 12px;border-radius:6px;border:1px solid transparent;background:transparent;
+  color:var(--mute);font-size:12.5px;transition:all .2s;
+}
+.share-btn:hover{border-color:var(--line);background:var(--paper-elev);color:var(--ink)}
+
+/* 手风琴核验档案卡 */
+.dossier{margin-top:14px;border:1px solid var(--line);border-radius:6px;background:var(--paper-elev);overflow:hidden}
+.dossier-btn{
+  width:100%;display:flex;align-items:center;gap:10px;padding:10px 15px;
+  background:transparent;border:none;color:var(--ink2);text-align:left;transition:background .2s;
+}
+.dossier-btn:hover{background:var(--accent-soft)}
+.dossier-label{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em}
+.dossier-label i{width:6px;height:6px;border-radius:1px;background:var(--accent);display:inline-block}
+.dossier-count{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--mute)}
+.dossier-icon{
+  width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:15px;color:var(--accent);transition:transform .28s var(--ease);
+}
+.dossier[data-open="true"] .dossier-icon{transform:rotate(45deg)}
+.dossier-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s var(--ease)}
+.dossier[data-open="true"] .dossier-panel{grid-template-rows:1fr}
+.dossier-inner{overflow:hidden}
+.dossier-inner table{width:100%;border-collapse:collapse;border-top:1px solid var(--line);font-size:13.5px}
+.dossier-inner th{
+  text-align:left;vertical-align:top;white-space:nowrap;color:var(--mute);
+  font-family:var(--mono);font-weight:600;padding:8px 18px 8px 15px;width:1%;
+}
+.dossier-inner td{padding:8px 15px 8px 0;border-bottom:1px solid var(--line);color:var(--ink2);overflow-wrap:anywhere}
+.dossier-inner tr:last-child td{border-bottom:none}
 .inline-url{color:var(--accent);word-break:break-all}
-.facts{margin-top:18px;border-top:1px solid var(--line);padding-top:12px}
-.facts summary{cursor:pointer;font-size:12.5px;color:var(--mute);list-style:none;user-select:none}
-.facts summary::-webkit-details-marker{display:none}
-.facts summary::before{content:"▸ ";color:var(--accent)}
-.facts[open] summary::before{content:"▾ "}
-.facts table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13.5px}
-.facts th{text-align:left;vertical-align:top;white-space:nowrap;color:var(--mute);font-weight:600;padding:7px 18px 7px 0;width:1%}
-.facts td{padding:7px 0;border-bottom:1px solid var(--line);color:var(--ink2);overflow-wrap:anywhere}
-.lects{padding-top:16px;max-width:76ch}
-.lects>h2{font-size:14px;letter-spacing:.14em;color:var(--mute);font-weight:700;margin:40px 0 4px}
-.lect{padding:32px 0;border-bottom:1px solid var(--line)}
-.lect h3{font-size:clamp(19px,2.2vw,24px);margin:0 0 14px;letter-spacing:-.02em;font-weight:700}
-.meta{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 16px;margin:0 0 20px;font-size:13px}
-.meta dt{color:var(--mute);font-weight:600;white-space:nowrap}
-.meta dd{margin:0;min-width:0;color:var(--ink2);overflow-wrap:anywhere}
-.prose p{margin:0 0 1em;font-size:16px}
-.best{margin-top:18px;padding:14px 16px;background:var(--soft);border-left:3px solid var(--accent);font-size:14px;color:var(--ink2)}
-.best strong{color:var(--accent)}
-.foot{padding:36px clamp(18px,5vw,64px);border-top:1px solid var(--line);color:var(--mute);font-size:13px;max-width:1120px;margin:0 auto}
+.inline-url:hover{text-decoration:underline}
+
+/* 深度专栏 Feature Well（东方现代编辑感：顶线规格栏 + 首段导语竖线提亮） */
+.feature-well{
+  margin-top:52px;padding:clamp(28px,4vw,48px);border-radius:8px;
+  background:var(--paper-feature);border-top:2px solid var(--line-strong);
+}
+.feature-header{
+  display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;
+  padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:6px;
+}
+.feature-header h2{font-size:clamp(22px,2.6vw,30px);font-weight:800;margin:0;letter-spacing:-.025em}
+.feature-header span{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--stamp);font-weight:700}
+.essay{padding:34px 0;border-bottom:1px solid var(--line)}
+.essay:last-child{border-bottom:none;padding-bottom:4px}
+.essay-kicker{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.essay-badge{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;font-weight:700;
+  padding:3px 8px;background:var(--ink);color:var(--paper);border-radius:3px;
+}
+.essay-stat{font-family:var(--mono);font-size:11.5px;color:var(--mute)}
+.essay-title{
+  font-size:clamp(21px,2.5vw,28px);font-weight:800;
+  margin:0 0 20px;line-height:1.3;letter-spacing:-.02em;
+}
+.essay-brief{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;
+  margin:0 0 26px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.brief-cell{display:flex;flex-direction:column;gap:5px}
+.brief-cell .bk{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--stamp);font-weight:700}
+.brief-cell .bv{font-size:13px;line-height:1.58;color:var(--ink2);overflow-wrap:anywhere}
+.essay-prose{max-width:72ch}
+.essay-prose p{margin:0 0 1.12em;font-size:16.5px;line-height:1.9;color:var(--ink)}
+.essay-prose p.essay-lead{
+  font-size:17.2px;font-weight:500;padding-left:16px;
+  border-left:3px solid var(--accent);color:var(--ink);
+}
+.editor-note{
+  margin:22px 0 16px;padding:14px 18px;border-left:3px solid var(--stamp);
+  background:var(--paper-elev);border-radius:0 6px 6px 0;max-width:72ch;
+}
+.editor-note .en-head{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--stamp);font-weight:700;margin-bottom:5px}
+.editor-note p{margin:0;font-size:14.5px;line-height:1.68;color:var(--ink2)}
+
+/* 前后期翻页与页脚 */
+.issue-pager{
+  max-width:1260px;margin:0 auto;padding:0 clamp(18px,4vw,52px) 36px;
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+}
+.pager-card{
+  padding:18px 22px;border:1px solid var(--line);border-radius:6px;background:var(--paper-elev);
+  display:flex;flex-direction:column;gap:4px;transition:all .22s var(--ease);
+}
+.pager-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.pager-card.next{text-align:right}
+.pager-card small{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--mute)}
+.pager-card strong{font-size:17px;font-weight:700}
+
+.foot{
+  max-width:1260px;margin:0 auto;padding:26px clamp(18px,4vw,52px) 60px;
+  border-top:2px solid var(--line-strong);color:var(--mute);font-size:13px;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+}
 .foot p{margin:0}
-.lightbox{position:fixed;inset:0;background:rgba(12,10,20,.94);display:flex;align-items:center;justify-content:center;z-index:99;cursor:zoom-out;padding:3vh 3vw}
-.lightbox[hidden]{display:none}
-.lightbox img{max-width:100%;max-height:94vh;border-radius:6px}
-@media (max-width:820px){.strip-2,.strip-3{grid-template-columns:1fr}.shot.wide{grid-column:span 1}}
+
+/* 移动端悬浮目录抽屉 */
+.fab-toc{
+  display:none;position:fixed;right:18px;bottom:20px;z-index:85;
+  padding:10px 16px;border-radius:99px;border:1px solid var(--line);
+  background:var(--ink);color:var(--paper);font-size:13px;font-weight:600;
+  box-shadow:0 10px 26px rgba(0,0,0,.22);
+}
+.mobile-drawer{
+  position:fixed;inset:0;z-index:95;background:rgba(12,11,16,.58);
+  backdrop-filter:blur(4px);display:flex;align-items:flex-end;opacity:0;pointer-events:none;
+  transition:opacity .26s var(--ease);
+}
+.mobile-drawer.is-open{opacity:1;pointer-events:auto}
+.mobile-sheet{
+  width:100%;max-height:76vh;overflow-y:auto;background:var(--paper-elev);
+  border-radius:16px 16px 0 0;padding:20px 20px 30px;
+  transform:translateY(100%);transition:transform .3s var(--ease);
+}
+.mobile-drawer.is-open .mobile-sheet{transform:translateY(0)}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.sheet-head strong{font-size:16px;font-weight:800}
+.sheet-close{border:none;background:transparent;color:var(--mute);font-size:22px;line-height:1}
+
+/* 灯箱 */
+.lightbox{
+  position:fixed;inset:0;background:rgba(12,11,18,.92);backdrop-filter:blur(8px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:110;padding:24px;opacity:0;pointer-events:none;transition:opacity .24s var(--ease);
+}
+.lightbox.is-open{opacity:1;pointer-events:auto}
+.lb-stage{position:relative;display:flex;align-items:center;justify-content:center;max-width:92vw;max-height:82vh}
+.lb-stage img{max-width:92vw;max-height:82vh;border-radius:6px;box-shadow:0 24px 60px rgba(0,0,0,.5);transform:scale(.96);transition:transform .28s var(--ease)}
+.lightbox.is-open .lb-stage img{transform:scale(1)}
+.lb-nav{
+  position:fixed;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;
+  font-size:20px;display:flex;align-items:center;justify-content:center;transition:background .2s;
+}
+.lb-nav:hover{background:rgba(255,255,255,.2)}
+.lb-prev{left:20px}
+.lb-next{right:20px}
+.lb-close{
+  position:fixed;top:18px;right:22px;width:40px;height:40px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;font-size:20px;
+}
+.lb-bar{margin-top:14px;color:rgba(255,255,255,.82);font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-align:center}
+
+.toast{
+  position:fixed;left:50%;bottom:28px;transform:translate(-50%,16px);opacity:0;
+  background:var(--ink);color:var(--paper);padding:8px 16px;border-radius:99px;
+  font-size:13px;font-weight:600;z-index:120;pointer-events:none;transition:all .26s var(--ease);
+}
+.toast.is-on{opacity:1;transform:translate(-50%,0)}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
+.reveal.is-visible{opacity:1;transform:translateY(0)}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+}
+@media (max-width:1024px){
+  .mag-shell{grid-template-columns:1fr}
+  .toc-rail{display:none}
+  .fab-toc{display:inline-flex;align-items:center;gap:6px}
+}
+@media (max-width:760px){
+  .masthead-hero{grid-template-columns:1fr;gap:16px}
+  .issue-box{text-align:left;border-left:none;border-top:1px solid var(--line);padding:14px 0 0}
+  .strip-2,.strip-3,.essay-brief{grid-template-columns:1fr}
+  .plate.wide{grid-column:span 1}
+  .issue-pager{grid-template-columns:1fr}
+  .pager-card.next{text-align:left}
+  .lb-nav{bottom:18px;top:auto;transform:none}
+  .lb-prev{left:28%}
+  .lb-next{right:28%}
+}
 </style>
 </head>
 <body>
-<header class="top"><span class="brand">EveryNews</span><span class="tag">每日 AI 讀報筆記 · 2026-11-24</span></header>
-<!-- ISSUE-NAV:START -->
-<style>
-.issue-nav{border-bottom:1px solid var(--line,#E2DCD0);background:rgba(255,255,255,.55)}
-.issue-nav-inner{max-width:860px;margin:0 auto;padding:10px clamp(18px,5vw,64px);display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.issue-nav label{font-size:12px;color:var(--mute,#7C7691)}
-.issue-nav select{font:inherit;font-size:13px;padding:6px 10px;border:1px solid var(--line,#E2DCD0);border-radius:6px;background:#fff;color:inherit;cursor:pointer;max-width:100%}
-.issue-nav a{font-size:13px;color:var(--accent,#5B3FD1)}
-.issue-nav a:hover{text-decoration:underline}
-.issue-nav-hint{font-size:12px;color:var(--mute,#7C7691);margin-left:auto}
-@media(max-width:640px){.issue-nav-hint{margin-left:0}}
-</style>
-<nav class="issue-nav" aria-label="切換期次" data-current="20261124.html">
-  <div class="issue-nav-inner">
-    <label for="issue-select">期次</label>
-    <select id="issue-select"><option value="20261124.html" selected>2026-11-24</option><option value="archive.html">全部期次 · 按日期篩選</option></select>
-    <a href="index.html">當日成果</a>
-    <a href="archive.html">全部期次 →</a>
-    <span class="issue-nav-hint" id="issue-nav-hint"></span>
+<div class="progress-rail" aria-hidden="true"><div class="progress-bar" id="progress-bar"></div></div>
+
+<header class="topbar issue-nav" data-current="20261124.html">
+  <div class="topbar-inner">
+    <div class="topbar-left">
+      <a href="index.html" class="mini-brand">EveryNews.</a>
+      <span class="topbar-sep">/</span>
+      <div class="issue-switcher">
+        <select id="issue-select" aria-label="切換期次"><option value="20261124.html" selected>No.015 · 2026-11-24</option><option value="archive.html">往期刊物架</option></select>
+        <a href="archive.html" class="archive-link">往期刊物架 →</a>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span class="issue-nav-hint" id="issue-nav-hint"></span>
+      <span class="read-pct" id="read-pct">0%</span>
+      <button type="button" class="theme-btn" id="theme-toggle" aria-label="切換紙本與夜讀模式">
+        <span class="theme-dot"></span><span id="theme-label">夜讀</span>
+      </button>
+    </div>
   </div>
-</nav>
+</header>
 <script src="issues.js"></script>
-<!-- ISSUE-NAV:END -->
-<main class="daypage">
-  <section class="hero">
-    <h1>2026-11-24</h1>
-    <p class="lede">每日精選 AI 一手消息與兩篇長文講解，讀報筆記體行文，逐條附配圖、事實表與原始來源。</p>
-    <p class="stat">6 條快訊 · 18 張配圖 · 2 篇講解</p>
-  </section>
-  <nav class="jump"><a href="#glm-5.4-loop-transformer">① 同一批參數，跑第二遍</a><a href="#openai-cisco-shirudo">② 補丁還要等幾天幾週</a><a href="#anthropic-efs-zdr">③ 資料留在客戶那裡</a><a href="#ant-lingsante-open">④ 一千兩百四十億，能放進筆電</a><a href="#sierra-series-f">⑤ 估值半年翻了一倍</a><a href="#nariq-qwen27b-10gb">⑥ 十吉位元組，跑同一個模型</a></nav>
-  <article class="item" id="glm-5.4-loop-transformer">
-  <div class="head"><span class="no">①</span><h3>同一批參數，跑第二遍</h3></div>
-  <div class="strip strip-3"><a class="shot"><img src="cards/20261124/01-glm-5.4-loop-transformer-01.webp" alt="" loading="lazy" decoding="async"></a><a class="shot"><img src="cards/20261124/01-glm-5.4-loop-transformer-02.webp" alt="" loading="lazy" decoding="async"></a><a class="shot"><img src="cards/20261124/01-glm-5.4-loop-transformer-03.webp" alt="" loading="lazy" decoding="async"></a></div>
-  <div class="post"><p>Z.ai 十一月二十三日發的 GLM-5.4 沒往模型裡堆新參數，把 GLM-5 的二十八層在一次前向裡反覆跑兩遍，同一組權重對著剛算完的中間狀態再改一輪，網絡算深了，參數量停在七千五百億。官方拿三十B 做對照，循環版和非循環版參數完全相同，多花的訓練算力約一成，輸出平均短了一到一成四。</p><p>博客沒給完整的評測分數表，兩三萬億參數的對標是公司自述。API 標著即將開放，權重要等安全加固完成才放，想自己跑一遍的現在還拿不到東西。</p><a class="src" href="https://z.ai/blog/glm-5.4" target="_blank" rel="noopener">原始來源 ↗</a></div>
-  <details class="facts"><summary>事實表 12 行</summary><table><tbody><tr><th>時間</th><td>2026 年 11 月 23 日</td></tr><tr><th>主體</th><td>Z.ai，智譜</td></tr><tr><th>架構</th><td>Loop Transformer，把 GLM-5 基礎模型的 28 層跑兩次，權重共享</td></tr><tr><th>規模</th><td>750B 參數</td></tr><tr><th>對標</th><td>公司自述智能水平 comparable to 2T-3T parameter models</td></tr><tr><th>算力</th><td>相同參數量下多約 10% 訓練算力</td></tr><tr><th>輸出</th><td>平均長度降 10-14%</td></tr><tr><th>吞吐</th><td>離峰最高 200 tokens/s，峰值 70-80 tokens/s</td></tr><tr><th>驗證</th><td>1B、4B、30B、750B 四檔逐級驗證；30B 對照實驗</td></tr><tr><th>開放</th><td>API Coming Soon；權重稱完成安全加固後才開源</td></tr><tr><th>邊界</th><td>無完整評測分數表；對標是公司自述；權重未放出</td></tr><tr><th>來源</th><td><a class="inline-url" href="https://z.ai/blog/glm-5.4" target="_blank" rel="noopener">https://z.ai/blog/glm-5.4</a></td></tr></tbody></table></details>
-</article><article class="item" id="openai-cisco-shirudo">
-  <div class="head"><span class="no">②</span><h3>補丁還要等幾天幾週</h3></div>
-  <div class="strip strip-3"><a class="shot"><img src="cards/20261124/02-openai-cisco-shirudo-01.webp" alt="" loading="lazy" decoding="async"></a><a class="shot"><img src="cards/20261124/02-openai-cisco-shirudo-02.webp" alt="" loading="lazy" decoding="async"></a><a class="shot"><img src="cards/20261124/02-openai-cisco-shirudo-03.webp" alt="" loading="lazy" decoding="async"></a></div>
-  <div class="post"><p>OpenAI 和 Cisco 十一月二十三日開源了一套叫 Shirudo 的運行時，用 eBPF 小程序把臨時防護熱掛到正在跑的 Linux 上，不打補丁也不重啟。示範裡 Codex 生成一層輸入檢查加在 Java 的 Base64 解碼器上，掛到運行中的 Elasticsearch 擋住一次 Java4Shell，防護載入前要簽名驗證，硬體也記一筆帳。</p><p>官方自己寫了兩處邊界，補丁測試部署還要幾天到幾週，攻擊和正常請求可能依賴同一條操作，整條擋掉服務就跟著下線。有沒有性能開銷和相容性數字，博客沒給。</p><a class="src" href="https://openai.com/index/introducing-shirudo/" target="_blank" rel="noopener">原始來源 ↗</a></div>
-  <details class="facts"><summary>事實表 9 行</summary><table><tbody><tr><th>時間</th><td>2026 年 11 月 23 日</td></tr><tr><th>主體</th><td>OpenAI 與 Cisco</td></tr><tr><th>產品</th><td>Shirudo，日語意為盾，開源運行時</td></tr><tr><th>機制</th><td>eBPF 小程序在系統特定點運行，對運行中的 Linux 加臨時防護 shield</td></tr><tr><th>示範</th><td>Codex 生成 shield，在 Java Base64 解碼器加輸入檢查，掛到運行中的 Elasticsearch，擋住 Java4Shell</td></tr><tr><th>能力</th><td>即時防護、代理可編程控制、簽名驗證、TPM 硬體背書</td></tr><tr><th>授權</th><td>BSD 2-Clause，BPF 程序 BSD 與 GPL 雙授權</td></tr><tr><th>邊界</th><td>補丁測試部署仍要數天到數週；攻擊與正常請求可能依賴同一操作，全擋會讓服務下線；需操作員批准；無性能與相容性數字</td></tr><tr><th>來源</th><td><a class="inline-url" href="https://openai.com/index/introducing-shirudo/" target="_blank" rel="noopener">https://openai.com/index/introducing-shirudo/</a></td></tr></tbody></table></details>
-</article><article class="item" id="anthropic-efs-zdr">
-  <div class="head"><span class="no">③</span><h3>資料留在客戶那裡</h3></div>
-  <div class="strip strip-3"><a class="shot"><img src="cards/20261124/03-anthropic-efs-zdr-01.webp" alt="" loading="lazy" decoding="async"></a><a class="shot"><img src="cards/20261124/03-anthropic-efs-zdr-02.webp" alt="" loading="lazy" decoding="async"></a><a class="shot"><img src="cards/20261124/03-anthropic-efs-zdr-03.webp" alt="" loading="lazy" decoding="async"></a></div>
-  <div class="post"><p>讓企業把提示詞留在自己雲端的方案，是 Anthropic 十一月二十三日公佈的 Enterprise Frontier Safeguards，它把提示詞和輸出存進客戶自己控管的雲端儲存，S3、Azure Blob 和 Google Cloud Storage 都在範圍裡，加密金鑰、存取政策、審計日誌一併歸客戶。自動系統照樣分析一段滾動窗口的流量找嚴重濫用訊號，警示直接發給客戶的安全團隊。</p><p>參與設計的一百多家企業裡，財富百強佔了四分之一。方案分階段推出，官方說目標秋天廣泛可用，沒給具體日期。零資料保留在過渡期只給 Fable 5 和 5.1，滾動窗口要跨請求看活動，資料還是得存一段間。</p><a class="src" href="https://www.anthropic.com/news/enterprise-frontier-safeguards" target="_blank" rel="noopener">原始來源 ↗</a></div>
-  <details class="facts"><summary>事實表 12 行</summary><table><tbody><tr><th>時間</th><td>2026 年 11 月 23 日</td></tr><tr><th>主體</th><td>Anthropic</td></tr><tr><th>產品</th><td>Enterprise Frontier Safeguards，簡稱 EFS</td></tr><tr><th>資料</th><td>存在客戶控制的雲端，Amazon S3、Azure Blob Storage、Google Cloud Storage</td></tr><tr><th>金鑰</th><td>客戶自己的加密金鑰、存取政策、審計日誌</td></tr><tr><th>監控</th><td>自動系統分析滾動窗口流量，找嚴重濫用訊號</td></tr><tr><th>告警</th><td>直接發給客戶，由客戶人員處置</td></tr><tr><th>人工</th><td>官方稱不需 Anthropic 人工審查</td></tr><tr><th>客戶</th><td>一百多家，財富百強佔四分之一</td></tr><tr><th>推出</th><td>分階段，目標今年秋天廣泛可用，無具體日期；過渡期 Fable 5 與 5.1 先給零資料保留</td></tr><tr><th>邊界</th><td>非所有 Claude 產品；官方頁面未列具體 API；滾動窗口仍涉及資料留存</td></tr><tr><th>來源</th><td><a class="inline-url" href="https://www.anthropic.com/news/enterprise-frontier-safeguards" target="_blank" rel="noopener">https://www.anthropic.com/news/enterprise-frontier-safeguards</a></td></tr></tbody></table></details>
-</article><article class="item" id="ant-lingsante-open">
-  <div class="head"><span class="no">④</span><h3>一千兩百四十億，能放進筆電</h3></div>
-  <div class="strip strip-3"><a class="shot"><img src="cards/20261124/04-ant-lingsante-open-01.webp" alt="" loading="lazy" decoding="async"></a><a class="shot"><img src="cards/20261124/04-ant-lingsante-open-02.webp" alt="" loading="lazy" decoding="async"></a><a class="shot"><img src="cards/20261124/04-ant-lingsante-open-03.webp" alt="" loading="lazy" decoding="async"></a></div>
-  <div class="post"><p>螞蟻在十一月二十三日廣州的阿福醫療健康生態大會上放出百靈家族四款模型， air-VL 總參數一千兩百四十億、激活五十五億，官方說筆電能跑；flash 面向醫療機構，五千六百億參數配一百萬 token 上下文。Pulse 做一百五十多種疾病未來六年的風險預測，MedGuard 管安全防護。</p><p>air-VL 在多項醫療評測位居全球第一是公司自述，榜單和分數都沒公佈，開源許可也沒披露。想拿去商用或復現榜單的，現在手裡只有模型說明。</p><a class="src" href="https://t.cj.sina.com.cn/articles/view/5182171545/134e1a99902002lr5z" target="_blank" rel="noopener">原始來源 ↗</a></div>
-  <details class="facts"><summary>事實表 10 行</summary><table><tbody><tr><th>時間</th><td>2026 年 11 月 23 日</td></tr><tr><th>主體</th><td>螞蟻，百靈醫療健康大模型家族</td></tr><tr><th>場合</th><td>2026 螞蟻阿福醫療健康生態大會，廣州</td></tr><tr><th>開源</th><td>四款模型，LingSante-3.1-air-VL、LingSante-3.1-flash、LingSante Pulse、LingSante MedGuard</td></tr><tr><th>air-VL</th><td>124B 總參數，5.5B 激活參數，本地設備可部署，文字圖片影片理解</td></tr><tr><th>flash</th><td>560B 總參數，最長 1M token 上下文，面向專業醫療機構</td></tr><tr><th>Pulse</th><td>150 餘項疾病未來六年風險預測</td></tr><tr><th>MedGuard</th><td>醫療安全防護，官方稱達業界頭部安全模型效果</td></tr><tr><th>邊界</th><td>全球第一為公司自述，無榜單與分數；開源許可未披露</td></tr><tr><th>來源</th><td><a class="inline-url" href="https://t.cj.sina.com.cn/articles/view/5182171545/134e1a99902002lr5z" target="_blank" rel="noopener">https://t.cj.sina.com.cn/articles/view/5182171545/134e1a99902002lr5z</a></td></tr></tbody></table></details>
-</article><article class="item" id="sierra-series-f">
-  <div class="head"><span class="no">⑤</span><h3>估值半年翻了一倍</h3></div>
-  <div class="strip strip-3"><a class="shot"><img src="cards/20261124/05-sierra-series-f-01.webp" alt="" loading="lazy" decoding="async"></a><a class="shot"><img src="cards/20261124/05-sierra-series-f-02.webp" alt="" loading="lazy" decoding="async"></a><a class="shot"><img src="cards/20261124/05-sierra-series-f-03.webp" alt="" loading="lazy" decoding="async"></a></div>
-  <div class="post"><p>客服智能體這條賽道又添一筆大錢。Sierra 十一月二十三日宣佈完成 F 輪融資，金額十七點五億美元，估值三百億，Greenoaks 和 Lightspeed 領投，之前的投資人幾乎都跟著加碼。公司說年化收入已經過四億美元，光第三季就新增一億五千萬，比去年全年還多。半年前上一輪估值是一百五十億。</p><p>數字全部出自公司博客，聚合站把金額寫成十八億，和官方的十七點五億對不上，也沒有第三方審計。客服這個對話入口正在被市場重新定價，定價的一方現在是自己報數的公司。</p><a class="src" href="https://sierra.ai/blog/series-f-30b" target="_blank" rel="noopener">原始來源 ↗</a></div>
-  <details class="facts"><summary>事實表 11 行</summary><table><tbody><tr><th>時間</th><td>2026 年 11 月 23 日</td></tr><tr><th>主體</th><td>Sierra，創辦人 Bret Taylor 與 Clay Bavor</td></tr><tr><th>輪次</th><td>Series F</td></tr><tr><th>金額</th><td>17.5 億美元</td></tr><tr><th>估值</th><td>300 億美元</td></tr><tr><th>領投</th><td>Greenoaks、Lightspeed Venture Partners</td></tr><tr><th>跟投</th><td>Benchmark、Sequoia、Greenoaks、GV、Tiger Global 繼續加碼</td></tr><tr><th>收入</th><td>年化收入超過 4 億美元，第三季單季新增 1.5 億美元</td></tr><tr><th>對照</th><td>半年前上輪估值 150 億美元，募資 9.5 億美元</td></tr><tr><th>邊界</th><td>全部為公司博客自報；聚合站把金額寫成 18 億，與官方 17.5 億不一致；無第三方審計</td></tr><tr><th>來源</th><td><a class="inline-url" href="https://sierra.ai/blog/series-f-30b" target="_blank" rel="noopener">https://sierra.ai/blog/series-f-30b</a></td></tr></tbody></table></details>
-</article><article class="item" id="nariq-qwen27b-10gb">
-  <div class="head"><span class="no">⑥</span><h3>十吉位元組，跑同一個模型</h3></div>
-  <div class="strip strip-3"><a class="shot"><img src="cards/20261124/06-nariq-qwen27b-10gb-01.webp" alt="" loading="lazy" decoding="async"></a><a class="shot"><img src="cards/20261124/06-nariq-qwen27b-10gb-02.webp" alt="" loading="lazy" decoding="async"></a><a class="shot"><img src="cards/20261124/06-nariq-qwen27b-10gb-03.webp" alt="" loading="lazy" decoding="async"></a></div>
-  <div class="post"><p>Nari Labs 把 Qwen3.8-27B 做成十點一二吉位元組的 GGUF 檔，三比特量化，DeepSWE 代理任務上拿到 41.0 分，BF16 原版是 39.8。模型卡十一月二十日放出，用 trellis 編碼按真實編碼代理軌跡校準，二點五比特那檔分數更高，二比特只剩下 28.6。</p><p>代價是得用自家改過的 llama.cpp，Ollama 和 LM Studio 還讀不了，蘋果 M3 Pro 上每秒只有三點八個 token。攜帶方便和跑得動是兩件事，相容性那一欄得自己試過再說。</p><a class="src" href="https://huggingface.co/nari-labs/Qwen3.8-27B-NariQ-GGUF" target="_blank" rel="noopener">原始來源 ↗</a></div>
-  <details class="facts"><summary>事實表 10 行</summary><table><tbody><tr><th>時間</th><td>模型卡 2026 年 11 月 20 日，11 月 24 日仍在 HF 趨勢榜與 HN 首頁</td></tr><tr><th>主體</th><td>Nari Labs，作者 Doyeob (Toby) Kim</td></tr><tr><th>模型</th><td>NariQ v1，Qwen3.8-27B 的 GGUF 量化，Apache-2.0</td></tr><tr><th>方法</th><td>trellis 編碼的訓練後量化，按真實編碼代理軌跡校準</td></tr><tr><th>檔案</th><td>3-bit 10.12 GB、2.5-bit 8.44 GB、2-bit 6.75 GB；BF16 基線 53.8 GB</td></tr><tr><th>成績</th><td>DeepSWE v1，BF16 39.8、3-bit 41.0、2.5-bit 41.9、2-bit 28.6</td></tr><tr><th>速度</th><td>RTX PRO 6000，4K 上下文，3-bit 88.9 tokens/s</td></tr><tr><th>硬體</th><td>需自家 llama.cpp fork；Ollama、LM Studio 與原版 llama.cpp 讀不了新張量；AMD 與 Intel 未支援</td></tr><tr><th>邊界</th><td>M3 Pro 18 GB 的 3-bit 只有 3.8 tokens/s；視覺塔與 KV cache 仍 BF16；2-bit 明顯變弱</td></tr><tr><th>來源</th><td><a class="inline-url" href="https://huggingface.co/nari-labs/Qwen3.8-27B-NariQ-GGUF" target="_blank" rel="noopener">https://huggingface.co/nari-labs/Qwen3.8-27B-NariQ-GGUF</a></td></tr></tbody></table></details>
+
+<section class="masthead">
+  <div class="masthead-meta">
+    <span class="stamp-pill">DAILY AI JOURNAL · 每日一刊</span>
+    <span>TUE · 24 NOV 2026 · 約 6 分鐘讀完</span>
+  </div>
+  <div class="masthead-hero">
+    <div>
+      <h1 class="journal-name">EveryNews<span>.</span></h1>
+      <p class="journal-sub">把每天真正值得讀的一手技術博客、論文與財報對完帳，寫成一份連貫好讀的同行讀報雜誌。</p>
+    </div>
+    <div class="issue-box">
+      <span class="ib-kicker">ISSUE NO. 015 · 週二</span>
+      <div class="ib-date">2026-11-24</div>
+      <p class="stat">6 篇快訊 · 13 張圖版 · 2 篇專欄</p>
+    </div>
+  </div>
+</section>
+
+<nav class="jump jump-compat" aria-hidden="true"><a href="#glm-54-loop">① 同一批參數，跑第二遍</a><a href="#openai-cisco-shirudo">② 補丁還要等幾天幾週</a><a href="#anthropic-efs-zdr">③ 資料留在客戶那裡</a><a href="#ant-bailing-med">④ 一千兩百四十億，能放進筆電</a><a href="#sierra-series-f">⑤ 估值半年翻了一倍</a><a href="#nariq-qwen27b">⑥ 十吉位元組，跑同一個模型</a></nav>
+
+<div class="mag-shell">
+  <aside class="toc-rail" aria-label="本期目錄">
+    <div class="toc-head"><span>IN THIS ISSUE</span><span>目錄</span></div>
+    
+  <ul class="toc-list">
+    <li><a class="toc-link" href="#glm-54-loop" data-toc="glm-54-loop"><span class="toc-no">01</span><span>同一批參數，跑第二遍</span></a></li><li><a class="toc-link" href="#openai-cisco-shirudo" data-toc="openai-cisco-shirudo"><span class="toc-no">02</span><span>補丁還要等幾天幾週</span></a></li><li><a class="toc-link" href="#anthropic-efs-zdr" data-toc="anthropic-efs-zdr"><span class="toc-no">03</span><span>資料留在客戶那裡</span></a></li><li><a class="toc-link" href="#ant-bailing-med" data-toc="ant-bailing-med"><span class="toc-no">04</span><span>一千兩百四十億，能放進筆電</span></a></li><li><a class="toc-link" href="#sierra-series-f" data-toc="sierra-series-f"><span class="toc-no">05</span><span>估值半年翻了一倍</span></a></li><li><a class="toc-link" href="#nariq-qwen27b" data-toc="nariq-qwen27b"><span class="toc-no">06</span><span>十吉位元組，跑同一個模型</span></a></li>
+  </ul>
+  <div class="toc-sec-label">ESSAYS · 深度專欄</div>
+         <ul class="toc-list">
+           <li><a class="toc-link" href="#lect-01" data-toc="lect-01"><span class="toc-no">E1</span><span>同一組權重跑兩遍，算的是哪筆帳</span></a></li><li><a class="toc-link" href="#lect-02" data-toc="lect-02"><span class="toc-no">E2</span><span>把金鑰還給客戶，告警也一起還回去</span></a></li>
+         </ul>
+
+    <div class="toc-kbd">快捷鍵 <kbd>J</kbd> <kbd>K</kbd> 上下篇 · <kbd>T</kbd> 夜讀</div>
+  </aside>
+
+  <main class="mag-main">
+    <section class="dispatches">
+      <article class="story reveal is-lead" id="glm-54-loop" data-spy="glm-54-loop">
+  <div class="story-meta">
+    <span class="story-folio">01</span>
+    <span class="story-rubric">Z.ai</span>
+    <span class="lead-badge">COVER STORY · 本期頭條</span>
+  </div>
+  <h3 class="story-title">同一批參數，跑第二遍</h3>
+  <div class="plate-wrap">
+    <div class="strip strip-3"><figure class="plate">
+            <a class="shot" href="cards/20261124/01-glm-54-loop-01.webp" data-group="glm-54-loop" data-index="0" data-caption="① 同一批參數，跑第二遍 — 圖版 1/3">
+              <img src="cards/20261124/01-glm-54-loop-01.webp" alt="同一批參數，跑第二遍" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 01.1</span><span>01 / 03</span></figcaption>
+          </figure><figure class="plate">
+            <a class="shot" href="cards/20261124/01-glm-54-loop-02.webp" data-group="glm-54-loop" data-index="1" data-caption="① 同一批參數，跑第二遍 — 圖版 2/3">
+              <img src="cards/20261124/01-glm-54-loop-02.webp" alt="同一批參數，跑第二遍" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 01.2</span><span>02 / 03</span></figcaption>
+          </figure><figure class="plate">
+            <a class="shot" href="cards/20261124/01-glm-54-loop-03.webp" data-group="glm-54-loop" data-index="2" data-caption="① 同一批參數，跑第二遍 — 圖版 3/3">
+              <img src="cards/20261124/01-glm-54-loop-03.webp" alt="同一批參數，跑第二遍" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 01.3</span><span>03 / 03</span></figcaption>
+          </figure></div>
+  </div>
+  <div class="story-body">
+    <div class="post"><p>Z.ai 昨天發了 GLM-5.4，做法挺少見的，它沒往模型裡繼續堆新參數，而是把原來 GLM-5 的二十八層在一次推理裡反覆跑兩遍，讓同一組權重對著剛算完的中間結果再改一輪。官方拿 30B 做過同參數對照，多花大概一成訓練算力，換來多數評測裡的回答平均短了一到一成四。這套思路在顯存吃緊的環境裡確實討巧，只是博客裡喊出可比兩三萬億參數模型時沒附完整分數表，API 跟權重也都還沒放出來，現階段還只能先看架構，分數得等真正開源後再說。</p></div>
+    <div class="story-actions">
+      <a class="src-btn" href="https://z.ai/blog/glm-5.4" target="_blank" rel="noopener">
+              <span>閱讀一手原文</span>
+              <small>z.ai</small>
+              <i aria-hidden="true">↗</i>
+            </a>
+      <button type="button" class="share-btn" data-copy="#glm-54-loop">複製本節連結</button>
+    </div>
+    <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-glm-54-loop">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">11 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-glm-54-loop">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>時間</th><td>2026 年 11 月 23 日</td></tr><tr><th>主體</th><td>Z.ai，智譜</td></tr><tr><th>架構</th><td>Loop Transformer，把 GLM-5 基礎模型的 28 層跑兩次，權重共享</td></tr><tr><th>規模</th><td>750B 參數</td></tr><tr><th>對標</th><td>公司自述智能水準 comparable to 2T-3T parameter models</td></tr><tr><th>對照</th><td>30B 同參數實驗，循環版比非循環版多花約 10% 訓練算力</td></tr><tr><th>輸出</th><td>GPQA-Diamond 與 MMLU-Pro 等多數基準上，平均輸出短 10% 至 14%</td></tr><tr><th>吞吐</th><td>離峰最高 200 tokens/s，高峰 70 至 80 tokens/s</td></tr><tr><th>開放</th><td>API 標註 Coming Soon，權重稱完成安全加固後開源</td></tr><tr><th>邊界</th><td>博客未附完整評測分數表與對標模型版本清單</td></tr><tr><th>來源</th><td><a class="inline-url" href="https://z.ai/blog/glm-5.4" target="_blank" rel="noopener">https://z.ai/blog/glm-5.4</a></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+  </div>
+</article><article class="story reveal" id="openai-cisco-shirudo" data-spy="openai-cisco-shirudo">
+  <div class="story-meta">
+    <span class="story-folio">02</span>
+    <span class="story-rubric">OpenAI 與 Cisco</span>
+    
+  </div>
+  <h3 class="story-title">補丁還要等幾天幾週</h3>
+  <div class="plate-wrap">
+    <div class="strip strip-2"><figure class="plate">
+            <a class="shot" href="cards/20261124/02-openai-cisco-shirudo-01.webp" data-group="openai-cisco-shirudo" data-index="0" data-caption="② 補丁還要等幾天幾週 — 圖版 1/2">
+              <img src="cards/20261124/02-openai-cisco-shirudo-01.webp" alt="補丁還要等幾天幾週" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 02.1</span><span>01 / 02</span></figcaption>
+          </figure><figure class="plate">
+            <a class="shot" href="cards/20261124/02-openai-cisco-shirudo-02.webp" data-group="openai-cisco-shirudo" data-index="1" data-caption="② 補丁還要等幾天幾週 — 圖版 2/2">
+              <img src="cards/20261124/02-openai-cisco-shirudo-02.webp" alt="補丁還要等幾天幾週" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 02.2</span><span>02 / 02</span></figcaption>
+          </figure></div>
+  </div>
+  <div class="story-body">
+    <div class="post"><p>線上 Linux 伺服器碰上高危零日漏洞，最難熬的往往是等官方出補丁、再等維運排妥維護窗口重啟機器那幾天。OpenAI 跟 Cisco 聯合開源的 Shirudo 專門補這段空窗，直接借 eBPF 把臨時攔截規則熱掛進正在跑的內核裡，全程不用停機。</p><p>官方示範裡讓 Codex 寫了一層參數檢查套在 Java 解碼器上，當場攔住一次 Java4Shell 攻擊。為了防止熱掛載本身變成新後門，規則進內核前必須過簽名驗證，底層硬體也會同步留下一筆審計記錄。</p></div>
+    <div class="story-actions">
+      <a class="src-btn" href="https://openai.com/index/introducing-shirudo/" target="_blank" rel="noopener">
+              <span>閱讀一手原文</span>
+              <small>openai.com</small>
+              <i aria-hidden="true">↗</i>
+            </a>
+      <button type="button" class="share-btn" data-copy="#openai-cisco-shirudo">複製本節連結</button>
+    </div>
+    <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-openai-cisco-shirudo">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">7 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-openai-cisco-shirudo">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>時間</th><td>2026 年 11 月 23 日</td></tr><tr><th>主體</th><td>OpenAI 與 Cisco</td></tr><tr><th>產品</th><td>Shirudo，日語意為盾，開源運行時</td></tr><tr><th>機制</th><td>以 eBPF 把臨時防護掛到運行中的 Linux 內核，無須打補丁或重啟</td></tr><tr><th>示範</th><td>Codex 生成檢查邏輯掛載到 Java 解碼器，擋下一次 Java4Shell 攻擊</td></tr><tr><th>驗證</th><td>防護載入前經簽名驗證，硬體層留存審計記錄</td></tr><tr><th>來源</th><td><a class="inline-url" href="https://openai.com/index/introducing-shirudo/" target="_blank" rel="noopener">https://openai.com/index/introducing-shirudo/</a></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+  </div>
+</article><article class="story reveal" id="anthropic-efs-zdr" data-spy="anthropic-efs-zdr">
+  <div class="story-meta">
+    <span class="story-folio">03</span>
+    <span class="story-rubric">Anthropic</span>
+    
+  </div>
+  <h3 class="story-title">資料留在客戶那裡</h3>
+  <div class="plate-wrap">
+    <div class="strip strip-2"><figure class="plate">
+            <a class="shot" href="cards/20261124/03-anthropic-efs-zdr-01.webp" data-group="anthropic-efs-zdr" data-index="0" data-caption="③ 資料留在客戶那裡 — 圖版 1/2">
+              <img src="cards/20261124/03-anthropic-efs-zdr-01.webp" alt="資料留在客戶那裡" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 03.1</span><span>01 / 02</span></figcaption>
+          </figure><figure class="plate">
+            <a class="shot" href="cards/20261124/03-anthropic-efs-zdr-02.webp" data-group="anthropic-efs-zdr" data-index="1" data-caption="③ 資料留在客戶那裡 — 圖版 2/2">
+              <img src="cards/20261124/03-anthropic-efs-zdr-02.webp" alt="資料留在客戶那裡" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 03.2</span><span>02 / 02</span></figcaption>
+          </figure></div>
+  </div>
+  <div class="story-body">
+    <div class="post"><p>大公司法務採購外部模型最常卡在資料駐留上，Anthropic 新發的 EFS 方案乾脆把提示詞和輸出直接存回客戶自家的 S3、Azure Blob 或 GCS，加密金鑰跟審計日誌全歸企業自己管。</p><p>不過資料搬回家以後，安全責任也跟著搬回去了。自動系統仍會掃一段滾動窗口的流量盯防嚴重濫用，一旦觸發紅燈，告警直接發給客戶自己的安全團隊接手，Anthropic 那頭不再派人人工審查。參與設計的一百多家公司裡有四分之一是財富百強，沒有專職安全值班人手的小團隊，簽這份方案前得先想好告警響了誰來處理。</p></div>
+    <div class="story-actions">
+      <a class="src-btn" href="https://www.anthropic.com/news/enterprise-frontier-safeguards" target="_blank" rel="noopener">
+              <span>閱讀一手原文</span>
+              <small>anthropic.com</small>
+              <i aria-hidden="true">↗</i>
+            </a>
+      <button type="button" class="share-btn" data-copy="#anthropic-efs-zdr">複製本節連結</button>
+    </div>
+    <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-anthropic-efs-zdr">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">9 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-anthropic-efs-zdr">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>時間</th><td>2026 年 11 月 23 日</td></tr><tr><th>主體</th><td>Anthropic</td></tr><tr><th>產品</th><td>Enterprise Frontier Safeguards，簡稱 EFS</td></tr><tr><th>儲存</th><td>提示詞與輸出存於客戶自管雲端（S3、Azure Blob、GCS），金鑰與存取政策歸客戶</td></tr><tr><th>監控</th><td>自動系統分析滾動窗口流量，偵測嚴重濫用訊號</td></tr><tr><th>告警</th><td>直接發送給客戶安全團隊處置，官方稱不需 Anthropic 人工審查</td></tr><tr><th>客戶</th><td>一百多家企業參與設計，財富百強佔四分之一</td></tr><tr><th>推出</th><td>分階段推出，目標今年秋天廣泛可用，未公布具體日期</td></tr><tr><th>來源</th><td><a class="inline-url" href="https://www.anthropic.com/news/enterprise-frontier-safeguards" target="_blank" rel="noopener">https://www.anthropic.com/news/enterprise-frontier-safeguards</a></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+  </div>
+</article><article class="story reveal" id="ant-bailing-med" data-spy="ant-bailing-med">
+  <div class="story-meta">
+    <span class="story-folio">04</span>
+    <span class="story-rubric">螞蟻</span>
+    
+  </div>
+  <h3 class="story-title">一千兩百四十億，能放進筆電</h3>
+  <div class="plate-wrap">
+    <div class="strip strip-2"><figure class="plate">
+            <a class="shot" href="cards/20261124/04-ant-bailing-med-01.webp" data-group="ant-bailing-med" data-index="0" data-caption="④ 一千兩百四十億，能放進筆電 — 圖版 1/2">
+              <img src="cards/20261124/04-ant-bailing-med-01.webp" alt="一千兩百四十億，能放進筆電" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 04.1</span><span>01 / 02</span></figcaption>
+          </figure><figure class="plate">
+            <a class="shot" href="cards/20261124/04-ant-bailing-med-02.webp" data-group="ant-bailing-med" data-index="1" data-caption="④ 一千兩百四十億，能放進筆電 — 圖版 2/2">
+              <img src="cards/20261124/04-ant-bailing-med-02.webp" alt="一千兩百四十億，能放進筆電" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 04.2</span><span>02 / 02</span></figcaption>
+          </figure></div>
+  </div>
+  <div class="story-body">
+    <div class="post"><p>螞蟻在廣州阿福醫療健康生態大會上一口氣端出百靈醫療家族四款模型，分別管多模態理解、醫學推理、風險預測和安全防護，其中 flash 款能接一百萬 token 長病歷，最小的 air-VL 總參數一千兩百四十億、每次只激活五十五億，新聞稿說能直接塞進筆電跑。稍微留個心眼的地方在於會場通稿宣稱 air-VL 拿了多項醫療評測全球第一，翻遍整篇報導卻連一個具體榜單名字和對照分數都沒給出來。</p></div>
+    <div class="story-actions">
+      <a class="src-btn" href="https://t.cj.sina.com.cn/articles/view/5182171545/134e1a99902002lr5z" target="_blank" rel="noopener">
+              <span>閱讀一手原文</span>
+              <small>t.cj.sina.com.cn</small>
+              <i aria-hidden="true">↗</i>
+            </a>
+      <button type="button" class="share-btn" data-copy="#ant-bailing-med">複製本節連結</button>
+    </div>
+    <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-ant-bailing-med">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">8 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-ant-bailing-med">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>時間</th><td>2026 年 11 月 23 日</td></tr><tr><th>主體</th><td>螞蟻，百靈醫療健康大模型家族</td></tr><tr><th>場合</th><td>2026 螞蟻阿福醫療健康生態大會，廣州</td></tr><tr><th>產品</th><td>四款模型，分別負責多模態理解、醫學推理、風險預測與安全防護</td></tr><tr><th>規模</th><td>最小款 air-VL 總參數 124B、激活 5.5B，宣稱可部署於筆記型電腦</td></tr><tr><th>上下文</th><td>flash 款支援 100 萬 token 上下文</td></tr><tr><th>邊界</th><td>官方稱 air-VL 在多項醫療評測排全球第一，報導未公布榜單名稱與具體分數</td></tr><tr><th>來源</th><td><a class="inline-url" href="https://t.cj.sina.com.cn/articles/view/5182171545/134e1a99902002lr5z" target="_blank" rel="noopener">https://t.cj.sina.com.cn/articles/view/5182171545/134e1a99902002lr5z</a></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+  </div>
+</article><article class="story reveal" id="sierra-series-f" data-spy="sierra-series-f">
+  <div class="story-meta">
+    <span class="story-folio">05</span>
+    <span class="story-rubric">Sierra</span>
+    
+  </div>
+  <h3 class="story-title">估值半年翻了一倍</h3>
+  <div class="plate-wrap">
+    <div class="strip strip-2"><figure class="plate">
+            <a class="shot" href="cards/20261124/05-sierra-series-f-01.webp" data-group="sierra-series-f" data-index="0" data-caption="⑤ 估值半年翻了一倍 — 圖版 1/2">
+              <img src="cards/20261124/05-sierra-series-f-01.webp" alt="估值半年翻了一倍" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 05.1</span><span>01 / 02</span></figcaption>
+          </figure><figure class="plate">
+            <a class="shot" href="cards/20261124/05-sierra-series-f-02.webp" data-group="sierra-series-f" data-index="1" data-caption="⑤ 估值半年翻了一倍 — 圖版 2/2">
+              <img src="cards/20261124/05-sierra-series-f-02.webp" alt="估值半年翻了一倍" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 05.2</span><span>02 / 02</span></figcaption>
+          </figure></div>
+  </div>
+  <div class="story-body">
+    <div class="post"><p>Bret Taylor 和 Clay Bavor 創辦的企業客服代理公司 Sierra 剛拿完 17.5 億美元 F 輪融資，Greenoaks 與 Lightspeed 領投，估值在半年內翻了一倍站上三百億。撐住這個高估值的核心數字是公司披露年化收入已突破四億美元，光第三季單季就新簽下一億五千萬。老股東幾乎全數跟投，資本算的顯然是大型企業把整條人工客服外包線換成代理後的長期年費帳單。</p></div>
+    <div class="story-actions">
+      <a class="src-btn" href="https://sierra.ai/blog/series-f-30b" target="_blank" rel="noopener">
+              <span>閱讀一手原文</span>
+              <small>sierra.ai</small>
+              <i aria-hidden="true">↗</i>
+            </a>
+      <button type="button" class="share-btn" data-copy="#sierra-series-f">複製本節連結</button>
+    </div>
+    <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-sierra-series-f">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">7 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-sierra-series-f">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>時間</th><td>2026 年 11 月 23 日</td></tr><tr><th>主體</th><td>Sierra，創辦人 Bret Taylor 與 Clay Bavor</td></tr><tr><th>輪次</th><td>Series F，融資 17.5 億美元</td></tr><tr><th>估值</th><td>300 億美元，較半年前翻倍</td></tr><tr><th>投資方</th><td>Greenoaks 與 Lightspeed 領投，既有投資人多數加碼</td></tr><tr><th>收入</th><td>公司稱年化收入已破 4 億美元，第三季單季新增 1.5 億美元</td></tr><tr><th>來源</th><td><a class="inline-url" href="https://sierra.ai/blog/series-f-30b" target="_blank" rel="noopener">https://sierra.ai/blog/series-f-30b</a></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+  </div>
+</article><article class="story reveal" id="nariq-qwen27b" data-spy="nariq-qwen27b">
+  <div class="story-meta">
+    <span class="story-folio">06</span>
+    <span class="story-rubric">Nari Labs</span>
+    
+  </div>
+  <h3 class="story-title">十吉位元組，跑同一個模型</h3>
+  <div class="plate-wrap">
+    <div class="strip strip-2"><figure class="plate">
+            <a class="shot" href="cards/20261124/06-nariq-qwen27b-01.webp" data-group="nariq-qwen27b" data-index="0" data-caption="⑥ 十吉位元組，跑同一個模型 — 圖版 1/2">
+              <img src="cards/20261124/06-nariq-qwen27b-01.webp" alt="十吉位元組，跑同一個模型" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 06.1</span><span>01 / 02</span></figcaption>
+          </figure><figure class="plate">
+            <a class="shot" href="cards/20261124/06-nariq-qwen27b-02.webp" data-group="nariq-qwen27b" data-index="1" data-caption="⑥ 十吉位元組，跑同一個模型 — 圖版 2/2">
+              <img src="cards/20261124/06-nariq-qwen27b-02.webp" alt="十吉位元組，跑同一個模型" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 06.2</span><span>02 / 02</span></figcaption>
+          </figure></div>
+  </div>
+  <div class="story-body">
+    <div class="post"><p>Nari Labs 用真實編碼代理軌跡做校準，把原本 53.8 GB 的 Qwen3.8-27B 壓成了 10.12 GB 的三比特 GGUF 檔，在 DeepSWE 基準上跑出 41.0 分，反倒比 BF16 原版的 39.8 分還高出一截。</p><p>想立刻拉回本機試跑的人得先看清相容性限制。這套量化改了底層張量格式，目前 Ollama、LM Studio 和原版 llama.cpp 全都讀不了，必須自己編譯作者維護的專用分支；而且在 18 GB 記憶體的 M3 Pro 上每秒只能吐 3.8 個 token，AMD 跟 Intel 顯卡也還沒排上支援。</p></div>
+    <div class="story-actions">
+      <a class="src-btn" href="https://huggingface.co/nari-labs/Qwen3.8-27B-NariQ-GGUF" target="_blank" rel="noopener">
+              <span>閱讀一手原文</span>
+              <small>huggingface.co</small>
+              <i aria-hidden="true">↗</i>
+            </a>
+      <button type="button" class="share-btn" data-copy="#nariq-qwen27b">複製本節連結</button>
+    </div>
+    <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-nariq-qwen27b">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">9 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-nariq-qwen27b">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>時間</th><td>模型卡 2026 年 11 月 20 日，11 月 24 日仍在 HF 趨勢榜與 HN 首頁</td></tr><tr><th>主體</th><td>Nari Labs，作者 Doyeob (Toby) Kim</td></tr><tr><th>模型</th><td>NariQ v1，Qwen3.8-27B 的 GGUF 量化，Apache-2.0</td></tr><tr><th>檔案</th><td>3-bit 10.12 GB、2.5-bit 8.44 GB、2-bit 6.75 GB；BF16 基線 53.8 GB</td></tr><tr><th>成績</th><td>DeepSWE v1，BF16 39.8、3-bit 41.0、2.5-bit 41.9、2-bit 28.6</td></tr><tr><th>速度</th><td>RTX PRO 6000，4K 上下文，3-bit 88.9 tokens/s</td></tr><tr><th>硬體</th><td>需自家 llama.cpp fork；Ollama、LM Studio 與原版 llama.cpp 讀不了新張量；AMD 與 Intel 未支援</td></tr><tr><th>邊界</th><td>M3 Pro 18 GB 的 3-bit 只有 3.8 tokens/s；視覺塔與 KV cache 仍 BF16；2-bit 明顯變弱</td></tr><tr><th>來源</th><td><a class="inline-url" href="https://huggingface.co/nari-labs/Qwen3.8-27B-NariQ-GGUF" target="_blank" rel="noopener">https://huggingface.co/nari-labs/Qwen3.8-27B-NariQ-GGUF</a></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+  </div>
 </article>
-  <section class="lects"><h2>長文講解</h2><article class="lect" id="lect-01">
-  <h3>講① 同一層，跑兩遍</h3>
-  <dl class="meta"><dt>原文</dt><dd>Z.ai · GLM-5.4: Toward Generalized Coding with Our First Loop Transformer · 2026-11-23 · <a class="inline-url" href="https://z.ai/blog/glm-5.4" target="_blank" rel="noopener">https://z.ai/blog/glm-5.4</a></dd><dt>判據</dt><dd>能照做（把循環次數、算力、輸出長度分開看）· 有邊界（對標分數與權重都未公開）· 時效（循環架構的取捨往後幾季都還在）</dd><dt>局面</dt><dd>中文標題多寫七千五百億打兩三萬億，很少把多出的一成算力和變短的輸出放在同一段</dd></dl>
-  <div class="prose"><p>11 月 23 日這篇技術博客，值得從二十八層跑兩次那句讀起。標準 Transformer 每層在一次前向裡只跑一回，Loop Transformer 讓一組共享權重的層反覆跑，拿前面的隱藏狀態再改一遍。GLM-5.4 的做法是把 GLM-5 的二十八層跑兩次，參數量沒變，網絡算更深了。多出來的深度來自同一組權重再走一遍，不是靠堆新的權重買的。</p><p>先看深度和參數怎麼分開。官方在 1B、4B、30B、750B 四檔上逐級驗證過這套架構，三十B 的對照實驗裡，循環版和非循環版參數完全相同，多花的訓練算力約一成。這個對照把兩件事拆開了。想讓模型顯得更深，有多一條路，不必先問显存夠不夠。</p><p>接著要把分數和代價放在同一杆秤上。博客說在 GPQA-Diamond 和 MMLU-Pro 上，多數基準的輸出平均短了一到一成四。回答變短，在多步驟任務裡通常直接等於省下的 token。官方又給了吞吐數字，離峰最高每秒兩百個 token，高峰七十到八十。這幾個數放在同一段，才看得出循環買到了什麼，也看得出它要多付什麼。</p><p>三處工程改動寫得很具體。每輪有獨立的 per-token gate，第一輪保守寫入，第二輪放開；第二輪复用第一輪選出的稀疏 KV，只保留滑動窗口裡新生成的；注意力索引也直接复用，不再重算。到了一百萬上下文，多一輪的成本因此只是一個滑動窗口，不是整個上下文的快取。這段是博客裡密度最高的部分，也是和單純加深最不一樣的地方。</p><p>讀到結論那一段要慢一點。智能水平 comparable to 2T-3T parameter models 是公司自述，博客沒有給出完整的評測分數表，沒有說是哪幾個榜、哪幾個版本。權重到現在也沒放，API 標的是 Coming Soon，開源要等安全加固完成。七千五百億這個數是真的，兩三萬億那個比較還沒有第三方分數托著。兩者之间的距离，文章自己留白了。</p><p>要照著看這類發布，可以先把循環次數、多花的訓練算力、輸出縮短多少這幾欄記下來，再去看那些形容詞。博客自己在末尾也說，長期目標是讓智能體和防禦者快速驗證保護措施，現在只是第一步。讀者能做的是把這一步的帳先算清楚。</p></div>
-  <details class="facts"><summary>事實表 7 行</summary><table><tbody><tr><th>改造</th><td>把 GLM-5 基礎模型的 28 層跑兩次，權重共享</td></tr><tr><th>規模</th><td>750B 參數</td></tr><tr><th>對標</th><td>公司自述 comparable to 2T-3T parameter models</td></tr><tr><th>算力</th><td>相同參數量下多約 10% 訓練算力</td></tr><tr><th>輸出</th><td>平均長度降 10-14%</td></tr><tr><th>吞吐</th><td>離峰最高 200 tokens/s，峰值 70-80 tokens/s</td></tr><tr><th>開放</th><td>API Coming Soon，權重稱完成安全加固後開源</td></tr></tbody></table></details>
-  <p class="best"><strong>最值得看</strong> 從第 2 段讀起，把循環次數、多花算力、輸出變短三欄分開記，一欄放公司自述的對標，一欄留給還沒公開的分數</p>
-</article><article class="lect" id="lect-02">
-  <h3>講② 讓客戶自己拿著鑰匙</h3>
-  <dl class="meta"><dt>原文</dt><dd>Anthropic · Developing Enterprise Frontier Safeguards with our customers · 2026-11-23 · <a class="inline-url" href="https://www.anthropic.com/news/enterprise-frontier-safeguards" target="_blank" rel="noopener">https://www.anthropic.com/news/enterprise-frontier-safeguards</a></dd><dt>判據</dt><dd>能照做（把資料放哪、誰來告警、誰來處置分開看）· 有邊界（分階段推出，覆蓋範圍有限）· 時效（資料托管和濫用檢測的取捨短期不會消失）</dd><dt>局面</dt><dd>中文標題多寫零資料保留，很少把安全監控要存一段滾動窗口這件事寫在一起</dd></dl>
-  <div class="prose"><p>Anthropic 在 11 月 23 日公佈的這套方案，可以從資料放在哪裡讀起。EFS 把提示詞和輸出存到客戶自己控管的雲端儲存，亞馬遜 S3、微軟 Azure Blob 或 Google Cloud Storage 都在支援範圍裡。加密金鑰、存取政策、審計日誌，樣樣都歸客戶。Anthropic 在這裡讓出的，是資料的托管權。企業原本要接受的取捨，被拆成了一道可以自己選的題。</p><p>再看不看內容怎麼抓濫用。官方的答案是自動系統分析一段滾動窗口的流量，從活動資料、流量和輸入輸出裡找嚴重濫用的訊號，例如大規模網路攻擊或生物武器相關的操作。這裡有一處取捨寫得很直白，有效的檢測需要把資料存一段有意義的時間，零保留和跨請求檢測很難同時靠删掉資料達成。零資料保留在這裡指的是模型公司不留存，不是資料本身不曾存在。</p><p>再往下看告警交給誰。警示直接發給客戶，後面由客戶的安全團隊接手。Anthropic 只收到警示的類別和嚴重程度，不碰客戶資料。產品頁面上有一句話把邊界畫得很清楚，這個方案是自動化安全監控，不需要 Anthropic 的人工審查。審查的責任從模型公司移到了企業自己，這也是這套方案最容易被低估的 cost。</p><p>參與設計的企業名單也給了規模。一百多家企業，其中財富百強的四分之一。這批企業的性格，更像是既有合規要求、又有預算去自己存資料的那一類。名單本身不是背書，它只說明這個方案是按誰的需求長出來的。小團隊讀到這裡，要先確認自己有沒有接住這份責任的人。</p><p>節奏要另算。EFS 目標在今年秋天分階段推出，官方沒有給出具體日期。過渡期裡，符合資格的客戶在 Fable 5 和 Fable 5.1 上先拿到零資料保留。舊的安排是三十天保留，新的方案才把托管權交出去。想現在就用的團隊，能拿到的只是過渡安排，不是最終形態。</p><p>要判斷自己的場景適不適合，先想清楚資料現在放在誰的帳號裡，警示最後誰來點，出了事了誰來給監管一個說法。這幾處都有答案，再去看那份申請表。覆蓋範圍也要一併確認，官方文件列出的是 Claude Code、Claude Enterprise 和幾個雲端平台的上線入口，不是每一個 Claude 產品都在裡頭。</p></div>
-  <details class="facts"><summary>事實表 8 行</summary><table><tbody><tr><th>方案</th><td>Enterprise Frontier Safeguards，簡稱 EFS</td></tr><tr><th>資料</th><td>存在客戶控制的雲端基礎設施，S3、Azure Blob、GCS</td></tr><tr><th>金鑰</th><td>客戶自己的加密金鑰、存取政策、審計日誌</td></tr><tr><th>監控</th><td>系統分析滾動窗口流量，找嚴重濫用訊號</td></tr><tr><th>告警</th><td>直接發給客戶，由客戶人員處置</td></tr><tr><th>人工</th><td>官方稱不需 Anthropic 人工審查</td></tr><tr><th>客戶</th><td>一百多家，財富百強佔四分之一</td></tr><tr><th>推出</th><td>分階段，目標今年秋天廣泛可用</td></tr></tbody></table></details>
-  <p class="best"><strong>最值得看</strong> 從第 1 段讀起，沿著資料落在哪、誰來監控、誰來處置往下看，一欄記客戶要接手哪些動作</p>
-</article></section>
-</main>
-<footer class="foot"><p>文稿依 everynews-editorial 規範撰寫並經閘門校驗。配圖已轉碼為外置 WebP（cards/20261124/）。</p></footer>
-<div class="lightbox" id="lb" hidden><img alt=""></div>
+    </section>
+
+    <section class="feature-well reveal">
+            <div class="feature-header">
+              <h2>深度專欄 · Feature Essays</h2>
+              <span>DEEP DIVES · 每日兩篇</span>
+            </div>
+            <article class="essay reveal" id="lect-01" data-spy="lect-01">
+  <div class="essay-kicker">
+    <span class="essay-badge">ESSAY 01</span>
+    <span class="essay-stat">658 漢字 · 深度拆解</span>
+  </div>
+  <h3 class="essay-title">同一組權重跑兩遍，算的是哪筆帳</h3>
+  <div class="essay-brief"><div class="brief-cell"><span class="bk">原文</span><span class="bv">Z.ai · GLM-5.4: Toward Generalized Coding with Our First Loop Transformer · 2026-11-23 · <a class="inline-url" href="https://z.ai/blog/glm-5.4" target="_blank" rel="noopener">https://z.ai/blog/glm-5.4</a></span></div><div class="brief-cell"><span class="bk">判據</span><span class="bv">能照做（拆開訓練增量、輸出長度與開放進度來核技術博客）· 有邊界（評測分數表與權重均未公開）· 時效（共享權重循環深度在顯存受限的推理場景會長期反覆出現）</span></div><div class="brief-cell"><span class="bk">局面</span><span class="bv">多數轉述只抄「七千五百億打兩三萬億」，沒把多花一成訓練算力、輸出變短跟稀疏快取復用放回同一筆帳裡算</span></div></div>
+  <div class="essay-prose"><p class="essay-lead">過去想讓大語言模型變深，最省心的辦法就是往上疊新層，代價是參數和顯存一起往上衝。Z.ai 在 11 月 23 日放出的 GLM-5.4 博客換了個算盤，直接拿 GLM-5 原先那二十八層在一次前向裡跑兩遍，同一批權重先算完一輪隱藏狀態，再回頭把自己改寫一遍。這套 Loop Transformer 沒多塞任何參數，七千五百億參數留在原地，網路有效深度翻了一倍。</p><p>光聽原理很容易懷疑它只是把推理變慢了。官方在博客裡給了一組 30B 的同參數對照，把循環版和非循環版放在一起跑，循環版多花的訓練算力大約是一成。這組對照挺關鍵，因為它把「加參數」跟「加計算深度」這兩筆錢切開了。模型不用膨脹到裝不進單機顯存，靠多轉一圈也能換到一部分深層推理能力。</p><p>多轉一圈到底划算不划算，得跟著看輸出的長度。博客說在 GPQA-Diamond 和 MMLU-Pro 這類需要多步推理的題庫上，回答平均短了一到一成四。這件事放進實際呼叫帳單裡很有意思。代理跑一次複雜編碼任務動輒來回十幾輪，每輪少吐一成多廢話，省下來的延遲和費用正好拿去補多跑一輪前向的開銷。官方也報了自家機房的吞吐，離峰最高每秒兩百個 token，高峰落在七十到八十之間。</p><p>上下文拉到一百萬還不炸顯存，靠的是幾處快取改動。兩輪循環各自帶著獨立的 per-token gate，頭一輪收著寫，第二輪再放開。稀疏 KV 這塊更省事，後面那輪直接復用前面篩好的快取，只把滑動窗口裡新生成的內容補進去，連注意力索引都原樣沿用。上下文拉長時，多跑這輪只多背一個滑動窗口，不必把整份歷史再抄一遍。</p><p>話說回來，讀到最後一段還是得把腳步放慢。博客寫了智能水準可比兩三萬億參數模型，這句目前屬於公司自述，整篇文章沒附完整評測分數表，也沒交代對標的是哪幾家、哪個版本。權重還沒開源，官方說要等安全加固跑完，連 API 頁面上都掛著即將開放。等它真放出來，自己拿手頭的多步編碼題測一遍耗時跟輸出長度，比現在猜它到底打贏誰有用得多。</p></div>
+  <aside class="editor-note">
+          <div class="en-head"><span>EDITOR'S NOTE · 最值得看</span></div>
+          <p>從第 2 段 30B 同參數對照與稀疏 KV 復用那段讀起，把多花的一成訓練算力、縮短一成多的輸出，跟尚未公開的分數表並排對著看</p>
+        </aside>
+  <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-lect-01">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">7 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-lect-01">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>改造</th><td>把 GLM-5 基礎模型的 28 層跑兩次，權重共享</td></tr><tr><th>規模</th><td>750B 參數</td></tr><tr><th>對標</th><td>公司自述 comparable to 2T-3T parameter models</td></tr><tr><th>算力</th><td>相同參數量下多約 10% 訓練算力</td></tr><tr><th>輸出</th><td>平均長度降 10-14%</td></tr><tr><th>吞吐</th><td>離峰最高 200 tokens/s，峰值 70-80 tokens/s</td></tr><tr><th>開放</th><td>API Coming Soon，權重稱完成安全加固後開源</td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+</article><article class="essay reveal" id="lect-02" data-spy="lect-02">
+  <div class="essay-kicker">
+    <span class="essay-badge">ESSAY 02</span>
+    <span class="essay-stat">693 漢字 · 深度拆解</span>
+  </div>
+  <h3 class="essay-title">把金鑰還給客戶，告警也一起還回去</h3>
+  <div class="essay-brief"><div class="brief-cell"><span class="bk">原文</span><span class="bv">Anthropic · Developing Enterprise Frontier Safeguards with our customers · 2026-11-23 · <a class="inline-url" href="https://www.anthropic.com/news/enterprise-frontier-safeguards" target="_blank" rel="noopener">https://www.anthropic.com/news/enterprise-frontier-safeguards</a></span></div><div class="brief-cell"><span class="bk">判據</span><span class="bv">能照做（進企業採購前把儲存位置、濫用偵測窗口與告警責任拆開核對）· 有邊界（分階段推出，覆蓋產品線有限且要求客戶自備安全人手）· 時效（零資料保留與安全監控之間的結構拉扯短期不會消失）</span></div><div class="brief-cell"><span class="bk">局面</span><span class="bv">新聞標題多半只提「零資料保留」，漏掉滾動窗口留存與安全審查責任移轉給客戶這兩塊真實成本</span></div></div>
+  <div class="essay-prose"><p class="essay-lead">大公司法務跟 AI 供應商談合約，十次裡有八次卡在同一句話上，員工貼進去的程式碼和財報能不能別留在你們伺服器裡。Anthropic 11 月 23 日公佈的 Enterprise Frontier Safeguards 就是衝著這句話來的。它把提示詞和模型輸出直接寫回客戶自己管的雲端空間，亞馬遜 S3、微軟 Azure Blob 跟 Google Cloud Storage 都在清單裡，加密金鑰、存取權限和審計日誌全歸買方自己掌管。</p><p>資料搬回家以後，馬上會撞上另一個問題。模型公司不留紀錄，要是有人拿企業帳號去寫大規模網攻腳本或碰生物安全紅線，系統怎麼抓得出來。Anthropic 在文章裡沒有迴避這層衝突，直接承認跨請求的嚴重濫用偵測需要看一段時間的連續流量，資料刪得一乾二淨就沒法做有效分析。所以 EFS 的做法是在客戶控管的環境裡維持一段滾動窗口，由自動系統盯著活動流量和輸入輸出找高風險訊號。這裡的零資料保留說的是模型廠商不留份，資料在窗口期內仍然存在。</p><p>更讓買方得提前算清楚的，是系統真的響起紅燈以後誰來動手。舊方案裡異常紀錄會進到廠商的信任與安全隊列，EFS 改把告警直接發給企業自己的安全團隊，Anthropic 那頭只收到事件類別和嚴重程度，不碰原始對話，也不再做人工審查。託管權拿回來了，半夜點開告警、判斷是內部安全工程師在做滲透測試還是真的帳號外洩、決定要不要停權，這些活也一併回到買方工單裡。</p><p>看一眼參與設計的名單就知道這套方案是替誰長出來的。一百多家企業裡，財富百強佔了四分之一。這群客戶本來就有合規部門、雲端維運和全天候值班的安全團隊，缺的只是供應商把加密金鑰交回來。二三十人的創業公司如果跟著追這張單子，拿到託管權以後反而多出一套沒人盯的告警系統。</p><p>想現在簽進來的團隊還得看清時間表。EFS 目標在今年秋天分階段放開，具體日期未公布。眼下符合資格的客戶在 Fable 5 和 Fable 5.1 上先用零資料保留過渡，換掉原本三十天保留期，還不是完整形態。動筆簽約前別光看標題，先對照官方列出的 Claude Code、Claude Enterprise 跟幾個雲端入口，確認自己每天真在用的產品在不在名單裡。</p></div>
+  <aside class="editor-note">
+          <div class="en-head"><span>EDITOR'S NOTE · 最值得看</span></div>
+          <p>從第 1 段資料託管與滾動窗口監控的取捨讀起，順著看告警怎麼從廠商人工審查移交給客戶安全團隊</p>
+        </aside>
+  <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-lect-02">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">8 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-lect-02">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>方案</th><td>Enterprise Frontier Safeguards，簡稱 EFS</td></tr><tr><th>資料</th><td>存在客戶控制的雲端基礎設施，S3、Azure Blob、GCS</td></tr><tr><th>金鑰</th><td>客戶自己的加密金鑰、存取政策、審計日誌</td></tr><tr><th>監控</th><td>系統分析滾動窗口流量，找嚴重濫用訊號</td></tr><tr><th>告警</th><td>直接發給客戶，由客戶人員處置</td></tr><tr><th>人工</th><td>官方稱不需 Anthropic 人工審查</td></tr><tr><th>客戶</th><td>一百多家，財富百強佔四分之一</td></tr><tr><th>推出</th><td>分階段，目標今年秋天廣泛可用</td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+</article>
+          </section>
+  </main>
+</div>
+
+<nav class="issue-pager" id="issue-pager" aria-label="前後期翻頁"></nav>
+
+<footer class="foot">
+  <p><strong>EveryNews.</strong> · Issue No.015 · 每日 AI 讀報雜誌</p>
+  <p><a href="archive.html" style="text-decoration:underline">瀏覽全部往期刊物架 →</a></p>
+</footer>
+
+<button type="button" class="fab-toc" id="fab-toc">☰ 本期目錄</button>
+<div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+  <div class="mobile-sheet">
+    <div class="sheet-head"><strong>本期目錄 · Issue No.015</strong><button type="button" class="sheet-close" id="sheet-close">×</button></div>
+    
+  <ul class="toc-list">
+    <li><a class="toc-link" href="#glm-54-loop" data-toc="glm-54-loop"><span class="toc-no">01</span><span>同一批參數，跑第二遍</span></a></li><li><a class="toc-link" href="#openai-cisco-shirudo" data-toc="openai-cisco-shirudo"><span class="toc-no">02</span><span>補丁還要等幾天幾週</span></a></li><li><a class="toc-link" href="#anthropic-efs-zdr" data-toc="anthropic-efs-zdr"><span class="toc-no">03</span><span>資料留在客戶那裡</span></a></li><li><a class="toc-link" href="#ant-bailing-med" data-toc="ant-bailing-med"><span class="toc-no">04</span><span>一千兩百四十億，能放進筆電</span></a></li><li><a class="toc-link" href="#sierra-series-f" data-toc="sierra-series-f"><span class="toc-no">05</span><span>估值半年翻了一倍</span></a></li><li><a class="toc-link" href="#nariq-qwen27b" data-toc="nariq-qwen27b"><span class="toc-no">06</span><span>十吉位元組，跑同一個模型</span></a></li>
+  </ul>
+  <div class="toc-sec-label">ESSAYS · 深度專欄</div>
+         <ul class="toc-list">
+           <li><a class="toc-link" href="#lect-01" data-toc="lect-01"><span class="toc-no">E1</span><span>同一組權重跑兩遍，算的是哪筆帳</span></a></li><li><a class="toc-link" href="#lect-02" data-toc="lect-02"><span class="toc-no">E2</span><span>把金鑰還給客戶，告警也一起還回去</span></a></li>
+         </ul>
+
+  </div>
+</div>
+
+<div class="lightbox" id="lb" aria-hidden="true">
+  <button type="button" class="lb-close" id="lb-close" aria-label="關閉">×</button>
+  <button type="button" class="lb-nav lb-prev" id="lb-prev" aria-label="上一張">‹</button>
+  <div class="lb-stage"><img id="lb-img" alt=""></div>
+  <button type="button" class="lb-nav lb-next" id="lb-next" aria-label="下一張">›</button>
+  <div class="lb-bar" id="lb-cap"></div>
+</div>
+
+<div class="toast" id="toast">已複製連結</div>
+
 <script>
-document.addEventListener('click',(e)=>{const a=e.target.closest('.shot');const lb=document.getElementById('lb');
-if(a){e.preventDefault();const img=a.querySelector('img');if(img){lb.querySelector('img').src=img.src;lb.hidden=false;}}
-else if(!lb.hidden){lb.hidden=true;}});
-document.addEventListener('keydown',(e)=>{if(e.key==='Escape')document.getElementById('lb').hidden=true;});
+(function(){
+  var root = document.documentElement;
+  var tBtn = document.getElementById('theme-toggle');
+  var tLab = document.getElementById('theme-label');
+  function toggleTheme(){
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('everynews-theme', next); } catch(e){}
+    syncThemeLabel();
+  }
+  function syncThemeLabel(){
+    var dark = root.getAttribute('data-theme') === 'dark';
+    if (tLab) tLab.textContent = dark ? '紙本' : '夜讀';
+  }
+  syncThemeLabel();
+  if (tBtn) tBtn.addEventListener('click', toggleTheme);
+
+  var pBar = document.getElementById('progress-bar');
+  var pTxt = document.getElementById('read-pct');
+  function onScroll(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = h > 0 ? Math.min(100, Math.max(0, Math.round((window.scrollY / h) * 100))) : 0;
+    if (pBar) pBar.style.width = pct + '%';
+    if (pTxt) pTxt.textContent = pct + '%';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  var reveals = document.querySelectorAll('.reveal');
+  var spyTargets = Array.prototype.slice.call(document.querySelectorAll('[data-spy]'));
+  var activeSpyIdx = 0;
+
+  if ('IntersectionObserver' in window) {
+    var revObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) {
+          en.target.classList.add('is-visible');
+          revObs.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(function(el){ revObs.observe(el); });
+
+    var tocLinks = document.querySelectorAll('[data-toc]');
+    var spyObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) {
+          var id = en.target.getAttribute('data-spy');
+          var found = spyTargets.indexOf(en.target);
+          if (found !== -1) activeSpyIdx = found;
+          tocLinks.forEach(function(a){
+            a.classList.toggle('is-active', a.getAttribute('data-toc') === id);
+          });
+        }
+      });
+    }, { rootMargin: '-18% 0px -68% 0px' });
+    spyTargets.forEach(function(el){ spyObs.observe(el); });
+  } else {
+    reveals.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  document.querySelectorAll('.dossier-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var box = btn.closest('.dossier');
+      var open = box.getAttribute('data-open') === 'true';
+      box.setAttribute('data-open', open ? 'false' : 'true');
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+    });
+  });
+
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  function showToast(msg){
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.classList.add('is-on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('is-on'); }, 1800);
+  }
+  document.querySelectorAll('.share-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var hash = btn.getAttribute('data-copy') || '';
+      var url = location.origin + location.pathname + hash;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function(){ showToast('已複製本節連結'); });
+      } else {
+        location.hash = hash;
+        showToast('已定位至本節');
+      }
+    });
+  });
+
+  var drawer = document.getElementById('mobile-drawer');
+  var fab = document.getElementById('fab-toc');
+  var sClose = document.getElementById('sheet-close');
+  function closeDrawer(){ if (drawer) drawer.classList.remove('is-open'); }
+  if (fab && drawer) fab.addEventListener('click', function(){ drawer.classList.add('is-open'); });
+  if (sClose) sClose.addEventListener('click', closeDrawer);
+  if (drawer) {
+    drawer.addEventListener('click', function(e){
+      if (e.target === drawer || e.target.closest('[data-toc]')) closeDrawer();
+    });
+  }
+
+  var lb = document.getElementById('lb');
+  var lbImg = document.getElementById('lb-img');
+  var lbCap = document.getElementById('lb-cap');
+  var lbPrev = document.getElementById('lb-prev');
+  var lbNext = document.getElementById('lb-next');
+  var lbClose = document.getElementById('lb-close');
+  var shots = Array.prototype.slice.call(document.querySelectorAll('.shot'));
+  var curIdx = -1;
+
+  function openAt(idx){
+    if (!shots.length || idx < 0 || idx >= shots.length) return;
+    curIdx = idx;
+    var a = shots[curIdx];
+    lbImg.src = a.getAttribute('href') || a.querySelector('img').src;
+    lbCap.textContent = (a.getAttribute('data-caption') || '') + '  ·  全刊圖版 ' + (curIdx + 1) + ' / ' + shots.length;
+    lb.classList.add('is-open');
+    lbPrev.style.display = shots.length > 1 ? '' : 'none';
+    lbNext.style.display = shots.length > 1 ? '' : 'none';
+  }
+  function closeLb(){ lb.classList.remove('is-open'); curIdx = -1; }
+  shots.forEach(function(a, i){
+    a.addEventListener('click', function(e){ e.preventDefault(); openAt(i); });
+  });
+  if (lbPrev) lbPrev.addEventListener('click', function(e){ e.stopPropagation(); openAt((curIdx - 1 + shots.length) % shots.length); });
+  if (lbNext) lbNext.addEventListener('click', function(e){ e.stopPropagation(); openAt((curIdx + 1) % shots.length); });
+  if (lbClose) lbClose.addEventListener('click', closeLb);
+  if (lb) lb.addEventListener('click', function(e){ if (e.target === lb) closeLb(); });
+
+  document.addEventListener('keydown', function(e){
+    var tag = (e.target && e.target.tagName) || '';
+    if (lb && lb.classList.contains('is-open')) {
+      if (e.key === 'Escape') closeLb();
+      if (e.key === 'ArrowLeft') openAt((curIdx - 1 + shots.length) % shots.length);
+      if (e.key === 'ArrowRight') openAt((curIdx + 1) % shots.length);
+      return;
+    }
+    if (/INPUT|SELECT|TEXTAREA/.test(tag) || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.key === 't' || e.key === 'T') { toggleTheme(); showToast(root.getAttribute('data-theme') === 'dark' ? '已切換至夜讀模式' : '已切換至紙本模式'); }
+    if ((e.key === 'j' || e.key === 'J') && spyTargets.length) {
+      activeSpyIdx = Math.min(spyTargets.length - 1, activeSpyIdx + 1);
+      spyTargets[activeSpyIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    if ((e.key === 'k' || e.key === 'K') && spyTargets.length) {
+      activeSpyIdx = Math.max(0, activeSpyIdx - 1);
+      spyTargets[activeSpyIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+
+  window.addEventListener('DOMContentLoaded', function(){
+    var list = window.EVERYNEWS_ISSUES || [];
+    var pager = document.getElementById('issue-pager');
+    if (!pager || !list.length) return;
+    var curFile = '20261124.html';
+    var idx = list.findIndex(function(x){ return x.file === curFile; });
+    if (idx === -1) idx = 0;
+    var prevIssue = list[idx + 1];
+    var nextIssue = idx > 0 ? list[idx - 1] : null;
+    var html = '';
+    if (prevIssue) {
+      html += '<a class="pager-card prev" href="' + prevIssue.file + '"><small>← PREVIOUS ISSUE · 上一刊</small><strong>' + prevIssue.date + ' 期</strong></a>';
+    } else {
+      html += '<a class="pager-card prev" href="archive.html"><small>BACK ISSUES · 往期刊物架</small><strong>查看全部歷史期次</strong></a>';
+    }
+    if (nextIssue) {
+      html += '<a class="pager-card next" href="' + nextIssue.file + '"><small>NEXT ISSUE · 下一刊 →</small><strong>' + nextIssue.date + ' 期</strong></a>';
+    } else {
+      html += '<a class="pager-card next" href="archive.html"><small>ALL ISSUES · 共 ' + list.length + ' 期 →</small><strong>進入往期刊物架篩選</strong></a>';
+    }
+    pager.innerHTML = html;
+  });
+})();
 </script>
 </body>
 </html>

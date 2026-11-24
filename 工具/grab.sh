@@ -7,6 +7,8 @@
 #   ./grab.sh <slug> <url> --save 1 3   把第 1、3 张下到 img/<slug>-01.ext
 set -euo pipefail
 cd "$(dirname "$0")"
+export PWTEST_SOCKETS_DIR="/tmp/pw-en"
+mkdir -p "$PWTEST_SOCKETS_DIR"
 
 SLUG="${1:-}"
 URL="${2:-}"

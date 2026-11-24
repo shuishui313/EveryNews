@@ -1,0 +1,40 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "OpenAI × Cisco · 11-23",
+  "date": "2026.11.24",
+  "noImageReason": "官方發布頁無正文資訊圖，核心機制走流程圖卡呈現",
+  "slides": [
+    {
+      "type": "cover-min",
+      "kicker": "SYSTEMS SECURITY · 運行時防護",
+      "headline": ["補丁還沒到", "先掛一層盾"],
+      "accentLine": 1,
+      "sub": "OpenAI 與 Cisco 聯合開源 Shirudo，專補零日漏洞到重啟窗口之間的空窗。",
+      "num": "0",
+      "numLabel": "停機與重啟次數 · 直接熱掛載進運行中的 Linux 內核",
+      "chips": [
+        "底層透過 Linux eBPF 動態注入臨時攔截規則",
+        "官方示範由 Codex 生成檢查擋住 Java4Shell",
+        "載入前強制簽名驗證，硬體層留存審計帳"
+      ],
+      "note": "Shirudo 取自日語「盾」，現已開源。"
+    },
+    {
+      "type": "diagram",
+      "kicker": "HOT-PATCH PIPELINE · 攔截鏈路",
+      "headline": ["不用等重啟", "三步進內核"],
+      "accentLine": 1,
+      "sub": "把原本動輒幾週的打補丁排期壓成即時熱防禦。",
+      "nodes": [
+        { "box": "Codex", "lab": "針對漏洞生成檢查" },
+        { "box": "簽名驗證", "lab": "防範規則變新後門", "tone": "dim" },
+        { "box": "eBPF 掛載", "lab": "在線攔截異常呼叫", "tone": "fill" }
+      ],
+      "arrows": [
+        { "label": "產出防護策略" },
+        { "label": "寫入硬體審計" }
+      ],
+      "verdict": "它替維運搶出排期窗口，最終仍要合入正式補丁。"
+    }
+  ]
+}

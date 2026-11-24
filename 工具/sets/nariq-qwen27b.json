@@ -1,0 +1,32 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "Hugging Face · Nari Labs · 11-24",
+  "date": "2026.11.24",
+  "noImageReason": "HF 模型卡為純 Markdown 表格，量化檔位與相容性走點陣與清單卡",
+  "slides": [
+    {
+      "type": "matrix",
+      "kicker": "QUANTIZATION · 極限壓縮",
+      "headline": ["壓小五倍多", "分數反超了"],
+      "accentLine": 1,
+      "sub": "NariQ 用真實編碼代理軌跡校準 Qwen3.8-27B，10.12 GB 三比特反超原版。",
+      "groups": [
+        { "label": "NariQ 3-bit（10.12 GB）· DeepSWE v1", "value": "41.0", "filled": 41, "tone": "accent" },
+        { "label": "BF16 原版基線（53.8 GB）· DeepSWE v1", "value": "39.8", "filled": 40, "tone": "muted" }
+      ],
+      "note": "2.5-bit（8.44 GB）達 41.9 分；壓到 2-bit（6.75 GB）則跌至 28.6 分。"
+    },
+    {
+      "type": "list",
+      "kicker": "LOCAL DEPLOYMENT · 本機門檻",
+      "headline": ["拉下來之前", "先看三道檻"],
+      "accentLine": 1,
+      "items": [
+        { "k": "必須編譯專用 llama.cpp 分支", "v": "底層改了新張量格式，Ollama、LM Studio 與原版均讀不了。" },
+        { "k": "Mac 端側吞吐偏慢", "v": "M3 Pro 18GB 跑 3-bit 僅 3.8 tokens/s；RTX PRO 6000 達 88.9 tokens/s。" },
+        { "k": "顯卡與模態仍有保留", "v": "視覺塔與 KV cache 仍維持 BF16，AMD 與 Intel 顯卡尚未支援。" }
+      ],
+      "verdict": "伺服器 N 卡嚐鮮很香，日常筆電主力還得等主流推理框架合入。"
+    }
+  ]
+}

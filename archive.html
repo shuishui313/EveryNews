@@ -3,217 +3,388 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>EveryNews · 全部期次</title>
-<meta name="description" content="按日期查 EveryNews 的歷史期次。每日 AI 一手消息與兩篇長文講解。">
+<title>EveryNews · 往期刊物架 Back Issues</title>
+<meta name="description" content="EveryNews 往期刊物架：按刊號、日期或標題關鍵字翻閱每日 AI 線上雜誌。">
+<script>
+(function(){try{var t=localStorage.getItem('everynews-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
 <style>
+:root{
+  --paper:#F6F3EC;--paper-elev:#FCFBF8;--ink:#141318;--ink2:#3F3B4D;--mute:#787287;
+  --line:rgba(20,19,24,.12);--line-strong:#141318;--accent:#3B28CC;--stamp:#C84B31;
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI","PingFang TC","PingFang SC","Noto Sans TC","Hiragino Sans GB","Microsoft JhengHei",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+html[data-theme="dark"]{
+  --paper:#0F0F13;--paper-elev:#17171F;--ink:#EFECE4;--ink2:#B8B3C7;--mute:#857F96;
+  --line:rgba(255,255,255,.11);--line-strong:#E2DDD2;--accent:#9688FF;--stamp:#E06348;
+}
 *{box-sizing:border-box}
-:root{--accent:#5B3FD1;--ink:#121118;--ink2:#4A4659;--mute:#8E88A0;--line:#E2DCD0;--paper:#F7F4EE;--soft:#EFEAFD}
-body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.75 -apple-system,BlinkMacSystemFont,"PingFang TC","Noto Sans TC","Microsoft JhengHei",sans-serif;line-break:strict}
-a{color:inherit}
-.wrap{max-width:860px;margin:0 auto;padding:0 clamp(18px,5vw,40px)}
-header{padding:44px 0 30px;border-bottom:1px solid var(--line)}
-.brand{font-size:13px;letter-spacing:.16em;color:var(--accent);font-weight:700}
-.back{display:inline-block;margin-top:16px;font-size:13px;color:var(--accent);text-decoration:none}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.75 var(--sans);font-variant-numeric:tabular-nums;line-break:strict;transition:background-color .3s,color .3s}
+a{color:inherit;text-decoration:none}
+button{font:inherit;cursor:pointer}
+.wrap{max-width:1260px;margin:0 auto;padding:0 clamp(18px,4vw,52px)}
+.topbar{border-bottom:1px solid var(--line);padding:12px 0;display:flex;justify-content:space-between;align-items:center}
+.back{font-size:13.5px;font-weight:600;color:var(--accent)}
 .back:hover{text-decoration:underline}
-h1{margin:14px 0 8px;font-size:clamp(30px,5vw,42px);letter-spacing:-.02em}
+.theme-btn{padding:5px 12px;border-radius:99px;border:1px solid var(--line);background:var(--paper-elev);color:var(--ink2);font-size:12px;font-weight:600}
+.mast{padding:clamp(30px,5vw,56px) 0 30px;border-bottom:2px solid var(--line-strong);display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:18px}
+.mast-kicker{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--stamp);font-weight:700}
+h1{font-size:clamp(36px,5.4vw,60px);font-weight:900;letter-spacing:-.04em;line-height:1;margin:10px 0 12px}
 .lede{margin:0;color:var(--ink2);font-size:16px}
-.count{margin:12px 0 0;color:var(--mute);font-size:13px}
-.count strong{color:var(--accent)}
-.filters{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;padding:22px 0;border-bottom:1px solid var(--line)}
-.filters label{display:flex;flex-direction:column;gap:5px;font-size:12px;color:var(--mute)}
-select,input[type=date],input[type=search]{font:inherit;font-size:14px;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:6px;padding:8px 10px;min-height:38px}
-input[type=search]{min-width:200px}
-select:focus,input:focus{outline:2px solid var(--accent);outline-offset:1px}
-button{font:inherit;font-size:14px;border:1px solid var(--line);background:var(--soft);color:var(--ink2);border-radius:6px;padding:8px 14px;min-height:38px;cursor:pointer}
-button:hover{border-color:var(--accent)}
-#hint{font-size:13px;color:var(--mute);margin-left:auto;padding-bottom:9px}
-main{padding:8px 0 40px}
-.day{display:grid;grid-template-columns:92px minmax(0,1fr) 76px;gap:22px;align-items:start;padding:26px 0;border-bottom:1px solid var(--line);text-decoration:none}
-.day[hidden]{display:none}
-.day:hover .body h2{color:var(--accent)}
-.when b{display:block;font-size:24px;letter-spacing:-.02em}
-.when span{display:block;color:var(--mute);font-size:12px;margin-top:2px}
-.body h2{margin:0 0 10px;font-size:17px;font-weight:650;transition:color .15s}
-.body h2 small{font-weight:400;color:var(--mute);font-size:12px;margin-left:8px}
-.body ol{margin:0;padding-left:1.3em;color:var(--ink2);font-size:14px}
-.body li{margin:2px 0}
-.go{color:var(--accent);font-size:13px;white-space:nowrap;padding-top:3px}
-.empty{padding:48px 0;color:var(--mute);text-align:center}
+.count-box{font-family:var(--mono);font-size:12px;color:var(--mute);text-align:right}
+.count-box b{display:block;font-family:var(--sans);font-weight:900;font-size:42px;letter-spacing:-.04em;color:var(--ink);line-height:1}
+
+.toolbar{display:flex;flex-wrap:wrap;gap:12px;align-items:flex-end;padding:22px 0;border-bottom:1px solid var(--line)}
+.toolbar label{display:flex;flex-direction:column;gap:5px;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--mute)}
+select,input[type=date],input[type=search]{
+  font:14px var(--sans);color:var(--ink);background:var(--paper-elev);
+  border:1px solid var(--line);border-radius:6px;padding:8px 12px;min-height:38px;
+}
+input[type=search]{min-width:220px}
+.reset-btn{border:1px solid var(--line);background:var(--paper-elev);color:var(--ink2);border-radius:6px;padding:8px 14px;min-height:38px}
+.reset-btn:hover{border-color:var(--accent)}
+.view-switch{margin-left:auto;display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--paper-elev)}
+.view-switch button{border:none;background:transparent;color:var(--mute);padding:8px 13px;font-size:12.5px;font-weight:600}
+.view-switch button.is-on{background:var(--ink);color:var(--paper)}
+#hint{width:100%;font-family:var(--mono);font-size:12px;color:var(--mute);margin-top:2px}
+
+/* 封面墙 Grid 模式（默认） */
+.rack{padding:30px 0 56px;display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:22px}
+.issue-card{
+  position:relative;display:flex;flex-direction:column;justify-content:space-between;
+  background:var(--paper-elev);border:1px solid var(--line);border-top:5px solid var(--accent);
+  border-radius:4px;padding:22px 22px 18px;transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .25s;
+}
+.issue-card:first-child{border-top-color:var(--stamp)}
+.issue-card[hidden]{display:none}
+.issue-card:hover{transform:translateY(-5px);border-color:var(--accent);box-shadow:0 18px 36px rgba(20,19,24,.1)}
+.ic-top{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.ic-no{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--stamp);font-weight:700}
+.ic-wk{font-family:var(--mono);font-size:11.5px;color:var(--mute)}
+.ic-date{margin:16px 0 14px;display:flex;align-items:baseline;gap:10px}
+.ic-date b{font-weight:900;font-size:38px;line-height:1;letter-spacing:-.04em}
+.ic-date span{font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--mute)}
+.ic-list{margin:0 0 18px;padding-left:1.25em;color:var(--ink2);font-size:13.8px;line-height:1.6}
+.ic-list li{margin:4px 0}
+.ic-foot{padding-top:12px;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;font-family:var(--mono);font-size:11.5px;color:var(--mute)}
+.ic-go{color:var(--accent);font-weight:700;font-family:var(--sans);font-size:13px}
+
+/* 编年列表 List 模式 */
+.rack.is-list{grid-template-columns:1fr;gap:0}
+.rack.is-list .issue-card{
+  border-radius:0;border-left:none;border-right:none;border-top:none;border-bottom:1px solid var(--line);
+  background:transparent;padding:22px 4px;display:grid;grid-template-columns:140px 1fr auto;gap:24px;align-items:start;
+}
+.rack.is-list .issue-card:hover{transform:translateX(4px);box-shadow:none}
+.rack.is-list .ic-top{border:none;padding:0;flex-direction:column;gap:2px}
+.rack.is-list .ic-date{margin:4px 0 0}
+.rack.is-list .ic-date b{font-size:26px}
+.rack.is-list .ic-list{margin:0;columns:2;column-gap:28px}
+.rack.is-list .ic-foot{border:none;padding:0;flex-direction:column;align-items:flex-end;gap:6px}
+
+.empty{padding:56px 0;color:var(--mute);text-align:center}
 .empty[hidden]{display:none}
-footer{border-top:1px solid var(--line);padding:26px 0 56px;color:var(--mute);font-size:13px}
-footer p{margin:0 0 6px}
-@media(max-width:640px){.day{grid-template-columns:1fr;gap:8px}.when{display:flex;align-items:baseline;gap:10px}.when span{margin:0}.go{padding:0}#hint{margin-left:0}}
+footer{border-top:4px double var(--line-strong);padding:26px 0 56px;color:var(--mute);font-size:13px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+@media(max-width:760px){
+  .count-box{text-align:left}
+  .view-switch{margin-left:0}
+  .rack.is-list .issue-card{grid-template-columns:1fr;gap:10px}
+  .rack.is-list .ic-list{columns:1}
+  .rack.is-list .ic-foot{align-items:flex-start}
+}
 </style>
 </head>
 <body>
 <div class="wrap">
-<header>
-  <div class="brand">EveryNews</div>
-  <a class="back" href="index.html">← 回到當日成果</a>
-  <h1>全部期次</h1>
-  <p class="lede">每日精選 AI 一手消息與兩篇長文講解。按日期找，或直接搜標題。</p>
-  <p class="count">共 <strong>15</strong> 期 · 最新 2026-11-24 · 最早 2026-11-03</p>
-</header>
-<section class="filters">
-  <label>期次
-    <select id="date"><option value="">全部期次</option><option value="2026-11-24">2026-11-24 · 6 條</option><option value="2026-11-23">2026-11-23 · 6 條</option><option value="2026-11-22">2026-11-22 · 6 條</option><option value="2026-11-21">2026-11-21 · 6 條</option><option value="2026-11-19">2026-11-19 · 6 條</option><option value="2026-11-18">2026-11-18 · 6 條</option><option value="2026-11-17">2026-11-17 · 6 條</option><option value="2026-11-16">2026-11-16 · 6 條</option><option value="2026-11-09">2026-11-09 · 6 條</option><option value="2026-11-08">2026-11-08 · 6 條</option><option value="2026-11-07">2026-11-07 · 6 條</option><option value="2026-11-06">2026-11-06 · 6 條</option><option value="2026-11-05">2026-11-05 · 6 條</option><option value="2026-11-04">2026-11-04 · 6 條</option><option value="2026-11-03">2026-11-03 · 6 條</option></select>
-  </label>
-  <label>指定日期
-    <input type="date" id="pick" min="2026-11-03" max="2026-11-24">
-  </label>
-  <label>搜標題
-    <input type="search" id="q" placeholder="輸入日期或標題關鍵字">
-  </label>
-  <button type="button" id="reset">重置</button>
-  <span id="hint">顯示 15 期</span>
-</section>
-<main id="list">
-<a class="day" href="20261124.html" data-date="2026-11-24" data-text="2026-11-24 6 條快訊 · 18 張配圖 · 2 篇講解 ① 同一批參數，跑第二遍 ② 補丁還要等幾天幾週 ③ 資料留在客戶那裡 ④ 一千兩百四十億，能放進筆電 ⑤ 估值半年翻了一倍 ⑥ 十吉位元組，跑同一個模型">
-  <div class="when"><b>11-24</b><span>2026 · 週二</span></div>
-  <div class="body">
-    <h2>2026-11-24<small>6 條快訊 · 18 張配圖 · 2 篇講解 · 28 KB</small></h2>
-    <ol><li>① 同一批參數，跑第二遍</li><li>② 補丁還要等幾天幾週</li><li>③ 資料留在客戶那裡</li><li>④ 一千兩百四十億，能放進筆電</li><li>⑤ 估值半年翻了一倍</li><li>⑥ 十吉位元組，跑同一個模型</li></ol>
+  <div class="topbar">
+    <a class="back" href="index.html">← 回到今日最新一刊（Issue No.015）</a>
+    <button type="button" class="theme-btn" id="theme-toggle">切換夜讀 / 紙本</button>
   </div>
-  <div class="go">打開這一期 →</div>
-</a>
-<a class="day" href="20261123.html" data-date="2026-11-23" data-text="2026-11-23 6 条 · 18 张卡 · 2 篇讲解 ① 這把尺，先量出來再談煞車 ② 畫面換了，號稱快二十五倍 ③ 論文和碼放出來了，離驗證還差一包 ④ 公開漏洞報告，被做成了技能 ⑤ 近兩百萬條提示詞，全是誘餌 ⑥ 兩個讀副本同時倒下">
-  <div class="when"><b>11-23</b><span>2026 · 週一</span></div>
-  <div class="body">
-    <h2>2026-11-23<small>6 条 · 18 张卡 · 2 篇讲解 · 4.1 MB</small></h2>
-    <ol><li>① 這把尺，先量出來再談煞車</li><li>② 畫面換了，號稱快二十五倍</li><li>③ 論文和碼放出來了，離驗證還差一包</li><li>④ 公開漏洞報告，被做成了技能</li><li>⑤ 近兩百萬條提示詞，全是誘餌</li><li>⑥ 兩個讀副本同時倒下</li></ol>
+
+  <header class="mast">
+    <div>
+      <div class="mast-kicker">BACK ISSUES &amp; INDEX · 典藏刊物架</div>
+      <h1>EveryNews 往期刊物</h1>
+      <p class="lede">每天更新一期。可切換雜誌封面牆與編年索引表，或直接搜尋任意議題。</p>
+    </div>
+    <div class="count-box">
+      <b>15</b>
+      <span>ISSUES PUBLISHED · 2026-11-03 — 2026-11-24</span>
+    </div>
+  </header>
+
+  <section class="toolbar">
+    <label>ISSUE · 期次
+      <select id="date"><option value="">全部刊期</option><option value="2026-11-24">No.015 · 2026-11-24</option><option value="2026-11-23">No.014 · 2026-11-23</option><option value="2026-11-22">No.013 · 2026-11-22</option><option value="2026-11-21">No.012 · 2026-11-21</option><option value="2026-11-19">No.011 · 2026-11-19</option><option value="2026-11-18">No.010 · 2026-11-18</option><option value="2026-11-17">No.009 · 2026-11-17</option><option value="2026-11-16">No.008 · 2026-11-16</option><option value="2026-11-09">No.007 · 2026-11-09</option><option value="2026-11-08">No.006 · 2026-11-08</option><option value="2026-11-07">No.005 · 2026-11-07</option><option value="2026-11-06">No.004 · 2026-11-06</option><option value="2026-11-05">No.003 · 2026-11-05</option><option value="2026-11-04">No.002 · 2026-11-04</option><option value="2026-11-03">No.001 · 2026-11-03</option></select>
+    </label>
+    <label>DATE · 指定日期
+      <input type="date" id="pick" min="2026-11-03" max="2026-11-24">
+    </label>
+    <label>SEARCH · 搜尋標題或刊號
+      <input type="search" id="q" placeholder="輸入關鍵字，如 GLM、Anthropic、量化…">
+    </label>
+    <button type="button" class="reset-btn" id="reset">重置</button>
+    <div class="view-switch" role="group" aria-label="檢視模式">
+      <button type="button" id="v-grid" class="is-on">封面牆</button>
+      <button type="button" id="v-list">編年表</button>
+    </div>
+    <div id="hint">SHOWING 15 OF 15 ISSUES</div>
+  </section>
+
+  <main class="rack" id="rack">
+    <a class="issue-card" href="20261124.html" data-date="2026-11-24" data-text="015 2026-11-24 6 篇快訊 · 13 張圖版 · 2 篇專欄 ① 同一批參數，跑第二遍 ② 補丁還要等幾天幾週 ③ 資料留在客戶那裡 ④ 一千兩百四十億，能放進筆電 ⑤ 估值半年翻了一倍 ⑥ 十吉位元組，跑同一個模型">
+  <div>
+    <div class="ic-top">
+      <span class="ic-no">ISSUE NO.015 · LATEST</span>
+      <span class="ic-wk">週二</span>
+    </div>
+    <div class="ic-date"><b>24</b><span>NOV 2026</span></div>
+    <ol class="ic-list"><li>同一批參數，跑第二遍</li><li>補丁還要等幾天幾週</li><li>資料留在客戶那裡</li><li>一千兩百四十億，能放進筆電</li><li>估值半年翻了一倍</li><li>十吉位元組，跑同一個模型</li></ol>
   </div>
-  <div class="go">打開這一期 →</div>
-</a>
-<a class="day" href="20261122.html" data-date="2026-11-22" data-text="2026-11-22 6 条 · 18 张卡 · 2 篇讲解 ① 證明宣稱了，複核才剛開始 ② 26b 的模型，每 token 跑 48 層 ③ 它替你打電話，先報自己是 ai ④ 站外點擊少了，滿意度沒動 ⑤ 開源的是權重，不是第一次發布 ⑥ 護盤的手，一天就收了">
-  <div class="when"><b>11-22</b><span>2026 · 週日</span></div>
-  <div class="body">
-    <h2>2026-11-22<small>6 条 · 18 张卡 · 2 篇讲解 · 3.7 MB</small></h2>
-    <ol><li>① 證明宣稱了，複核才剛開始</li><li>② 26B 的模型，每 token 跑 48 層</li><li>③ 它替你打電話，先報自己是 AI</li><li>④ 站外點擊少了，滿意度沒動</li><li>⑤ 開源的是權重，不是第一次發布</li><li>⑥ 護盤的手，一天就收了</li></ol>
+  <div class="ic-foot">
+    <span>6 篇快訊 · 13 張圖版 · 2 篇專欄</span>
+    <span class="ic-go">翻閱本刊 ↗</span>
   </div>
-  <div class="go">打開這一期 →</div>
 </a>
-<a class="day" href="20261121.html" data-date="2026-11-21" data-text="2026-11-21 6 条 · 18 张卡 · 2 篇讲解 ① 防護升級的降幅漂亮，對手還在 ② 工商變更不等於錢已到帳 ③ 獨立窗口裡跑，隨時能喊停 ④ 工具太多，參數定義改用時才調 ⑤ 自動排查的漏斗，層層都要分母 ⑥ 32g 記憶體跑得動 1800 億參數，但不快">
-  <div class="when"><b>11-21</b><span>2026 · 週六</span></div>
-  <div class="body">
-    <h2>2026-11-21<small>6 条 · 18 张卡 · 2 篇讲解 · 3.9 MB</small></h2>
-    <ol><li>① 防護升級的降幅漂亮，對手還在</li><li>② 工商變更不等於錢已到帳</li><li>③ 獨立窗口裡跑，隨時能喊停</li><li>④ 工具太多，參數定義改用時才調</li><li>⑤ 自動排查的漏斗，層層都要分母</li><li>⑥ 32G 記憶體跑得動 1800 億參數，但不快</li></ol>
+<a class="issue-card" href="20261123.html" data-date="2026-11-23" data-text="014 2026-11-23 6 条 · 18 张卡 · 2 篇讲解 ① 這把尺，先量出來再談煞車 ② 畫面換了，號稱快二十五倍 ③ 論文和碼放出來了，離驗證還差一包 ④ 公開漏洞報告，被做成了技能 ⑤ 近兩百萬條提示詞，全是誘餌 ⑥ 兩個讀副本同時倒下">
+  <div>
+    <div class="ic-top">
+      <span class="ic-no">ISSUE NO.014</span>
+      <span class="ic-wk">週一</span>
+    </div>
+    <div class="ic-date"><b>23</b><span>NOV 2026</span></div>
+    <ol class="ic-list"><li>這把尺，先量出來再談煞車</li><li>畫面換了，號稱快二十五倍</li><li>論文和碼放出來了，離驗證還差一包</li><li>公開漏洞報告，被做成了技能</li><li>近兩百萬條提示詞，全是誘餌</li><li>兩個讀副本同時倒下</li></ol>
   </div>
-  <div class="go">打開這一期 →</div>
-</a>
-<a class="day" href="20261119.html" data-date="2026-11-19" data-text="2026-11-19 6 条 · 18 张卡 · 2 篇讲解 ① 模型改的是工程師調了多年的電路 ② 八十三美元一股，要算的是兩筆帳 ③ 一幀三十五毫秒，代價是還沒到院線 ④ 三個人裡有一個，把 ai 當朋友 ⑤ 研究員一天花兩千四讓智能體跑腿 ⑥ 卡住進化的不是想不出，是看不出">
-  <div class="when"><b>11-19</b><span>2026 · 週四</span></div>
-  <div class="body">
-    <h2>2026-11-19<small>6 条 · 18 张卡 · 2 篇讲解 · 4.4 MB</small></h2>
-    <ol><li>① 模型改的是工程師調了多年的電路</li><li>② 八十三美元一股，要算的是兩筆帳</li><li>③ 一幀三十五毫秒，代價是還沒到院線</li><li>④ 三個人裡有一個，把 AI 當朋友</li><li>⑤ 研究員一天花兩千四讓智能體跑腿</li><li>⑥ 卡住進化的不是想不出，是看不出</li></ol>
+  <div class="ic-foot">
+    <span>6 条 · 18 张卡 · 2 篇讲解</span>
+    <span class="ic-go">翻閱本刊 ↗</span>
   </div>
-  <div class="go">打開這一期 →</div>
 </a>
-<a class="day" href="20261118.html" data-date="2026-11-18" data-text="2026-11-18 6 条 · 18 张卡 · 2 篇讲解 ① 同一場發布，說出兩種手感 ② 快八到十倍，前面掛著條件 ③ 五十億美元，押在還沒交付藥物的公司 ④ 單季營收第一次破千億 ⑤ 不需要 transformer，標題下還寫著條件 ⑥ 做銷售的人，明天多一個外接要裝">
-  <div class="when"><b>11-18</b><span>2026 · 週三</span></div>
-  <div class="body">
-    <h2>2026-11-18<small>6 条 · 18 张卡 · 2 篇讲解 · 4.3 MB</small></h2>
-    <ol><li>① 同一場發布，說出兩種手感</li><li>② 快八到十倍，前面掛著條件</li><li>③ 五十億美元，押在還沒交付藥物的公司</li><li>④ 單季營收第一次破千億</li><li>⑤ 不需要 Transformer，標題下還寫著條件</li><li>⑥ 做銷售的人，明天多一個外接要裝</li></ol>
+<a class="issue-card" href="20261122.html" data-date="2026-11-22" data-text="013 2026-11-22 6 条 · 18 张卡 · 2 篇讲解 ① 證明宣稱了，複核才剛開始 ② 26b 的模型，每 token 跑 48 層 ③ 它替你打電話，先報自己是 ai ④ 站外點擊少了，滿意度沒動 ⑤ 開源的是權重，不是第一次發布 ⑥ 護盤的手，一天就收了">
+  <div>
+    <div class="ic-top">
+      <span class="ic-no">ISSUE NO.013</span>
+      <span class="ic-wk">週日</span>
+    </div>
+    <div class="ic-date"><b>22</b><span>NOV 2026</span></div>
+    <ol class="ic-list"><li>證明宣稱了，複核才剛開始</li><li>26B 的模型，每 token 跑 48 層</li><li>它替你打電話，先報自己是 AI</li><li>站外點擊少了，滿意度沒動</li><li>開源的是權重，不是第一次發布</li><li>護盤的手，一天就收了</li></ol>
   </div>
-  <div class="go">打開這一期 →</div>
-</a>
-<a class="day" href="20261117.html" data-date="2026-11-17" data-text="2026-11-17 6 条 · 18 张卡 · 2 篇讲解 ① 二十分之一，是哪把尺量出來的 ② 開源權重，四個月從 7.3% 到 30.9% ③ 同一個權重，兩條路徑算出的數不一樣 ④ 一份題庫，把模型帶進實驗室 ⑤ 認購截止那天，文件還寫了另一件事 ⑥ 監控一張網頁，多少錢一次">
-  <div class="when"><b>11-17</b><span>2026 · 週二</span></div>
-  <div class="body">
-    <h2>2026-11-17<small>6 条 · 18 张卡 · 2 篇讲解 · 4.5 MB</small></h2>
-    <ol><li>① 二十分之一，是哪把尺量出來的</li><li>② 開源權重，四個月從 7.3% 到 30.9%</li><li>③ 同一個權重，兩條路徑算出的數不一樣</li><li>④ 一份題庫，把模型帶進實驗室</li><li>⑤ 認購截止那天，文件還寫了另一件事</li><li>⑥ 監控一張網頁，多少錢一次</li></ol>
+  <div class="ic-foot">
+    <span>6 条 · 18 张卡 · 2 篇讲解</span>
+    <span class="ic-go">翻閱本刊 ↗</span>
   </div>
-  <div class="go">打開這一期 →</div>
 </a>
-<a class="day" href="20261116.html" data-date="2026-11-16" data-text="2026-11-16 6 条 · 18 张卡 · 2 篇讲解 ① 同一個模型，帳單差了六成 ② 開源的不只是模型，還有訓練框架 ③ 一張圖，一毫秒 ④ 推一把，違規反而更多 ⑤ 收購公告沒寫的那一欄 ⑥ 一半弱點，藏在附錄裡">
-  <div class="when"><b>11-16</b><span>2026 · 週一</span></div>
-  <div class="body">
-    <h2>2026-11-16<small>6 条 · 18 张卡 · 2 篇讲解 · 4.6 MB</small></h2>
-    <ol><li>① 同一個模型，帳單差了六成</li><li>② 開源的不只是模型，還有訓練框架</li><li>③ 一張圖，一毫秒</li><li>④ 推一把，違規反而更多</li><li>⑤ 收購公告沒寫的那一欄</li><li>⑥ 一半弱點，藏在附錄裡</li></ol>
+<a class="issue-card" href="20261121.html" data-date="2026-11-21" data-text="012 2026-11-21 6 条 · 18 张卡 · 2 篇讲解 ① 防護升級的降幅漂亮，對手還在 ② 工商變更不等於錢已到帳 ③ 獨立窗口裡跑，隨時能喊停 ④ 工具太多，參數定義改用時才調 ⑤ 自動排查的漏斗，層層都要分母 ⑥ 32g 記憶體跑得動 1800 億參數，但不快">
+  <div>
+    <div class="ic-top">
+      <span class="ic-no">ISSUE NO.012</span>
+      <span class="ic-wk">週六</span>
+    </div>
+    <div class="ic-date"><b>21</b><span>NOV 2026</span></div>
+    <ol class="ic-list"><li>防護升級的降幅漂亮，對手還在</li><li>工商變更不等於錢已到帳</li><li>獨立窗口裡跑，隨時能喊停</li><li>工具太多，參數定義改用時才調</li><li>自動排查的漏斗，層層都要分母</li><li>32G 記憶體跑得動 1800 億參數，但不快</li></ol>
   </div>
-  <div class="go">打開這一期 →</div>
-</a>
-<a class="day" href="20261109.html" data-date="2026-11-09" data-text="2026-11-09 6 条 · 18 张卡 · 2 篇讲解 ① 接手的是別人兩年前下的訂單 ② 發一條簡訊，買三樣東西 ③ 每秒十五幀，邊走邊改 ④ 整條軌跡一次畫完 ⑤ 解碼器得跟上量子處理器 ⑥ 同一段前綴，送去哪一張卡">
-  <div class="when"><b>11-09</b><span>2026 · 週一</span></div>
-  <div class="body">
-    <h2>2026-11-09<small>6 条 · 18 张卡 · 2 篇讲解 · 8.7 MB</small></h2>
-    <ol><li>① 接手的是別人兩年前下的訂單</li><li>② 發一條簡訊，買三樣東西</li><li>③ 每秒十五幀，邊走邊改</li><li>④ 整條軌跡一次畫完</li><li>⑤ 解碼器得跟上量子處理器</li><li>⑥ 同一段前綴，送去哪一張卡</li></ol>
+  <div class="ic-foot">
+    <span>6 条 · 18 张卡 · 2 篇讲解</span>
+    <span class="ic-go">翻閱本刊 ↗</span>
   </div>
-  <div class="go">打開這一期 →</div>
 </a>
-<a class="day" href="20261108.html" data-date="2026-11-08" data-text="2026-11-08 6 条 · 18 张卡 · 2 篇讲解 ① 一個月前還按兩萬億在談 ② 1380 核心年，跑完一把簽名 ③ 百度把權重停在預訓練終點 ④ 兩個月，清理 ai 微短劇 ⑤ 推一次代碼，中位耗時少了八成 ⑥ 同一批 89 道題，換了問法">
-  <div class="when"><b>11-08</b><span>2026 · 週日</span></div>
-  <div class="body">
-    <h2>2026-11-08<small>6 条 · 18 张卡 · 2 篇讲解 · 6.2 MB</small></h2>
-    <ol><li>① 一個月前還按兩萬億在談</li><li>② 1380 核心年，跑完一把簽名</li><li>③ 百度把權重停在預訓練終點</li><li>④ 兩個月，清理 AI 微短劇</li><li>⑤ 推一次代碼，中位耗時少了八成</li><li>⑥ 同一批 89 道題，換了問法</li></ol>
+<a class="issue-card" href="20261119.html" data-date="2026-11-19" data-text="011 2026-11-19 6 条 · 18 张卡 · 2 篇讲解 ① 模型改的是工程師調了多年的電路 ② 八十三美元一股，要算的是兩筆帳 ③ 一幀三十五毫秒，代價是還沒到院線 ④ 三個人裡有一個，把 ai 當朋友 ⑤ 研究員一天花兩千四讓智能體跑腿 ⑥ 卡住進化的不是想不出，是看不出">
+  <div>
+    <div class="ic-top">
+      <span class="ic-no">ISSUE NO.011</span>
+      <span class="ic-wk">週四</span>
+    </div>
+    <div class="ic-date"><b>19</b><span>NOV 2026</span></div>
+    <ol class="ic-list"><li>模型改的是工程師調了多年的電路</li><li>八十三美元一股，要算的是兩筆帳</li><li>一幀三十五毫秒，代價是還沒到院線</li><li>三個人裡有一個，把 AI 當朋友</li><li>研究員一天花兩千四讓智能體跑腿</li><li>卡住進化的不是想不出，是看不出</li></ol>
   </div>
-  <div class="go">打開這一期 →</div>
-</a>
-<a class="day" href="20261107.html" data-date="2026-11-07" data-text="2026-11-07 6 条 · 18 张卡 · 2 篇讲解 ① 一百一十億只是首筆 ② 菌落計數多算了一成二 ③ 淘寶 mnn 團隊把四條約束寫在一起 ④ 喬治亞廠的料箱數 ⑤ 兩百美元一個月 ⑥ lean 接受了形式化推導">
-  <div class="when"><b>11-07</b><span>2026 · 週六</span></div>
-  <div class="body">
-    <h2>2026-11-07<small>6 条 · 18 张卡 · 2 篇讲解 · 6.6 MB</small></h2>
-    <ol><li>① 一百一十億只是首筆</li><li>② 菌落計數多算了一成二</li><li>③ 淘寶 MNN 團隊把四條約束寫在一起</li><li>④ 喬治亞廠的料箱數</li><li>⑤ 兩百美元一個月</li><li>⑥ Lean 接受了形式化推導</li></ol>
+  <div class="ic-foot">
+    <span>6 条 · 18 张卡 · 2 篇讲解</span>
+    <span class="ic-go">翻閱本刊 ↗</span>
   </div>
-  <div class="go">打開這一期 →</div>
 </a>
-<a class="day" href="20261106.html" data-date="2026-11-06" data-text="2026-11-06 6 条 · 18 张卡 · 2 篇讲解 ① 48.5% 的分數，暫時拿不到 ② claude 能看你的銀行帳了 ③ 權重下週才開，模型先上線了 ④ 剪片的人要先算秒數了 ⑤ 戒指上多了一塊螢幕 ⑥ 最關鍵的證據被塗黑了">
-  <div class="when"><b>11-06</b><span>2026 · 週五</span></div>
-  <div class="body">
-    <h2>2026-11-06<small>6 条 · 18 张卡 · 2 篇讲解 · 5.7 MB</small></h2>
-    <ol><li>① 48.5% 的分數，暫時拿不到</li><li>② Claude 能看你的銀行帳了</li><li>③ 權重下週才開，模型先上線了</li><li>④ 剪片的人要先算秒數了</li><li>⑤ 戒指上多了一塊螢幕</li><li>⑥ 最關鍵的證據被塗黑了</li></ol>
+<a class="issue-card" href="20261118.html" data-date="2026-11-18" data-text="010 2026-11-18 6 条 · 18 张卡 · 2 篇讲解 ① 同一場發布，說出兩種手感 ② 快八到十倍，前面掛著條件 ③ 五十億美元，押在還沒交付藥物的公司 ④ 單季營收第一次破千億 ⑤ 不需要 transformer，標題下還寫著條件 ⑥ 做銷售的人，明天多一個外接要裝">
+  <div>
+    <div class="ic-top">
+      <span class="ic-no">ISSUE NO.010</span>
+      <span class="ic-wk">週三</span>
+    </div>
+    <div class="ic-date"><b>18</b><span>NOV 2026</span></div>
+    <ol class="ic-list"><li>同一場發布，說出兩種手感</li><li>快八到十倍，前面掛著條件</li><li>五十億美元，押在還沒交付藥物的公司</li><li>單季營收第一次破千億</li><li>不需要 Transformer，標題下還寫著條件</li><li>做銷售的人，明天多一個外接要裝</li></ol>
   </div>
-  <div class="go">打開這一期 →</div>
-</a>
-<a class="day" href="20261105.html" data-date="2026-11-05" data-text="2026-11-05 6 条 · 18 张卡 · 2 篇讲解 ① kimi k3.1 pro 權重開放，放得下來跑不起來 ② openai 把挖洞的成本帳公開了 ③ 三億筆裡的四單 ④ 五年，三百萬台機器人 ⑤ 十個月，三輪融了三億美元 ⑥ 你說錯一句，它跟著改">
-  <div class="when"><b>11-05</b><span>2026 · 週四</span></div>
-  <div class="body">
-    <h2>2026-11-05<small>6 条 · 18 张卡 · 2 篇讲解 · 7.0 MB</small></h2>
-    <ol><li>① Kimi K3.1 Pro 權重開放，放得下來跑不起來</li><li>② OpenAI 把挖洞的成本帳公開了</li><li>③ 三億筆裡的四單</li><li>④ 五年，三百萬台機器人</li><li>⑤ 十個月，三輪融了三億美元</li><li>⑥ 你說錯一句，它跟著改</li></ol>
+  <div class="ic-foot">
+    <span>6 条 · 18 张卡 · 2 篇讲解</span>
+    <span class="ic-go">翻閱本刊 ↗</span>
   </div>
-  <div class="go">打開這一期 →</div>
 </a>
-<a class="day" href="20261104.html" data-date="2026-11-04" data-text="2026-11-04 6 条 · 18 张卡 · 2 篇讲解 ① 騰訊混元 hy4：能力翻版，價簽原樣 ② 百度 apollo world：世界模型當考官 ③ marvell 收購 lumentum：電加光 ④ openai 激活分類器：安全進了生產線 ⑤ 蘋果智能 beta 開測：千問真的能喊 ⑥ deepseek super-agent：agent 自己接活">
-  <div class="when"><b>11-04</b><span>2026 · 週三</span></div>
-  <div class="body">
-    <h2>2026-11-04<small>6 条 · 18 张卡 · 2 篇讲解 · 5.4 MB</small></h2>
-    <ol><li>① 騰訊混元 Hy4：能力翻版，價簽原樣</li><li>② 百度 Apollo World：世界模型當考官</li><li>③ Marvell 收購 Lumentum：電加光</li><li>④ OpenAI 激活分類器：安全進了生產線</li><li>⑤ 蘋果智能 Beta 開測：千問真的能喊</li><li>⑥ DeepSeek Super-agent：Agent 自己接活</li></ol>
+<a class="issue-card" href="20261117.html" data-date="2026-11-17" data-text="009 2026-11-17 6 条 · 18 张卡 · 2 篇讲解 ① 二十分之一，是哪把尺量出來的 ② 開源權重，四個月從 7.3% 到 30.9% ③ 同一個權重，兩條路徑算出的數不一樣 ④ 一份題庫，把模型帶進實驗室 ⑤ 認購截止那天，文件還寫了另一件事 ⑥ 監控一張網頁，多少錢一次">
+  <div>
+    <div class="ic-top">
+      <span class="ic-no">ISSUE NO.009</span>
+      <span class="ic-wk">週二</span>
+    </div>
+    <div class="ic-date"><b>17</b><span>NOV 2026</span></div>
+    <ol class="ic-list"><li>二十分之一，是哪把尺量出來的</li><li>開源權重，四個月從 7.3% 到 30.9%</li><li>同一個權重，兩條路徑算出的數不一樣</li><li>一份題庫，把模型帶進實驗室</li><li>認購截止那天，文件還寫了另一件事</li><li>監控一張網頁，多少錢一次</li></ol>
   </div>
-  <div class="go">打開這一期 →</div>
-</a>
-<a class="day" href="20261103.html" data-date="2026-11-03" data-text="2026-11-03 6 条 · 18 张卡 · 2 篇讲解 ① anthropic 修訂版 s-1：虧損比營收還多 ② openai 合併額度池：12 月起按 token 計量 ③ xai 給 grok 文本加隱形水印 ④ 蘋果 × 阿里：國行 apple 智能定檔 ⑤ meta 與傅利葉合作造出人形機器人原型 max ⑥ 四家廠商統一 robots.txt 訓練退出標記">
-  <div class="when"><b>11-03</b><span>2026 · 週二</span></div>
-  <div class="body">
-    <h2>2026-11-03<small>6 条 · 18 张卡 · 2 篇讲解 · 5.0 MB</small></h2>
-    <ol><li>① Anthropic 修訂版 S-1：虧損比營收還多</li><li>② OpenAI 合併額度池：12 月起按 Token 計量</li><li>③ xAI 給 Grok 文本加隱形水印</li><li>④ 蘋果 × 阿里：國行 Apple 智能定檔</li><li>⑤ Meta 與傅利葉合作造出人形機器人原型 Max</li><li>⑥ 四家廠商統一 robots.txt 訓練退出標記</li></ol>
+  <div class="ic-foot">
+    <span>6 条 · 18 张卡 · 2 篇讲解</span>
+    <span class="ic-go">翻閱本刊 ↗</span>
   </div>
-  <div class="go">打開這一期 →</div>
 </a>
-</main>
-<p class="empty" id="empty" hidden>這一篩選下沒有期次，換一個日期或清空條件。</p>
-<footer>
-  <p>每期為獨立靜態 HTML，頂部期次切換由 issues.js 動態載入。</p>
-  <p>主頁 index.html 是當日成果；本頁由 工具/make-index.mjs 自動刷新。</p>
-</footer>
+<a class="issue-card" href="20261116.html" data-date="2026-11-16" data-text="008 2026-11-16 6 条 · 18 张卡 · 2 篇讲解 ① 同一個模型，帳單差了六成 ② 開源的不只是模型，還有訓練框架 ③ 一張圖，一毫秒 ④ 推一把，違規反而更多 ⑤ 收購公告沒寫的那一欄 ⑥ 一半弱點，藏在附錄裡">
+  <div>
+    <div class="ic-top">
+      <span class="ic-no">ISSUE NO.008</span>
+      <span class="ic-wk">週一</span>
+    </div>
+    <div class="ic-date"><b>16</b><span>NOV 2026</span></div>
+    <ol class="ic-list"><li>同一個模型，帳單差了六成</li><li>開源的不只是模型，還有訓練框架</li><li>一張圖，一毫秒</li><li>推一把，違規反而更多</li><li>收購公告沒寫的那一欄</li><li>一半弱點，藏在附錄裡</li></ol>
+  </div>
+  <div class="ic-foot">
+    <span>6 条 · 18 张卡 · 2 篇讲解</span>
+    <span class="ic-go">翻閱本刊 ↗</span>
+  </div>
+</a>
+<a class="issue-card" href="20261109.html" data-date="2026-11-09" data-text="007 2026-11-09 6 条 · 18 张卡 · 2 篇讲解 ① 接手的是別人兩年前下的訂單 ② 發一條簡訊，買三樣東西 ③ 每秒十五幀，邊走邊改 ④ 整條軌跡一次畫完 ⑤ 解碼器得跟上量子處理器 ⑥ 同一段前綴，送去哪一張卡">
+  <div>
+    <div class="ic-top">
+      <span class="ic-no">ISSUE NO.007</span>
+      <span class="ic-wk">週一</span>
+    </div>
+    <div class="ic-date"><b>09</b><span>NOV 2026</span></div>
+    <ol class="ic-list"><li>接手的是別人兩年前下的訂單</li><li>發一條簡訊，買三樣東西</li><li>每秒十五幀，邊走邊改</li><li>整條軌跡一次畫完</li><li>解碼器得跟上量子處理器</li><li>同一段前綴，送去哪一張卡</li></ol>
+  </div>
+  <div class="ic-foot">
+    <span>6 条 · 18 张卡 · 2 篇讲解</span>
+    <span class="ic-go">翻閱本刊 ↗</span>
+  </div>
+</a>
+<a class="issue-card" href="20261108.html" data-date="2026-11-08" data-text="006 2026-11-08 6 条 · 18 张卡 · 2 篇讲解 ① 一個月前還按兩萬億在談 ② 1380 核心年，跑完一把簽名 ③ 百度把權重停在預訓練終點 ④ 兩個月，清理 ai 微短劇 ⑤ 推一次代碼，中位耗時少了八成 ⑥ 同一批 89 道題，換了問法">
+  <div>
+    <div class="ic-top">
+      <span class="ic-no">ISSUE NO.006</span>
+      <span class="ic-wk">週日</span>
+    </div>
+    <div class="ic-date"><b>08</b><span>NOV 2026</span></div>
+    <ol class="ic-list"><li>一個月前還按兩萬億在談</li><li>1380 核心年，跑完一把簽名</li><li>百度把權重停在預訓練終點</li><li>兩個月，清理 AI 微短劇</li><li>推一次代碼，中位耗時少了八成</li><li>同一批 89 道題，換了問法</li></ol>
+  </div>
+  <div class="ic-foot">
+    <span>6 条 · 18 张卡 · 2 篇讲解</span>
+    <span class="ic-go">翻閱本刊 ↗</span>
+  </div>
+</a>
+<a class="issue-card" href="20261107.html" data-date="2026-11-07" data-text="005 2026-11-07 6 条 · 18 张卡 · 2 篇讲解 ① 一百一十億只是首筆 ② 菌落計數多算了一成二 ③ 淘寶 mnn 團隊把四條約束寫在一起 ④ 喬治亞廠的料箱數 ⑤ 兩百美元一個月 ⑥ lean 接受了形式化推導">
+  <div>
+    <div class="ic-top">
+      <span class="ic-no">ISSUE NO.005</span>
+      <span class="ic-wk">週六</span>
+    </div>
+    <div class="ic-date"><b>07</b><span>NOV 2026</span></div>
+    <ol class="ic-list"><li>一百一十億只是首筆</li><li>菌落計數多算了一成二</li><li>淘寶 MNN 團隊把四條約束寫在一起</li><li>喬治亞廠的料箱數</li><li>兩百美元一個月</li><li>Lean 接受了形式化推導</li></ol>
+  </div>
+  <div class="ic-foot">
+    <span>6 条 · 18 张卡 · 2 篇讲解</span>
+    <span class="ic-go">翻閱本刊 ↗</span>
+  </div>
+</a>
+<a class="issue-card" href="20261106.html" data-date="2026-11-06" data-text="004 2026-11-06 6 条 · 18 张卡 · 2 篇讲解 ① 48.5% 的分數，暫時拿不到 ② claude 能看你的銀行帳了 ③ 權重下週才開，模型先上線了 ④ 剪片的人要先算秒數了 ⑤ 戒指上多了一塊螢幕 ⑥ 最關鍵的證據被塗黑了">
+  <div>
+    <div class="ic-top">
+      <span class="ic-no">ISSUE NO.004</span>
+      <span class="ic-wk">週五</span>
+    </div>
+    <div class="ic-date"><b>06</b><span>NOV 2026</span></div>
+    <ol class="ic-list"><li>48.5% 的分數，暫時拿不到</li><li>Claude 能看你的銀行帳了</li><li>權重下週才開，模型先上線了</li><li>剪片的人要先算秒數了</li><li>戒指上多了一塊螢幕</li><li>最關鍵的證據被塗黑了</li></ol>
+  </div>
+  <div class="ic-foot">
+    <span>6 条 · 18 张卡 · 2 篇讲解</span>
+    <span class="ic-go">翻閱本刊 ↗</span>
+  </div>
+</a>
+<a class="issue-card" href="20261105.html" data-date="2026-11-05" data-text="003 2026-11-05 6 条 · 18 张卡 · 2 篇讲解 ① kimi k3.1 pro 權重開放，放得下來跑不起來 ② openai 把挖洞的成本帳公開了 ③ 三億筆裡的四單 ④ 五年，三百萬台機器人 ⑤ 十個月，三輪融了三億美元 ⑥ 你說錯一句，它跟著改">
+  <div>
+    <div class="ic-top">
+      <span class="ic-no">ISSUE NO.003</span>
+      <span class="ic-wk">週四</span>
+    </div>
+    <div class="ic-date"><b>05</b><span>NOV 2026</span></div>
+    <ol class="ic-list"><li>Kimi K3.1 Pro 權重開放，放得下來跑不起來</li><li>OpenAI 把挖洞的成本帳公開了</li><li>三億筆裡的四單</li><li>五年，三百萬台機器人</li><li>十個月，三輪融了三億美元</li><li>你說錯一句，它跟著改</li></ol>
+  </div>
+  <div class="ic-foot">
+    <span>6 条 · 18 张卡 · 2 篇讲解</span>
+    <span class="ic-go">翻閱本刊 ↗</span>
+  </div>
+</a>
+<a class="issue-card" href="20261104.html" data-date="2026-11-04" data-text="002 2026-11-04 6 条 · 18 张卡 · 2 篇讲解 ① 騰訊混元 hy4：能力翻版，價簽原樣 ② 百度 apollo world：世界模型當考官 ③ marvell 收購 lumentum：電加光 ④ openai 激活分類器：安全進了生產線 ⑤ 蘋果智能 beta 開測：千問真的能喊 ⑥ deepseek super-agent：agent 自己接活">
+  <div>
+    <div class="ic-top">
+      <span class="ic-no">ISSUE NO.002</span>
+      <span class="ic-wk">週三</span>
+    </div>
+    <div class="ic-date"><b>04</b><span>NOV 2026</span></div>
+    <ol class="ic-list"><li>騰訊混元 Hy4：能力翻版，價簽原樣</li><li>百度 Apollo World：世界模型當考官</li><li>Marvell 收購 Lumentum：電加光</li><li>OpenAI 激活分類器：安全進了生產線</li><li>蘋果智能 Beta 開測：千問真的能喊</li><li>DeepSeek Super-agent：Agent 自己接活</li></ol>
+  </div>
+  <div class="ic-foot">
+    <span>6 条 · 18 张卡 · 2 篇讲解</span>
+    <span class="ic-go">翻閱本刊 ↗</span>
+  </div>
+</a>
+<a class="issue-card" href="20261103.html" data-date="2026-11-03" data-text="001 2026-11-03 6 条 · 18 张卡 · 2 篇讲解 ① anthropic 修訂版 s-1：虧損比營收還多 ② openai 合併額度池：12 月起按 token 計量 ③ xai 給 grok 文本加隱形水印 ④ 蘋果 × 阿里：國行 apple 智能定檔 ⑤ meta 與傅利葉合作造出人形機器人原型 max ⑥ 四家廠商統一 robots.txt 訓練退出標記">
+  <div>
+    <div class="ic-top">
+      <span class="ic-no">ISSUE NO.001</span>
+      <span class="ic-wk">週二</span>
+    </div>
+    <div class="ic-date"><b>03</b><span>NOV 2026</span></div>
+    <ol class="ic-list"><li>Anthropic 修訂版 S-1：虧損比營收還多</li><li>OpenAI 合併額度池：12 月起按 Token 計量</li><li>xAI 給 Grok 文本加隱形水印</li><li>蘋果 × 阿里：國行 Apple 智能定檔</li><li>Meta 與傅利葉合作造出人形機器人原型 Max</li><li>四家廠商統一 robots.txt 訓練退出標記</li></ol>
+  </div>
+  <div class="ic-foot">
+    <span>6 条 · 18 张卡 · 2 篇讲解</span>
+    <span class="ic-go">翻閱本刊 ↗</span>
+  </div>
+</a>
+  </main>
+  <p class="empty" id="empty" hidden>這一篩選條件下沒有對應刊期，請換個關鍵字或點擊重置。</p>
+
+  <footer>
+    <span>EveryNews · Daily AI Journal Archive</span>
+    <span>由 工具/make-index.mjs 自動編目生成</span>
+  </footer>
 </div>
 <script>
-const cards=[...document.querySelectorAll('.day')];
-const dateSel=document.getElementById('date'),pick=document.getElementById('pick'),q=document.getElementById('q');
-const hint=document.getElementById('hint'),empty=document.getElementById('empty');
-function apply(){
-  const d=dateSel.value,p=pick.value,k=q.value.trim().toLowerCase();
-  let n=0;
-  cards.forEach(c=>{
-    const show=(!d||c.dataset.date===d)&&(!p||c.dataset.date===p)&&(!k||c.dataset.text.includes(k));
-    c.hidden=!show;
-    if(show)n++;
+(function(){
+  var root = document.documentElement;
+  document.getElementById('theme-toggle').addEventListener('click', function(){
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('everynews-theme', next); } catch(e){}
   });
-  hint.textContent='顯示 '+n+' 期';
-  empty.hidden=n>0;
-}
-dateSel.addEventListener('change',()=>{pick.value='';apply()});
-pick.addEventListener('change',()=>{dateSel.value='';apply()});
-q.addEventListener('input',apply);
-document.getElementById('reset').addEventListener('click',()=>{dateSel.value='';pick.value='';q.value='';apply()});
+
+  var cards = Array.prototype.slice.call(document.querySelectorAll('.issue-card'));
+  var dateSel = document.getElementById('date'), pick = document.getElementById('pick'), q = document.getElementById('q');
+  var hint = document.getElementById('hint'), empty = document.getElementById('empty');
+  var rack = document.getElementById('rack'), vGrid = document.getElementById('v-grid'), vList = document.getElementById('v-list');
+
+  function apply(){
+    var d = dateSel.value, p = pick.value, k = q.value.trim().toLowerCase();
+    var n = 0;
+    cards.forEach(function(c){
+      var show = (!d || c.dataset.date === d) && (!p || c.dataset.date === p) && (!k || c.dataset.text.includes(k));
+      c.hidden = !show;
+      if (show) n++;
+    });
+    hint.textContent = 'SHOWING ' + n + ' OF ' + cards.length + ' ISSUES';
+    empty.hidden = n > 0;
+  }
+  dateSel.addEventListener('change', function(){ pick.value = ''; apply(); });
+  pick.addEventListener('change', function(){ dateSel.value = ''; apply(); });
+  q.addEventListener('input', apply);
+  document.getElementById('reset').addEventListener('click', function(){ dateSel.value = ''; pick.value = ''; q.value = ''; apply(); });
+
+  vGrid.addEventListener('click', function(){ rack.classList.remove('is-list'); vGrid.classList.add('is-on'); vList.classList.remove('is-on'); });
+  vList.addEventListener('click', function(){ rack.classList.add('is-list'); vList.classList.add('is-on'); vGrid.classList.remove('is-on'); });
+})();
 </script>
 </body>
 </html>

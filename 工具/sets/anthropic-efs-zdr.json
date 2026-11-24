@@ -1,0 +1,35 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "Anthropic 官方公告 · 11-23",
+  "date": "2026.11.24",
+  "noImageReason": "Anthropic EFS 公告頁為純文字說明，權責轉移結構走對照卡",
+  "slides": [
+    {
+      "type": "ledger",
+      "kicker": "ENTERPRISE GOVERNANCE · 資料駐留",
+      "headline": ["金鑰歸客戶", "告警也歸你"],
+      "accentLine": 1,
+      "sub": "Anthropic EFS 把資料搬回買方雲端，安全處置工單也跟著移交。",
+      "rows": [
+        { "k": "資料落點", "v": "自有雲", "d": "存回客戶自管 S3、Azure Blob 或 GCS", "on": true },
+        { "k": "濫用偵測", "v": "滾動窗", "d": "自動系統仍需留存窗口期流量做分析", "on": false },
+        { "k": "告警處置", "v": "自接手", "d": "紅燈直接發給客戶安全團隊，無廠商人工審查", "on": true }
+      ],
+      "note": "目標今年秋天分階段開放，具體日期未公布。"
+    },
+    {
+      "type": "blocks",
+      "kicker": "BUYER PROFILE · 誰接得住",
+      "headline": ["替大企業", "量身定做的"],
+      "accentLine": 1,
+      "sub": "參與設計的企業結構直接說明了這套方案的人力門檻。",
+      "items": [
+        { "value": "100+", "label": "參與共創企業", "size": 100 },
+        { "value": "1/4", "label": "財富百強佔比", "size": 52 }
+      ],
+      "big": "25%",
+      "bigLabel": "Fortune 100 佔比 · 自備全天候安全值班團隊",
+      "note": "過渡期符合資格客戶先在 Fable 5 / 5.1 獲零資料保留。"
+    }
+  ]
+}

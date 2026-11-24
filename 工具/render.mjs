@@ -16,8 +16,8 @@ const BRAND =
   data.brand;
 
 const THEMES = {
-  // 默认：深紫 + 暖白 + 碳黑
-  deepviolet: { accent: "#5B3FD1", acctx: "#4A2CBE", onAcc: "#FFFFFF", paper: "#F6F3EC", deep: "#0D0D0D", soft: "#E6E0F5" },
+  // 默认：现代编辑杂志版（暖米白纸底 + 深靛蓝主色 + 朱砂点缀 + 纯粹现代无衬线字体）
+  deepviolet: { accent: "#3B28CC", acctx: "#3220B5", onAcc: "#FAF8F4", paper: "#F6F3EC", deep: "#111116", soft: "#ECE8F6" },
   violet: { accent: "#7A5CFF", acctx: "#6A45F0", onAcc: "#FFFFFF", paper: "#F7F5FF", deep: "#121118", soft: "#EDE8FF" },
   blackgold: { accent: "#FF9A3C", acctx: "#A9530F", onAcc: "#12100E", paper: "#F0EEE9", deep: "#0D0D0D", soft: "#F3E8DB" },
   pink: { accent: "#FF4D8D", acctx: "#E23A7A", onAcc: "#FFFFFF", paper: "#FFF6FA", deep: "#160E12", soft: "#FFE7EF" }
@@ -37,37 +37,45 @@ const CSS = `
 *{margin:0;padding:0;box-sizing:border-box;-webkit-font-smoothing:antialiased}
 html,body{width:1080px;height:1350px;overflow:hidden}
 html[data-wide="1"],html[data-wide="1"] body{width:1440px;height:810px}
-body{font-family:"PingFang SC","Hiragino Sans GB","Noto Sans SC",sans-serif;color:#121118}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI","PingFang TC","PingFang SC","Noto Sans TC","Hiragino Sans GB","Microsoft JhengHei",sans-serif;
+  color:#141318;font-variant-numeric:tabular-nums;
+}
 
-.slide{width:1080px;height:1350px;display:flex;flex-direction:column;background:PAPER;overflow:hidden}
+.slide{position:relative;width:1080px;height:1350px;display:flex;flex-direction:column;background:PAPER;overflow:hidden}
 html[data-wide="1"] .slide{width:1440px;height:810px}
-.slide.dark{background:DEEP;color:#fff}
-.band{height:12px;background:ACCENT;flex:none}
-.page{flex:1;display:flex;flex-direction:column;padding:40px 64px 0;min-height:0}
+.slide.dark{background:DEEP;color:#FAF8F4}
+.band{height:8px;background:linear-gradient(90deg,#C84B31 0,#C84B31 14%,ACCENT 14%,ACCENT 100%);flex:none}
+.page{flex:1;display:flex;flex-direction:column;padding:46px 68px 0;min-height:0}
 
-header{display:flex;justify-content:space-between;align-items:center;flex:none}
-.kick{display:flex;align-items:center;gap:16px;font-size:21px;font-weight:600;letter-spacing:2px;color:#7C768C}
-.kick::before{content:"";width:12px;height:12px;background:ACCENT;display:block;flex:none}
-.pnum{font-size:62px;font-weight:700;color:ACCTX;letter-spacing:-3px;line-height:.9}
-.slide.dark .kick{color:#8E88A0}
+header{display:flex;justify-content:space-between;align-items:center;flex:none;padding-bottom:20px;border-bottom:1.5px solid rgba(20,19,24,.16)}
+.slide.dark header{border-bottom-color:rgba(255,255,255,.18)}
+.kick{display:flex;align-items:center;gap:12px;font-size:20px;font-weight:700;letter-spacing:1.8px;color:#4E4A5C;text-transform:uppercase}
+.kick::before{content:"";width:9px;height:9px;background:#C84B31;border-radius:2px;display:block;flex:none}
+.pnum{font-size:52px;font-weight:800;color:ACCTX;letter-spacing:-2px;line-height:.9}
+.slide.dark .kick{color:#A8A2BA}
+.slide.dark .pnum{color:#9E91FF}
 
-h1{font-size:92px;line-height:1.06;font-weight:700;letter-spacing:-3px;margin-top:34px;flex:none}
-h1.sm{font-size:78px}
+h1{font-size:88px;line-height:1.08;font-weight:800;letter-spacing:-2.8px;margin-top:34px;flex:none;color:#141318}
+.slide.dark h1{color:#FAF8F4}
+h1.sm{font-size:74px}
 h1 .accent{color:ACCTX}
-.stamp{display:inline-block;background:ACCENT;color:ONACC;padding:.07em .1em;line-height:1;margin-left:.06em}
+.slide.dark h1 .accent{color:#A396FF}
+.stamp{display:inline-block;background:#C84B31;color:#FAF8F4;padding:.04em .14em;border-radius:4px;line-height:1.02;margin-left:.06em}
 
-.body{flex:1;display:flex;flex-direction:column;justify-content:center;gap:26px;padding:30px 0 26px;min-height:0}
-.sub{font-size:28px;line-height:1.55;color:#6E6A7B;font-weight:400}
-.slide.dark .sub{color:#A29CB4}
-.note{font-size:21px;line-height:1.55;color:#8E88A0}
+.body{flex:1;display:flex;flex-direction:column;justify-content:center;gap:26px;padding:28px 0 24px;min-height:0}
+.sub{font-size:28px;line-height:1.56;color:#3F3B4D;font-weight:500}
+.slide.dark .sub{color:#B8B2CA}
+.note{font-size:21px;line-height:1.55;color:#6E687F}
 
-footer{flex:none;padding:0 64px 44px}
-footer .in{border-top:2px solid rgba(18,17,24,.15);padding-top:19px;display:flex;justify-content:space-between;align-items:baseline}
+footer{flex:none;padding:0 68px 44px}
+footer .in{border-top:1.5px solid rgba(20,19,24,.15);padding-top:18px;display:flex;justify-content:space-between;align-items:center}
 .slide.dark footer .in{border-top-color:rgba(255,255,255,.16)}
-footer .src{font-size:21px;color:#8E88A0;letter-spacing:.3px}
-footer .logo{font-size:26px;font-weight:700;color:ACCTX;letter-spacing:.5px}
+footer .src{font-size:20px;color:#6E687F;letter-spacing:.3px;font-weight:500}
+footer .logo{font-size:21px;font-weight:800;color:#141318;letter-spacing:2.2px}
+.slide.dark footer .logo{color:#FAF8F4}
 
-.bleed{margin-left:-64px;margin-right:-64px}
+.bleed{margin-left:-68px;margin-right:-68px}
 
 /* v11 图片封面 A：上方满出血图，文字在下 */
 .imtop{display:flex;flex-direction:column;flex:1;min-height:0;gap:30px;padding:22px 0 0}

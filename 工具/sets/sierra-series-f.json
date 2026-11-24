@@ -1,0 +1,42 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "Sierra 官方博客 · 11-23",
+  "date": "2026.11.24",
+  "noImageReason": "Sierra 融資公告無資訊圖表，估值與 ARR 增速走對比卡",
+  "slides": [
+    {
+      "type": "cover",
+      "kicker": "VENTURE & ARR · 企業代理估值",
+      "headline": ["半年翻一倍", "站上三百億"],
+      "stamp": ["三百億"],
+      "accentLine": 1,
+      "sub": "Bret Taylor 與 Clay Bavor 創辦的客服代理公司完成 17.5 億美元 F 輪。",
+      "hero": {
+        "num": "$30B",
+        "unit": "SERIES F 最新估值",
+        "lines": ["本輪融資 $1.75B", "年化收入破 $400M", "Q3 單季新增 $150M"]
+      },
+      "chips": [
+        "Greenoaks 與 Lightspeed 聯合領投，老股東跟投",
+        "單季新增 ARR 佔總年化收入近四成",
+        "定價錨定大企業整條人工客服外包線替換"
+      ]
+    },
+    {
+      "type": "stack",
+      "kicker": "REVENUE VELOCITY · 收入結構",
+      "headline": ["單季新簽", "撐起高溢價"],
+      "accentLine": 1,
+      "sub": "75 倍市銷率背後，投資人買的是第三季陡增的簽單斜率。",
+      "bars": [
+        { "label": "累計年化經常性收入（ARR）", "price": "$400M+", "width": 100 },
+        { "label": "僅 Q3 單季新增年化收入", "price": "+$150M", "width": 38, "muted": true }
+      ],
+      "rows": [
+        { "k": "本輪領投", "v": "Greenoaks · Lightspeed" },
+        { "k": "估值倍數", "v": "約 75× 當前 ARR（半年翻倍）" }
+      ],
+      "note": "收入數據為公司官方博客自述口徑。"
+    }
+  ]
+}
