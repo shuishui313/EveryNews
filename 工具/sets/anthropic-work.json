@@ -1,0 +1,36 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "Anthropic Research · 11-23",
+  "date": "2026.11.25",
+  "noImageReason": "研究頁為文字與圖表混排的報告入口，核心兩欄數字直接做成對照卡更清晰",
+  "slides": [
+    {
+      "type": "ledger",
+      "kicker": "WORK & HIRING · 招聘帳本",
+      "headline": ["三分之二少招", "裁崗只有兩家"],
+      "accentLine": 1,
+      "sub": "58 家企業、66 次訪談裡，AI 先動的是招聘計劃，不是崗位名單。",
+      "rows": [
+        { "k": "減少招聘", "v": "2/3", "d": "企業因 AI 少招人", "on": true },
+        { "k": "崗位取消", "v": "2 家", "d": "樣本裡出現 AI 導致的裁崗", "on": false },
+        { "k": "樣本規模", "v": "58", "d": "企業客戶，66 次訪談", "on": false }
+      ],
+      "note": "作者為 Anthropic 自己，明確說明非隨機抽樣。"
+    },
+    {
+      "type": "quote",
+      "kicker": "FRAGILE AUTOMATION · 落地代價",
+      "headline": ["抵制一來", "自動化就脆弱"],
+      "accentLine": 1,
+      "quote": [
+        "自上而下推 AI，員工擔心被監控、被推去幹不熟的活。",
+        "抵製一上來，自動化要嘛被閒置，要嘛[[長期靠人兜底]]。"
+      ],
+      "by": "Anthropic · Working with AI",
+      "rows": [
+        { "k": "產出增益", "v": "一半加速原有工作，一半來自新服務" },
+        { "k": "AI 寫的軟件", "v": "八成接手人工活，兩成替掉外購" }
+      ]
+    }
+  ]
+}

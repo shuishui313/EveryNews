@@ -1,0 +1,39 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "Claude Blog · 11-23",
+  "date": "2026.11.25",
+  "noImageReason": "Claude Ship 公告頁為純文字與流程說明，三段代理職責改走流程圖卡呈現",
+  "slides": [
+    {
+      "type": "cover-split",
+      "kicker": "AGENTIC CODE REVIEW · 代理審核",
+      "headline": ["三個代理接力", "合併鍵留人手"],
+      "accentLine": 1,
+      "sub": "Claude Ship 把一次 PR 拆成審查、修綠、批准三段，最後一道閘仍歸倉庫規則。",
+      "hero": { "num": "3", "unit": "段代理接力" },
+      "chips": [
+        "Code Review 正式可用，Quick / Standard / Deep 三檔",
+        "PR Steward 修綠但不批准不合併",
+        "Claude Approvals 讀默認分支策略文件",
+        "官方建議先跑只看不動的觀察模式"
+      ]
+    },
+    {
+      "type": "diagram",
+      "kicker": "SHIP PIPELINE · 三道職責",
+      "headline": ["誰審誰修", "誰來放行"],
+      "accentLine": 1,
+      "sub": "把合併權拆開，代理各自只拿一段權限。",
+      "nodes": [
+        { "box": "Code Review", "lab": "收集問題並對抗驗證" },
+        { "box": "PR Steward", "lab": "修檢查與衝突，不合併", "tone": "dim" },
+        { "box": "Approvals", "lab": "按倉庫策略放行", "tone": "fill" }
+      ],
+      "arrows": [
+        { "label": "問題發到 PR" },
+        { "label": "觀察模式起步" }
+      ],
+      "verdict": "分支保護與必需檢查仍是放行的硬條件。"
+    }
+  ]
+}

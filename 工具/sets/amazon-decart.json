@@ -1,0 +1,50 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "About Amazon · 11-23",
+  "date": "2026.11.25",
+  "noImageReason": "Amazon 收購公告為純文字稿，未披露金額與交易結構改走對照卡呈現",
+  "slides": [
+    {
+      "type": "cover-min",
+      "kicker": "ACQUI-HIRE · 技術收購",
+      "headline": ["金額沒寫", "方向很直白"],
+      "accentLine": 1,
+      "sub": "Amazon 買下 Decart 的優化技術棧，連三位創辦人與工程團隊一起收進來。",
+      "num": "DOS",
+      "numLabel": "Decart Optimization Stack · 公告未披露價格",
+      "chips": [
+        "優化自家推理與自研芯片",
+        "涵蓋 Graviton 到 Trainium",
+        "雙方從 2025 年起在 Trainium 合作",
+        "交割仍要過監管批准"
+      ],
+      "note": "公告写明团队留任为预期事项，非已确定。"
+    },
+    {
+      "type": "columns",
+      "kicker": "DEAL SCOPE · 交易邊界",
+      "headline": ["已收下的", "還待定的"],
+      "accentLine": 1,
+      "sub": "技術、人與監管三件事，公告分得清楚。",
+      "cols2": [
+        {
+          "k": "已確認",
+          "items": [
+            "購買 DOS 背後的專有技術",
+            "三位聯合創辦人加入",
+            "研究與工程團隊一併轉入"
+          ]
+        },
+        {
+          "k": "待交割",
+          "items": [
+            "金額始終未披露",
+            "需滿足慣例交割條件",
+            "監管批准與團隊留任仍 writer 條件"
+          ]
+        }
+      ],
+      "verdict": "錢沒公布，買技術綁芯片的意圖寫得很滿。"
+    }
+  ]
+}

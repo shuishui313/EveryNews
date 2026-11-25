@@ -1,0 +1,49 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "OpenAI · 11-23",
+  "date": "2026.11.25",
+  "noImageReason": "OpenWorks 項目頁為報名說明與城市列表，津貼與資格直接做成數字卡",
+  "slides": [
+    {
+      "type": "bigfact",
+      "kicker": "SMALL BUSINESS · 落地輔導",
+      "headline": ["每月八千美元", "請人進小店"],
+      "accentLine": 1,
+      "sub": "OpenAI 出錢請本地顧問，上門幫美國小企業把 ChatGPT 用起來。",
+      "num": "$8,000",
+      "numLabel": "合作伙伴每月津貼上限",
+      "rows": [
+        { "k": "覆蓋", "v": "20 座城市" },
+        { "k": "企業所得", "v": "三個月 ChatGPT Business" },
+        { "k": "伙伴義務", "v": "每月數天上門加一場工作坊" }
+      ],
+      "note": "津貼是給顧問的，企業端全程免費。"
+    },
+    {
+      "type": "columns",
+      "kicker": "ELIGIBILITY · 名單邊界",
+      "headline": ["能拿的", "拿不到的"],
+      "accentLine": 1,
+      "sub": "項目把資源留給獨立經營的實體小店。",
+      "cols2": [
+        {
+          "k": "符合資格",
+          "items": [
+            "餐廳、零售商、服務公司、製造商",
+            "獨立持有的美国小企業",
+            "伙伴可為個人或小團隊"
+          ]
+        },
+        {
+          "k": "不具資格",
+          "items": [
+            "軟件與 SaaS 公司",
+            "風投支持的企業",
+            "私募股權持股的企業"
+          ]
+        }
+      ],
+      "verdict": "想蹭工具的新創團隊沒份。"
+    }
+  ]
+}

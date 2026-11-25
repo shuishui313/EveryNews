@@ -1,0 +1,39 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "Meta Newsroom · 11-24",
+  "date": "2026.11.25",
+  "noImageReason": "Muse 英國公告頁為文字說明與合作品牌列表，支付隔離機制改走規格卡呈現",
+  "slides": [
+    {
+      "type": "cover",
+      "kicker": "PERSONAL AGENT · 代理代購",
+      "headline": ["錢付得出去", "密碼始終不碰"],
+      "stamp": ["不碰密碼"],
+      "accentLine": 1,
+      "sub": "Muse 在英國上線，替你發郵件、訂旅行、追退款，大動作前回來問一句。",
+      "hero": {
+        "num": "18+",
+        "unit": "英國用戶 · 免費為主",
+        "lines": ["iOS、Android、網頁、WhatsApp", "發邮件與購買前需批准", "關閉應用後仍會繼續任務"]
+      },
+      "chips": [
+        "Stripe Onelink 一次性虛擬卡結賬",
+        "Shop Pay 复用已存付款與配送資訊",
+        "代理看不到密碼與支付方式"
+      ]
+    },
+    {
+      "type": "specs",
+      "kicker": "CHECKOUT PATH · 結賬路徑",
+      "headline": ["兩條支付通道", "一層隔離"],
+      "accentLine": 1,
+      "sub": "把付款能力交出去，同時把憑據留在代理視野之外。",
+      "cells": [
+        { "k": "通道一", "t": "Onelink 虛擬卡", "d": "Stripe 生成僅供代理使用的唯一卡號" },
+        { "k": "通道二", "t": "Shop Pay", "d": "复用已存資訊，支持商店直接結賬" },
+        { "k": "邊界", "t": "看不到憑據", "d": "密碼與支付方式不進入代理上下文" }
+      ],
+      "note": "零售伙伴含 M&S、Ocado、Argos、Sainsbury's、ASOS，PayPal 即將接入。"
+    }
+  ]
+}

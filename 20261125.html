@@ -1,0 +1,986 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EveryNews · Issue No.016 (2026-11-25)</title>
+<meta name="description" content="EveryNews 每日 AI 線上雜誌：讀報筆記體快訊、視覺圖版與兩篇深度專欄。">
+<script>
+(function(){try{var t=localStorage.getItem('everynews-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<style>
+:root{
+  --paper:#F6F3EC;
+  --paper-elev:#FCFBF8;
+  --paper-feature:#EFEBE1;
+  --ink:#141318;
+  --ink2:#3F3B4D;
+  --mute:#787287;
+  --line:rgba(20,19,24,.12);
+  --line-strong:#141318;
+  --accent:#3B28CC;
+  --accent-soft:rgba(59,40,204,.07);
+  --stamp:#C84B31;
+  --shadow:0 8px 24px rgba(20,19,24,.05),0 1px 3px rgba(20,19,24,.04);
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI","PingFang TC","PingFang SC","Noto Sans TC","Hiragino Sans GB","Microsoft JhengHei",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+html[data-theme="dark"]{
+  --paper:#0F0F13;
+  --paper-elev:#17171F;
+  --paper-feature:#1C1B26;
+  --ink:#EFECE4;
+  --ink2:#B8B3C7;
+  --mute:#857F96;
+  --line:rgba(255,255,255,.11);
+  --line-strong:#E2DDD2;
+  --accent:#9688FF;
+  --accent-soft:rgba(150,136,255,.12);
+  --stamp:#E06348;
+  --shadow:0 14px 34px rgba(0,0,0,.4),0 2px 6px rgba(0,0,0,.28);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-variant-numeric:tabular-nums;line-height:1.82;font-size:16px;
+  -webkit-font-smoothing:antialiased;line-break:strict;
+  transition:background-color .3s var(--ease),color .3s var(--ease);
+}
+a{color:inherit;text-decoration:none}
+button,select{font:inherit}
+button{cursor:pointer}
+
+/* 顶部阅读进度条 */
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2.5px;z-index:100;background:transparent}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--stamp),var(--accent));transition:width .1s linear}
+
+/* 唯一合并的单层毛玻璃杂志顶栏（整合期次切换、归档入口、进度与日夜开关） */
+.topbar{
+  position:sticky;top:0;z-index:80;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  background:color-mix(in srgb,var(--paper) 86%,transparent);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{
+  max-width:1260px;margin:0 auto;padding:9px clamp(18px,4vw,52px);
+  display:flex;align-items:center;gap:14px;justify-content:space-between;flex-wrap:wrap;
+}
+.topbar-left{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.mini-brand{font-weight:800;font-size:15.5px;letter-spacing:-.02em}
+.topbar-sep{color:var(--line);user-select:none}
+.issue-switcher{display:inline-flex;align-items:center;gap:8px}
+.issue-switcher select{
+  font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:99px;
+  border:1px solid var(--line);background:var(--paper-elev);color:var(--ink);cursor:pointer;
+}
+.issue-switcher select:focus{outline:2px solid var(--accent);outline-offset:1px}
+.archive-link{font-size:12.5px;font-weight:600;color:var(--accent);padding:3px 6px}
+.archive-link:hover{text-decoration:underline}
+.topbar-right{display:flex;align-items:center;gap:12px;margin-left:auto}
+.issue-nav-hint{font-family:var(--mono);font-size:11px;color:var(--mute);display:none}
+@media(min-width:900px){.issue-nav-hint{display:inline}}
+.read-pct{font-family:var(--mono);font-size:11.5px;color:var(--mute);min-width:36px;text-align:right}
+.theme-btn{
+  display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:99px;
+  border:1px solid var(--line);background:var(--paper-elev);color:var(--ink2);
+  font-size:12px;font-weight:600;transition:border-color .2s,transform .2s var(--ease);
+}
+.theme-btn:hover{border-color:var(--accent);transform:translateY(-1px)}
+.theme-dot{width:7px;height:7px;border-radius:50%;background:var(--stamp)}
+
+/* 瑞士现代杂志报头 Masthead */
+.masthead{max-width:1260px;margin:0 auto;padding:clamp(28px,4.2vw,52px) clamp(18px,4vw,52px) 0}
+.masthead-meta{
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+  padding-bottom:12px;border-bottom:1px solid var(--line);
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--mute);text-transform:uppercase;
+}
+.stamp-pill{display:inline-flex;align-items:center;gap:8px;color:var(--stamp);font-weight:700}
+.stamp-pill::before{content:"";width:7px;height:7px;border-radius:1.5px;background:var(--stamp)}
+.masthead-hero{
+  display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end;
+  padding:clamp(24px,3.6vw,42px) 0 clamp(24px,3.2vw,36px);
+  border-bottom:2px solid var(--line-strong);
+}
+.journal-name{
+  font-size:clamp(42px,6.8vw,82px);font-weight:900;
+  line-height:.95;letter-spacing:-.045em;margin:0;
+}
+.journal-name span{color:var(--accent)}
+.journal-sub{
+  margin:14px 0 0;font-size:clamp(15px,1.4vw,17.5px);color:var(--ink2);max-width:52ch;line-height:1.68;
+}
+.issue-box{
+  text-align:right;border-left:1px solid var(--line);padding-left:28px;
+  display:flex;flex-direction:column;justify-content:flex-end;gap:4px;
+}
+.issue-box .ib-kicker{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--stamp);font-weight:700}
+.issue-box .ib-date{font-size:clamp(26px,2.8vw,34px);font-weight:800;line-height:1.08;letter-spacing:-.03em}
+.stat{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin:4px 0 0}
+
+.jump-compat{display:none}
+
+/* 双栏瑞士网格：左侧吸附目录 + 右侧主内容区 */
+.mag-shell{
+  max-width:1260px;margin:0 auto;padding:0 clamp(18px,4vw,52px) 80px;
+  display:grid;grid-template-columns:240px minmax(0,1fr);gap:clamp(28px,4.5vw,60px);align-items:start;
+}
+.toc-rail{
+  position:sticky;top:64px;padding:32px 22px 24px 0;
+  border-right:1px solid var(--line);
+}
+.toc-head{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--mute);
+  text-transform:uppercase;margin:0 0 14px;display:flex;justify-content:space-between;
+}
+.toc-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.toc-link{
+  display:grid;grid-template-columns:24px 1fr;gap:8px;align-items:baseline;
+  padding:7px 10px;border-radius:5px;font-size:13px;line-height:1.45;color:var(--ink2);
+  border-left:2px solid transparent;transition:all .2s var(--ease);
+}
+.toc-link:hover{background:var(--accent-soft);color:var(--ink)}
+.toc-link.is-active{
+  background:var(--accent-soft);color:var(--ink);font-weight:700;
+  border-left-color:var(--stamp);transform:translateX(2px);
+}
+.toc-no{font-family:var(--mono);font-size:11px;color:var(--mute)}
+.toc-link.is-active .toc-no{color:var(--stamp);font-weight:700}
+.toc-sec-label{
+  margin:18px 0 8px;padding-top:14px;border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--mute);
+}
+.toc-kbd{
+  margin-top:20px;padding-top:14px;border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:10.5px;color:var(--mute);line-height:1.6;
+}
+.toc-kbd kbd{
+  padding:1px 5px;border:1px solid var(--line);border-radius:3px;background:var(--paper-elev);font-size:10px;
+}
+
+/* 新闻条目版面 */
+.mag-main{min-width:0}
+.story{padding:clamp(34px,4.2vw,52px) 0;border-bottom:1px solid var(--line)}
+.story.is-lead{padding-top:clamp(28px,3.4vw,42px)}
+.story-meta{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.story-folio{
+  font-size:24px;font-weight:900;line-height:1;color:var(--accent);letter-spacing:-.04em;
+}
+.story-rubric{
+  font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 9px;border:1px solid var(--line);border-radius:4px;color:var(--ink2);background:var(--paper-elev);
+}
+.lead-badge{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;font-weight:700;
+  padding:3px 9px;border-radius:4px;background:var(--stamp);color:#FAF8F4;
+}
+.story-title{
+  font-size:clamp(22px,2.8vw,32px);font-weight:800;
+  line-height:1.28;letter-spacing:-.025em;margin:0 0 22px;color:var(--ink);
+}
+.story.is-lead .story-title{font-size:clamp(25px,3.2vw,36px)}
+
+/* 图版阵列：统一左对齐与满宽瑞士网格，与正文、档案卡、分割线右边缘严丝合缝对齐 */
+.plate-wrap{margin:0 0 24px;width:100%}
+.strip{display:grid;gap:clamp(12px,1.8vw,20px);width:100%}
+.strip-1{grid-template-columns:minmax(0,1fr);max-width:480px}
+.strip-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.strip-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.plate{margin:0;display:flex;flex-direction:column;gap:7px}
+.plate.wide{grid-column:span 2}
+.strip-1 .plate.wide{grid-column:span 1;max-width:680px}
+.shot{
+  position:relative;display:block;border-radius:6px;overflow:hidden;
+  border:1px solid var(--line);background:var(--paper-elev);box-shadow:var(--shadow);
+  cursor:zoom-in;transition:transform .32s var(--ease),box-shadow .32s var(--ease),border-color .22s;
+}
+.shot:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 18px 36px rgba(20,19,24,.11)}
+.shot img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;transition:transform .45s var(--ease),filter .3s}
+html[data-theme="dark"] .shot img{filter:brightness(.93) contrast(1.02)}
+html[data-theme="dark"] .shot:hover img{filter:brightness(1)}
+.plate.wide .shot img{aspect-ratio:16/9;object-fit:contain}
+.shot:hover img{transform:scale(1.015)}
+.zoom-pill{
+  position:absolute;right:10px;bottom:10px;padding:4px 10px;border-radius:99px;
+  background:rgba(20,19,24,.78);color:#FAF8F4;font-size:11px;font-family:var(--mono);
+  opacity:0;transform:translateY(4px);transition:all .22s var(--ease);pointer-events:none;
+}
+.shot:hover .zoom-pill{opacity:1;transform:translateY(0)}
+.plate figcaption{
+  display:flex;justify-content:space-between;font-family:var(--mono);
+  font-size:10.5px;letter-spacing:.08em;color:var(--mute);padding:0 2px;
+}
+
+/* 正文与按钮区：100% 撑满主阅读栏，消除右侧参差留白 */
+.story-body{width:100%}
+.post p{margin:0 0 1em;font-size:16.5px;line-height:1.9;color:var(--ink);text-align:justify}
+.story-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:16px 0 4px}
+.src-btn{
+  display:inline-flex;align-items:center;gap:9px;padding:7px 14px;border-radius:6px;
+  border:1px solid var(--line);background:var(--paper-elev);font-size:13px;font-weight:600;
+  transition:all .22s var(--ease);
+}
+.src-btn small{font-family:var(--mono);font-size:11px;color:var(--mute);font-weight:400}
+.src-btn i{font-style:normal;color:var(--accent);transition:transform .22s var(--ease)}
+.src-btn:hover{border-color:var(--accent);transform:translateY(-1px)}
+.src-btn:hover i{transform:translate(2px,-2px)}
+.share-btn{
+  padding:7px 12px;border-radius:6px;border:1px solid transparent;background:transparent;
+  color:var(--mute);font-size:12.5px;transition:all .2s;
+}
+.share-btn:hover{border-color:var(--line);background:var(--paper-elev);color:var(--ink)}
+
+/* 手风琴核验档案卡 */
+.dossier{margin-top:14px;border:1px solid var(--line);border-radius:6px;background:var(--paper-elev);overflow:hidden}
+.dossier-btn{
+  width:100%;display:flex;align-items:center;gap:10px;padding:10px 15px;
+  background:transparent;border:none;color:var(--ink2);text-align:left;transition:background .2s;
+}
+.dossier-btn:hover{background:var(--accent-soft)}
+.dossier-label{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em}
+.dossier-label i{width:6px;height:6px;border-radius:1px;background:var(--accent);display:inline-block}
+.dossier-count{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--mute)}
+.dossier-icon{
+  width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:15px;color:var(--accent);transition:transform .28s var(--ease);
+}
+.dossier[data-open="true"] .dossier-icon{transform:rotate(45deg)}
+.dossier-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s var(--ease)}
+.dossier[data-open="true"] .dossier-panel{grid-template-rows:1fr}
+.dossier-inner{overflow:hidden}
+.dossier-inner table{width:100%;border-collapse:collapse;border-top:1px solid var(--line);font-size:13.5px}
+.dossier-inner th{
+  text-align:left;vertical-align:top;white-space:nowrap;color:var(--mute);
+  font-family:var(--mono);font-weight:600;padding:8px 18px 8px 15px;width:1%;
+}
+.dossier-inner td{padding:8px 15px 8px 0;border-bottom:1px solid var(--line);color:var(--ink2);overflow-wrap:anywhere}
+.dossier-inner tr:last-child td{border-bottom:none}
+.inline-url{color:var(--accent);word-break:break-all}
+.inline-url:hover{text-decoration:underline}
+
+/* 深度专栏 Feature Well（东方现代编辑感：顶线规格栏 + 首段导语竖线提亮） */
+.feature-well{
+  margin-top:52px;padding:clamp(28px,4vw,48px);border-radius:8px;
+  background:var(--paper-feature);border-top:2px solid var(--line-strong);
+}
+.feature-header{
+  display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;
+  padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:6px;
+}
+.feature-header h2{font-size:clamp(22px,2.6vw,30px);font-weight:800;margin:0;letter-spacing:-.025em}
+.feature-header span{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--stamp);font-weight:700}
+.essay{padding:34px 0;border-bottom:1px solid var(--line)}
+.essay:last-child{border-bottom:none;padding-bottom:4px}
+.essay-kicker{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.essay-badge{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;font-weight:700;
+  padding:3px 8px;background:var(--ink);color:var(--paper);border-radius:3px;
+}
+.essay-stat{font-family:var(--mono);font-size:11.5px;color:var(--mute)}
+.essay-title{
+  font-size:clamp(21px,2.5vw,28px);font-weight:800;
+  margin:0 0 20px;line-height:1.3;letter-spacing:-.02em;
+}
+.essay-brief{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;
+  margin:0 0 26px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.brief-cell{display:flex;flex-direction:column;gap:5px}
+.brief-cell .bk{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--stamp);font-weight:700}
+.brief-cell .bv{font-size:13px;line-height:1.58;color:var(--ink2);overflow-wrap:anywhere}
+.essay-prose{width:100%}
+.essay-prose p{margin:0 0 1.12em;font-size:16.5px;line-height:1.92;color:var(--ink);text-align:justify}
+.essay-prose p.essay-lead{
+  font-size:17.2px;font-weight:500;padding-left:16px;
+  border-left:3px solid var(--accent);color:var(--ink);
+}
+.editor-note{
+  margin:22px 0 16px;padding:14px 18px;border-left:3px solid var(--stamp);
+  background:var(--paper-elev);border-radius:0 6px 6px 0;width:100%;
+}
+.editor-note .en-head{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--stamp);font-weight:700;margin-bottom:5px}
+.editor-note p{margin:0;font-size:14.5px;line-height:1.68;color:var(--ink2)}
+
+/* 前后期翻页与页脚 */
+.issue-pager{
+  max-width:1260px;margin:0 auto;padding:0 clamp(18px,4vw,52px) 36px;
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+}
+.pager-card{
+  padding:18px 22px;border:1px solid var(--line);border-radius:6px;background:var(--paper-elev);
+  display:flex;flex-direction:column;gap:4px;transition:all .22s var(--ease);
+}
+.pager-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.pager-card.next{text-align:right}
+.pager-card small{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--mute)}
+.pager-card strong{font-size:17px;font-weight:700}
+
+.foot{
+  max-width:1260px;margin:0 auto;padding:26px clamp(18px,4vw,52px) 60px;
+  border-top:2px solid var(--line-strong);color:var(--mute);font-size:13px;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+}
+.foot p{margin:0}
+
+/* 移动端悬浮目录抽屉 */
+.fab-toc{
+  display:none;position:fixed;right:18px;bottom:20px;z-index:85;
+  padding:10px 16px;border-radius:99px;border:1px solid var(--line);
+  background:var(--ink);color:var(--paper);font-size:13px;font-weight:600;
+  box-shadow:0 10px 26px rgba(0,0,0,.22);
+}
+.mobile-drawer{
+  position:fixed;inset:0;z-index:95;background:rgba(12,11,16,.58);
+  backdrop-filter:blur(4px);display:flex;align-items:flex-end;opacity:0;pointer-events:none;
+  transition:opacity .26s var(--ease);
+}
+.mobile-drawer.is-open{opacity:1;pointer-events:auto}
+.mobile-sheet{
+  width:100%;max-height:76vh;overflow-y:auto;background:var(--paper-elev);
+  border-radius:16px 16px 0 0;padding:20px 20px 30px;
+  transform:translateY(100%);transition:transform .3s var(--ease);
+}
+.mobile-drawer.is-open .mobile-sheet{transform:translateY(0)}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.sheet-head strong{font-size:16px;font-weight:800}
+.sheet-close{border:none;background:transparent;color:var(--mute);font-size:22px;line-height:1}
+
+/* 灯箱 */
+.lightbox{
+  position:fixed;inset:0;background:rgba(12,11,18,.92);backdrop-filter:blur(8px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:110;padding:24px;opacity:0;pointer-events:none;transition:opacity .24s var(--ease);
+}
+.lightbox.is-open{opacity:1;pointer-events:auto}
+.lb-stage{position:relative;display:flex;align-items:center;justify-content:center;max-width:92vw;max-height:82vh}
+.lb-stage img{max-width:92vw;max-height:82vh;border-radius:6px;box-shadow:0 24px 60px rgba(0,0,0,.5);transform:scale(.96);transition:transform .28s var(--ease)}
+.lightbox.is-open .lb-stage img{transform:scale(1)}
+.lb-nav{
+  position:fixed;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;
+  font-size:20px;display:flex;align-items:center;justify-content:center;transition:background .2s;
+}
+.lb-nav:hover{background:rgba(255,255,255,.2)}
+.lb-prev{left:20px}
+.lb-next{right:20px}
+.lb-close{
+  position:fixed;top:18px;right:22px;width:40px;height:40px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;font-size:20px;
+}
+.lb-bar{margin-top:14px;color:rgba(255,255,255,.82);font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-align:center}
+
+.toast{
+  position:fixed;left:50%;bottom:28px;transform:translate(-50%,16px);opacity:0;
+  background:var(--ink);color:var(--paper);padding:8px 16px;border-radius:99px;
+  font-size:13px;font-weight:600;z-index:120;pointer-events:none;transition:all .26s var(--ease);
+}
+.toast.is-on{opacity:1;transform:translate(-50%,0)}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
+.reveal.is-visible{opacity:1;transform:translateY(0)}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+}
+@media (max-width:1024px){
+  .mag-shell{grid-template-columns:1fr}
+  .toc-rail{display:none}
+  .fab-toc{display:inline-flex;align-items:center;gap:6px}
+}
+@media (max-width:760px){
+  .masthead-hero{grid-template-columns:1fr;gap:16px}
+  .issue-box{text-align:left;border-left:none;border-top:1px solid var(--line);padding:14px 0 0}
+  .strip-2,.strip-3,.essay-brief{grid-template-columns:1fr}
+  .plate.wide{grid-column:span 1}
+  .issue-pager{grid-template-columns:1fr}
+  .pager-card.next{text-align:left}
+  .lb-nav{bottom:18px;top:auto;transform:none}
+  .lb-prev{left:28%}
+  .lb-next{right:28%}
+}
+</style>
+</head>
+<body>
+<div class="progress-rail" aria-hidden="true"><div class="progress-bar" id="progress-bar"></div></div>
+
+<header class="topbar issue-nav" data-current="20261125.html">
+  <div class="topbar-inner">
+    <div class="topbar-left">
+      <a href="index.html" class="mini-brand">EveryNews.</a>
+      <span class="topbar-sep">/</span>
+      <div class="issue-switcher">
+        <select id="issue-select" aria-label="切換期次"><option value="20261125.html" selected>No.016 · 2026-11-25</option><option value="archive.html">往期刊物架</option></select>
+        <a href="archive.html" class="archive-link">往期刊物架 →</a>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span class="issue-nav-hint" id="issue-nav-hint"></span>
+      <span class="read-pct" id="read-pct">0%</span>
+      <button type="button" class="theme-btn" id="theme-toggle" aria-label="切換紙本與夜讀模式">
+        <span class="theme-dot"></span><span id="theme-label">夜讀</span>
+      </button>
+    </div>
+  </div>
+</header>
+<script src="issues.js"></script>
+
+<section class="masthead">
+  <div class="masthead-meta">
+    <span class="stamp-pill">DAILY AI JOURNAL · 每日一刊</span>
+    <span>WED · 25 NOV 2026 · 約 5 分鐘讀完</span>
+  </div>
+  <div class="masthead-hero">
+    <div>
+      <h1 class="journal-name">EveryNews<span>.</span></h1>
+      <p class="journal-sub">把每天真正值得讀的一手技術博客、論文與財報對完帳，寫成一份連貫好讀的同行讀報雜誌。</p>
+    </div>
+    <div class="issue-box">
+      <span class="ib-kicker">ISSUE NO. 016 · 週三</span>
+      <div class="ib-date">2026-11-25</div>
+      <p class="stat">6 篇快訊 · 12 張圖版 · 2 篇專欄</p>
+    </div>
+  </div>
+</section>
+
+<nav class="jump jump-compat" aria-hidden="true"><a href="#anthropic-work">① 三分之二少招人，裁掉的只有两家</a><a href="#claude-ship">② 三个代理接力，合并键还留在人手里</a><a href="#openworks">③ 每月八千美元，请人坐进街边小店</a><a href="#amazon-decart">④ 金额没写，方向写得很直白</a><a href="#muse-uk">⑤ 钱付得出去，密码始终不碰</a><a href="#k-hub">⑥ 答案都指回原件，查不到就直说</a></nav>
+
+<div class="mag-shell">
+  <aside class="toc-rail" aria-label="本期目錄">
+    <div class="toc-head"><span>IN THIS ISSUE</span><span>目錄</span></div>
+    
+  <ul class="toc-list">
+    <li><a class="toc-link" href="#anthropic-work" data-toc="anthropic-work"><span class="toc-no">01</span><span>三分之二少招人，裁掉的只有两家</span></a></li><li><a class="toc-link" href="#claude-ship" data-toc="claude-ship"><span class="toc-no">02</span><span>三个代理接力，合并键还留在人手里</span></a></li><li><a class="toc-link" href="#openworks" data-toc="openworks"><span class="toc-no">03</span><span>每月八千美元，请人坐进街边小店</span></a></li><li><a class="toc-link" href="#amazon-decart" data-toc="amazon-decart"><span class="toc-no">04</span><span>金额没写，方向写得很直白</span></a></li><li><a class="toc-link" href="#muse-uk" data-toc="muse-uk"><span class="toc-no">05</span><span>钱付得出去，密码始终不碰</span></a></li><li><a class="toc-link" href="#k-hub" data-toc="k-hub"><span class="toc-no">06</span><span>答案都指回原件，查不到就直说</span></a></li>
+  </ul>
+  <div class="toc-sec-label">ESSAYS · 深度專欄</div>
+         <ul class="toc-list">
+           <li><a class="toc-link" href="#lect-01" data-toc="lect-01"><span class="toc-no">E1</span><span>合并键交给代理之前，先让它只看不动手</span></a></li><li><a class="toc-link" href="#lect-02" data-toc="lect-02"><span class="toc-no">E2</span><span>岗位没消失，招人先停了，读懂那 58 家企业的账</span></a></li>
+         </ul>
+
+    <div class="toc-kbd">快捷鍵 <kbd>J</kbd> <kbd>K</kbd> 上下篇 · <kbd>T</kbd> 夜讀</div>
+  </aside>
+
+  <main class="mag-main">
+    <section class="dispatches">
+      <article class="story reveal is-lead" id="anthropic-work" data-spy="anthropic-work">
+  <div class="story-meta">
+    <span class="story-folio">01</span>
+    <span class="story-rubric">Anthropic</span>
+    <span class="lead-badge">COVER STORY · 本期頭條</span>
+  </div>
+  <h3 class="story-title">三分之二少招人，裁掉的只有两家</h3>
+  <div class="plate-wrap">
+    <div class="strip strip-2"><figure class="plate">
+            <a class="shot" href="cards/20261125/01-anthropic-work-01.webp" data-group="anthropic-work" data-index="0" data-caption="① 三分之二少招人，裁掉的只有两家 — 圖版 1/2">
+              <img src="cards/20261125/01-anthropic-work-01.webp" alt="三分之二少招人，裁掉的只有两家" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 01.1</span><span>01 / 02</span></figcaption>
+          </figure><figure class="plate">
+            <a class="shot" href="cards/20261125/01-anthropic-work-02.webp" data-group="anthropic-work" data-index="1" data-caption="① 三分之二少招人，裁掉的只有两家 — 圖版 2/2">
+              <img src="cards/20261125/01-anthropic-work-02.webp" alt="三分之二少招人，裁掉的只有两家" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 01.2</span><span>02 / 02</span></figcaption>
+          </figure></div>
+  </div>
+  <div class="story-body">
+    <div class="post"><p>Anthropic 把 58 家企业客户的 66 次访谈摊开，最扎眼的一栏是招聘。三分之二的公司说因为 AI 少招了人，真正砍掉岗位的只有两家。自上而下推 AI 的老板容易撞上另一堵墙，员工担心技术盯着自己干活，抵制一上来，自动化要么被闲置，要么靠人反复兜底撑着。报告把这类产物叫作脆弱的自动化，看着上线了，其实没人敢把它接进关键流程。</p></div>
+    <div class="story-actions">
+      <a class="src-btn" href="https://www.anthropic.com/research/working-with-ai" target="_blank" rel="noopener">
+              <span>閱讀一手原文</span>
+              <small>anthropic.com</small>
+              <i aria-hidden="true">↗</i>
+            </a>
+      <button type="button" class="share-btn" data-copy="#anthropic-work">複製本節連結</button>
+    </div>
+    <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-anthropic-work">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">6 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-anthropic-work">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>主体</th><td>Anthropic，Working with AI 研究页</td></tr><tr><th>样本</th><td>58 家企业客户的 66 次访谈</td></tr><tr><th>招聘变化</th><td>三分之二企业因 AI 减少招聘</td></tr><tr><th>岗位裁撤</th><td>仅 2 家企业出现 AI 导致的岗位取消</td></tr><tr><th>失败模式</th><td>员工抵制令自动化被弃用或长期靠人兜底</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://www.anthropic.com/research/working-with-ai" target="_blank" rel="noopener">https://www.anthropic.com/research/working-with-ai</a></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+  </div>
+</article><article class="story reveal" id="claude-ship" data-spy="claude-ship">
+  <div class="story-meta">
+    <span class="story-folio">02</span>
+    <span class="story-rubric">Anthropic</span>
+    
+  </div>
+  <h3 class="story-title">三个代理接力，合并键还留在人手里</h3>
+  <div class="plate-wrap">
+    <div class="strip strip-2"><figure class="plate">
+            <a class="shot" href="cards/20261125/02-claude-ship-01.webp" data-group="claude-ship" data-index="0" data-caption="② 三个代理接力，合并键还留在人手里 — 圖版 1/2">
+              <img src="cards/20261125/02-claude-ship-01.webp" alt="三个代理接力，合并键还留在人手里" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 02.1</span><span>01 / 02</span></figcaption>
+          </figure><figure class="plate">
+            <a class="shot" href="cards/20261125/02-claude-ship-02.webp" data-group="claude-ship" data-index="1" data-caption="② 三个代理接力，合并键还留在人手里 — 圖版 2/2">
+              <img src="cards/20261125/02-claude-ship-02.webp" alt="三个代理接力，合并键还留在人手里" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 02.2</span><span>02 / 02</span></figcaption>
+          </figure></div>
+  </div>
+  <div class="story-body">
+    <div class="post"><p>Claude Ship 上线后，一个 Pull Request 从提交到合并可以交给三个代理接力，Anthropic 却把最后那道闸留给了仓库自己的规则。Code Review 已经正式可用，按 Quick、Standard、Deep 三档审，PR Steward 负责把失败的检查和冲突修绿，明说不批准也不合并。要不要放行例行改动，写在默认分支的一份策略文件里，官方建议先用只看不动的观察模式跑一段，再让分支保护去要求它的绿灯。</p></div>
+    <div class="story-actions">
+      <a class="src-btn" href="https://claude.com/resources/articles/introducing-claude-ship" target="_blank" rel="noopener">
+              <span>閱讀一手原文</span>
+              <small>claude.com</small>
+              <i aria-hidden="true">↗</i>
+            </a>
+      <button type="button" class="share-btn" data-copy="#claude-ship">複製本節連結</button>
+    </div>
+    <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-claude-ship">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">7 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-claude-ship">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>主体</th><td>Anthropic，Claude Ship</td></tr><tr><th>组件</th><td>Code Review 正式可用，PR Steward 与 Claude Approvals 测试</td></tr><tr><th>触发</th><td>Claude Code 输入 /ship</td></tr><tr><th>审批策略</th><td>写在默认分支的仓库文件，观察模式起步</td></tr><tr><th>计费</th><td>按 token，管理员可设月度上限，Team 与 Enterprise，仅 GitHub</td></tr><tr><th>不适用</th><td>零数据留存、HIPAA、客户自管密钥的组织</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://claude.com/resources/articles/introducing-claude-ship" target="_blank" rel="noopener">https://claude.com/resources/articles/introducing-claude-ship</a></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+  </div>
+</article><article class="story reveal" id="openworks" data-spy="openworks">
+  <div class="story-meta">
+    <span class="story-folio">03</span>
+    <span class="story-rubric">OpenAI</span>
+    
+  </div>
+  <h3 class="story-title">每月八千美元，请人坐进街边小店</h3>
+  <div class="plate-wrap">
+    <div class="strip strip-2"><figure class="plate">
+            <a class="shot" href="cards/20261125/03-openworks-01.webp" data-group="openworks" data-index="0" data-caption="③ 每月八千美元，请人坐进街边小店 — 圖版 1/2">
+              <img src="cards/20261125/03-openworks-01.webp" alt="每月八千美元，请人坐进街边小店" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 03.1</span><span>01 / 02</span></figcaption>
+          </figure><figure class="plate">
+            <a class="shot" href="cards/20261125/03-openworks-02.webp" data-group="openworks" data-index="1" data-caption="③ 每月八千美元，请人坐进街边小店 — 圖版 2/2">
+              <img src="cards/20261125/03-openworks-02.webp" alt="每月八千美元，请人坐进街边小店" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 03.2</span><span>02 / 02</span></figcaption>
+          </figure></div>
+  </div>
+  <div class="story-body">
+    <div class="post"><p>OpenWorks 掏钱请本地顾问，让他们在 20 座城市里坐进街边小店，手把手帮老板把 ChatGPT 用起来，企业这边一分不花，还白拿三个月 ChatGPT Business。掏的是 OpenAI 的钱，给伙伴的津贴每月最高八千美元，代价是每人每月要拿出几天上门，再办一场社区工作坊。名单把软件公司、风投和私募持股的企业挡在门外，想蹭工具的新创团队没份。</p></div>
+    <div class="story-actions">
+      <a class="src-btn" href="https://openai.com/openworks/" target="_blank" rel="noopener">
+              <span>閱讀一手原文</span>
+              <small>openai.com</small>
+              <i aria-hidden="true">↗</i>
+            </a>
+      <button type="button" class="share-btn" data-copy="#openworks">複製本節連結</button>
+    </div>
+    <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-openworks">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">7 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-openworks">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>主体</th><td>OpenAI，OpenWorks</td></tr><tr><th>津贴</th><td>合作伙伴每月最高 8000 美元</td></tr><tr><th>覆盖</th><td>美国 20 座城市</td></tr><tr><th>企业所得</th><td>免费上门辅导加三个月 ChatGPT Business</td></tr><tr><th>伙伴义务</th><td>每月数天上门，办一场社区工作坊</td></tr><tr><th>不具资格</th><td>软件与 SaaS 公司、风投支持、私募持股企业</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://openai.com/openworks/" target="_blank" rel="noopener">https://openai.com/openworks/</a></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+  </div>
+</article><article class="story reveal" id="amazon-decart" data-spy="amazon-decart">
+  <div class="story-meta">
+    <span class="story-folio">04</span>
+    <span class="story-rubric">Amazon</span>
+    
+  </div>
+  <h3 class="story-title">金额没写，方向写得很直白</h3>
+  <div class="plate-wrap">
+    <div class="strip strip-2"><figure class="plate">
+            <a class="shot" href="cards/20261125/04-amazon-decart-01.webp" data-group="amazon-decart" data-index="0" data-caption="④ 金额没写，方向写得很直白 — 圖版 1/2">
+              <img src="cards/20261125/04-amazon-decart-01.webp" alt="金额没写，方向写得很直白" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 04.1</span><span>01 / 02</span></figcaption>
+          </figure><figure class="plate">
+            <a class="shot" href="cards/20261125/04-amazon-decart-02.webp" data-group="amazon-decart" data-index="1" data-caption="④ 金额没写，方向写得很直白 — 圖版 2/2">
+              <img src="cards/20261125/04-amazon-decart-02.webp" alt="金额没写，方向写得很直白" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 04.2</span><span>02 / 02</span></figcaption>
+          </figure></div>
+  </div>
+  <div class="story-body">
+    <div class="post"><p>Amazon 买下 Decart 的优化技术栈，把三位联合创始人和研究工程师团队一并收进来，公告里没给金额。方向写得很直白，官方明说这套 DOS 技术要拿去优化自家的推理和自研芯片，从 Graviton 到 Trainium 都算在内，双方从 2025 年就在 Trainium 上一起跑过。交易还得过监管这关，照公告的措辞，批不批得下来、团队留不留得住都写着条件。</p></div>
+    <div class="story-actions">
+      <a class="src-btn" href="https://www.aboutamazon.com/news/company-news/amazon-decart-ai-optimization" target="_blank" rel="noopener">
+              <span>閱讀一手原文</span>
+              <small>aboutamazon.com</small>
+              <i aria-hidden="true">↗</i>
+            </a>
+      <button type="button" class="share-btn" data-copy="#amazon-decart">複製本節連結</button>
+    </div>
+    <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-amazon-decart">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">7 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-amazon-decart">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>主体</th><td>Amazon，Decart 技术协议</td></tr><tr><th>标的</th><td>Decart Optimization Stack 专有技术加创始人与工程团队</td></tr><tr><th>金额</th><td>公告未披露</td></tr><tr><th>用途</th><td>优化推理与自研芯片，涵盖 Graviton 到 Trainium</td></tr><tr><th>合作起点</th><td>2025 年起在 Trainium 上合作</td></tr><tr><th>交割</th><td>需惯例条件与监管批准，团队留任为预期事项</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://www.aboutamazon.com/news/company-news/amazon-decart-ai-optimization" target="_blank" rel="noopener">https://www.aboutamazon.com/news/company-news/amazon-decart-ai-optimization</a></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+  </div>
+</article><article class="story reveal" id="muse-uk" data-spy="muse-uk">
+  <div class="story-meta">
+    <span class="story-folio">05</span>
+    <span class="story-rubric">Meta</span>
+    
+  </div>
+  <h3 class="story-title">钱付得出去，密码始终不碰</h3>
+  <div class="plate-wrap">
+    <div class="strip strip-2"><figure class="plate">
+            <a class="shot" href="cards/20261125/05-muse-uk-01.webp" data-group="muse-uk" data-index="0" data-caption="⑤ 钱付得出去，密码始终不碰 — 圖版 1/2">
+              <img src="cards/20261125/05-muse-uk-01.webp" alt="钱付得出去，密码始终不碰" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 05.1</span><span>01 / 02</span></figcaption>
+          </figure><figure class="plate">
+            <a class="shot" href="cards/20261125/05-muse-uk-02.webp" data-group="muse-uk" data-index="1" data-caption="⑤ 钱付得出去，密码始终不碰 — 圖版 2/2">
+              <img src="cards/20261125/05-muse-uk-02.webp" alt="钱付得出去，密码始终不碰" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 05.2</span><span>02 / 02</span></figcaption>
+          </figure></div>
+  </div>
+  <div class="story-body">
+    <div class="post"><p>英国用户满 18 岁就能用 Muse，iOS、安卓、网页和 WhatsApp 四个入口都开着，免费是主线，想要更多用量再另订。这个个人代理能替你发邮件、订旅行、追退款，动作做大之前会回来问一句。结账那段另有一层设计，Muse 走 Stripe 的一次性虚拟卡或 Shop Pay 的已存信息，全程看不到密码和支付方式，免得代理把付款凭据记进上下文。</p></div>
+    <div class="story-actions">
+      <a class="src-btn" href="https://about.fb.com/news/2026/11/introducing-muse-in-the-uk-a-personal-ai-agent-you-control/" target="_blank" rel="noopener">
+              <span>閱讀一手原文</span>
+              <small>about.fb.com</small>
+              <i aria-hidden="true">↗</i>
+            </a>
+      <button type="button" class="share-btn" data-copy="#muse-uk">複製本節連結</button>
+    </div>
+    <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-muse-uk">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">7 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-muse-uk">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>主体</th><td>Meta，Muse in the UK</td></tr><tr><th>地区年龄</th><td>英国，18 岁以上</td></tr><tr><th>入口</th><td>iOS、Android、muse.ai、WhatsApp</td></tr><tr><th>批准</th><td>发邮件、购物前需用户批准</td></tr><tr><th>结账</th><td>Stripe Onelink 一次性虚拟卡、Shop Pay，代理看不到密码与支付方式</td></tr><tr><th>伙伴</th><td>M&amp;S、Ocado、Argos、Sainsbury's、ASOS 等，PayPal 即将接入</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://about.fb.com/news/2026/11/introducing-muse-in-the-uk-a-personal-ai-agent-you-control/" target="_blank" rel="noopener">https://about.fb.com/news/2026/11/introducing-muse-in-the-uk-a-personal-ai-agent-you-control/</a></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+  </div>
+</article><article class="story reveal" id="k-hub" data-spy="k-hub">
+  <div class="story-meta">
+    <span class="story-folio">06</span>
+    <span class="story-rubric">Amazon</span>
+    
+  </div>
+  <h3 class="story-title">答案都指回原件，查不到就直说</h3>
+  <div class="plate-wrap">
+    <div class="strip strip-2"><figure class="plate">
+            <a class="shot" href="cards/20261125/06-k-hub-01.webp" data-group="k-hub" data-index="0" data-caption="⑥ 答案都指回原件，查不到就直说 — 圖版 1/2">
+              <img src="cards/20261125/06-k-hub-01.webp" alt="答案都指回原件，查不到就直说" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 06.1</span><span>01 / 02</span></figcaption>
+          </figure><figure class="plate">
+            <a class="shot" href="cards/20261125/06-k-hub-02.webp" data-group="k-hub" data-index="1" data-caption="⑥ 答案都指回原件，查不到就直说 — 圖版 2/2">
+              <img src="cards/20261125/06-k-hub-02.webp" alt="答案都指回原件，查不到就直说" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 06.2</span><span>02 / 02</span></figcaption>
+          </figure></div>
+  </div>
+  <div class="story-body">
+    <div class="post"><p>维修技师过去碰上一颗没标签的零件，翻目录半小时找不到，再等同事认出来又是十来个小时，Amazon 把这段路压到两分钟以内。K-Hub AI 从数百万份历史维修单、几十万条备件和几千本手册里找答案，每条回答都指回某一份正式文档，查不到就直说没有。视觉找件那条线从八月上线后，十分钟的库存查询缩到五秒，常规使用率到七成，交互量每月还涨两成八。</p></div>
+    <div class="story-actions">
+      <a class="src-btn" href="https://www.aboutamazon.eu/news/aws/amazons-new-ai-agent-can-diagnose-a-breakdown-in-seconds-by-drawing-on-millions-of-past-repairs-worldwide" target="_blank" rel="noopener">
+              <span>閱讀一手原文</span>
+              <small>aboutamazon.eu</small>
+              <i aria-hidden="true">↗</i>
+            </a>
+      <button type="button" class="share-btn" data-copy="#k-hub">複製本節連結</button>
+    </div>
+    <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-k-hub">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">7 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-k-hub">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>主体</th><td>Amazon，K-Hub AI 与 Parts Visual Search</td></tr><tr><th>覆盖</th><td>全球数百个站点，法国全站点上线</td></tr><tr><th>资料库</th><td>数百万份维修报告、数十万备件、数千本手册</td></tr><tr><th>无标签零件</th><td>从 30 分钟加等 11 小时，压到 2 分钟以内</td></tr><tr><th>视觉找件</th><td>2026 年 8 月上线，10 分钟查询降到 5 秒以内</td></tr><tr><th>使用</th><td>常规使用 70%，交互量月增 28%</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://www.aboutamazon.eu/news/aws/amazons-new-ai-agent-can-diagnose-a-breakdown-in-seconds-by-drawing-on-millions-of-past-repairs-worldwide" target="_blank" rel="noopener">https://www.aboutamazon.eu/news/aws/amazons-new-ai-agent-can-diagnose-a-breakdown-in-seconds-by-drawing-on-millions-of-past-repairs-worldwide</a></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+  </div>
+</article>
+    </section>
+
+    <section class="feature-well reveal">
+            <div class="feature-header">
+              <h2>深度專欄 · Feature Essays</h2>
+              <span>DEEP DIVES · 每日兩篇</span>
+            </div>
+            <article class="essay reveal" id="lect-01" data-spy="lect-01">
+  <div class="essay-kicker">
+    <span class="essay-badge">ESSAY 01</span>
+    <span class="essay-stat">635 漢字 · 深度拆解</span>
+  </div>
+  <h3 class="essay-title">合并键交给代理之前，先让它只看不动手</h3>
+  <div class="essay-brief"><div class="brief-cell"><span class="bk">原文</span><span class="bv"><a class="inline-url" href="https://claude.com/resources/articles/introducing-claude-ship" target="_blank" rel="noopener">https://claude.com/resources/articles/introducing-claude-ship</a></span></div><div class="brief-cell"><span class="bk">判据</span><span class="bv">读完能照做，写清适用边界，三个月内仍有参考价值</span></div></div>
+  <div class="essay-prose"><p class="essay-lead">Claude Ship 把一次 Pull Request 从提交到合并拆成三段，读完你会拿到一把尺子，用来判断自己的仓库现在够不够格把合并键交出去。Anthropic 在 11 月 23 日放出这套流程，Code Review 已经正式可用，PR Steward 和 Claude Approvals 还在测试。</p><p>审查这一段先要证明自己看得准。Code Review 收集问题后会做一轮对抗性验证，再分类发到 PR 上，每个仓库可以挑 Quick、Standard 或 Deep。官方给的自述数字是 Claude Code 团队从六月到九月合并的 PR 多了一倍以上，回滚的比例降了四成多。这组数没有第三方复核，读的时候按公司自述对待。</p><p>修绿那段交给了 PR Steward。检查挂了、分支冲突、同事留了意见，它都会动手改，每次 push 后留一条评论说明改了什么、怎么撤销，你还可以在评论里打上 @claude stop 让它停手。它明说不批准也不合并，这条自我限制是它能先上线的理由。</p><p>批准权落在仓库的一份文件里。Claude Approvals 读默认分支上的策略，官方把它比作更聪明的 CODEOWNERS，例行改动可以按策略直接放行，需要人签字的一律往上送。代理再聪明也只是在策略框架里跑，仓库原本的分支保护和必需检查仍是放行的硬条件。官方建议大多数团队先用只看不动的观察模式，跑顺了再让分支保护去要求它的绿灯。</p><p>算钱的时候有两笔账。整套按 token 计费，管理员能给 Code Review 和 PR Steward 设月度上限，策略里的 classifier 也按 token 走，观察模式照样会触发计费的审查。零数据留存、HIPAA 配置、客户自管密钥的组织被排除在外，Enterprise 组织可以领至少一万美元额度，2027 年 1 月 15 日截止，领了要在 30 天内用完。</p><p>这套流程适合改动密集又愿意写策略的团队。仓库就几个人，PR 一天不到几条，配策略盯账单的工夫比省下的审查时间还多，先按原来的节奏走更划算。</p><p>官方那句合并结果取决于开发者权限和仓库分支规则，其实已经交底。代理没有新增任何权限，它把原本分散在几个审查环节的人手压成一次调用，能这么做的团队前提是仓库保护规则本来就密。规则松的仓库先接这套流程，只会把草率合并做得更快。</p></div>
+  <aside class="editor-note">
+          <div class="en-head"><span>EDITOR'S NOTE · 最值得看</span></div>
+          <p>官方上线步骤里把 approval policy 放在观察模式跑一段再要求绿灯的那几行，顺序写得很清楚。</p>
+        </aside>
+  
+</article><article class="essay reveal" id="lect-02" data-spy="lect-02">
+  <div class="essay-kicker">
+    <span class="essay-badge">ESSAY 02</span>
+    <span class="essay-stat">637 漢字 · 深度拆解</span>
+  </div>
+  <h3 class="essay-title">岗位没消失，招人先停了，读懂那 58 家企业的账</h3>
+  <div class="essay-brief"><div class="brief-cell"><span class="bk">原文</span><span class="bv"><a class="inline-url" href="https://www.anthropic.com/research/working-with-ai" target="_blank" rel="noopener">https://www.anthropic.com/research/working-with-ai</a></span></div><div class="brief-cell"><span class="bk">判据</span><span class="bv">读完能区分岗位消失与停止招人，看清样本边界</span></div></div>
+  <div class="essay-prose"><p class="essay-lead">这篇讲 Anthropic 那份客户访谈报告里最容易被转述错的一栏，读完你能拿走一个区分，岗位消失和停止招人是两回事。报告在 11 月 23 日发布，基于 58 家企业客户的 66 次访谈，作者来自 Anthropic 自己。</p><p>减少招人为什么先发生。报告里产出增益有一半来自加速原有工作，另一半来自新产品和服务质量提升，AI 写的软件里八成接手原本人工的活，两成替掉外购软件。省下来的首先是工时，工时变化最先写在招聘计划上，离裁员决策还有一段距离。</p><p>自上而下推 AI 的代价另有账本。老板压着要用，员工担心被监控，也担心被推去干不熟的活，抵制一上来，自动化要么被闲置，要么长期靠人兜底。报告里律所的例子很具体，运营负责人让员工做个查利益冲突的工具，技术并不难，卡点在接不接受人被它检查。</p><p>招聘冻结比裁员更容易拍板，这是从材料里推出来的判断。冻结不需要走岗位撤销那套流程，也不用回答谁被替掉，财务上先把新增人头拿掉，效果立刻见效，所以两份数字才会差得这么远。报告本身没有把这条写成结论，它是把招聘和岗位拆成两栏之后自然成立的。</p><p>样本边界得说清。58 家、66 次访谈集中在法律、制造、金融、医疗和物流等行业，作者明说这不是随机抽样，不能当全美企业的比例来用。AI 导致的裁员在这个样本里只出现两家，同样只是这批客户里的观察，换一批客户未必需同样的数。</p><p>要不要把这条写进自己的报表，取决于你手上是工时数据还是岗位数据。多数公司先动的是外包和空缺，正式编制的文件来不及改，看岗位表会以为什么都没发生，看招聘漏斗才看得到那道刹车。这两种口径差着一个季度，用错了一整年的规划都跟着偏。</p><p>转述最容易漏掉的是那堵墙。工具装上不等于流程改完，员工把不信任留在交接处，自动化就停在半路，这份报告把这条写成脆弱的自动化，值得记下来。</p></div>
+  <aside class="editor-note">
+          <div class="en-head"><span>EDITOR'S NOTE · 最值得看</span></div>
+          <p>报告摘要里 hiring less 与 two had seen AI wipe out a position 的那两句对照，把两栏数字并排放着。</p>
+        </aside>
+  
+</article>
+          </section>
+  </main>
+</div>
+
+<nav class="issue-pager" id="issue-pager" aria-label="前後期翻頁"></nav>
+
+<footer class="foot">
+  <p><strong>EveryNews.</strong> · Issue No.016 · 每日 AI 讀報雜誌</p>
+  <p><a href="archive.html" style="text-decoration:underline">瀏覽全部往期刊物架 →</a></p>
+</footer>
+
+<button type="button" class="fab-toc" id="fab-toc">☰ 本期目錄</button>
+<div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+  <div class="mobile-sheet">
+    <div class="sheet-head"><strong>本期目錄 · Issue No.016</strong><button type="button" class="sheet-close" id="sheet-close">×</button></div>
+    
+  <ul class="toc-list">
+    <li><a class="toc-link" href="#anthropic-work" data-toc="anthropic-work"><span class="toc-no">01</span><span>三分之二少招人，裁掉的只有两家</span></a></li><li><a class="toc-link" href="#claude-ship" data-toc="claude-ship"><span class="toc-no">02</span><span>三个代理接力，合并键还留在人手里</span></a></li><li><a class="toc-link" href="#openworks" data-toc="openworks"><span class="toc-no">03</span><span>每月八千美元，请人坐进街边小店</span></a></li><li><a class="toc-link" href="#amazon-decart" data-toc="amazon-decart"><span class="toc-no">04</span><span>金额没写，方向写得很直白</span></a></li><li><a class="toc-link" href="#muse-uk" data-toc="muse-uk"><span class="toc-no">05</span><span>钱付得出去，密码始终不碰</span></a></li><li><a class="toc-link" href="#k-hub" data-toc="k-hub"><span class="toc-no">06</span><span>答案都指回原件，查不到就直说</span></a></li>
+  </ul>
+  <div class="toc-sec-label">ESSAYS · 深度專欄</div>
+         <ul class="toc-list">
+           <li><a class="toc-link" href="#lect-01" data-toc="lect-01"><span class="toc-no">E1</span><span>合并键交给代理之前，先让它只看不动手</span></a></li><li><a class="toc-link" href="#lect-02" data-toc="lect-02"><span class="toc-no">E2</span><span>岗位没消失，招人先停了，读懂那 58 家企业的账</span></a></li>
+         </ul>
+
+  </div>
+</div>
+
+<div class="lightbox" id="lb" aria-hidden="true">
+  <button type="button" class="lb-close" id="lb-close" aria-label="關閉">×</button>
+  <button type="button" class="lb-nav lb-prev" id="lb-prev" aria-label="上一張">‹</button>
+  <div class="lb-stage"><img id="lb-img" alt=""></div>
+  <button type="button" class="lb-nav lb-next" id="lb-next" aria-label="下一張">›</button>
+  <div class="lb-bar" id="lb-cap"></div>
+</div>
+
+<div class="toast" id="toast">已複製連結</div>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var tBtn = document.getElementById('theme-toggle');
+  var tLab = document.getElementById('theme-label');
+  function toggleTheme(){
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('everynews-theme', next); } catch(e){}
+    syncThemeLabel();
+  }
+  function syncThemeLabel(){
+    var dark = root.getAttribute('data-theme') === 'dark';
+    if (tLab) tLab.textContent = dark ? '紙本' : '夜讀';
+  }
+  syncThemeLabel();
+  if (tBtn) tBtn.addEventListener('click', toggleTheme);
+
+  var pBar = document.getElementById('progress-bar');
+  var pTxt = document.getElementById('read-pct');
+  function onScroll(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = h > 0 ? Math.min(100, Math.max(0, Math.round((window.scrollY / h) * 100))) : 0;
+    if (pBar) pBar.style.width = pct + '%';
+    if (pTxt) pTxt.textContent = pct + '%';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  var reveals = document.querySelectorAll('.reveal');
+  var spyTargets = Array.prototype.slice.call(document.querySelectorAll('[data-spy]'));
+  var activeSpyIdx = 0;
+
+  if ('IntersectionObserver' in window) {
+    var revObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) {
+          en.target.classList.add('is-visible');
+          revObs.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(function(el){ revObs.observe(el); });
+
+    var tocLinks = document.querySelectorAll('[data-toc]');
+    var spyObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) {
+          var id = en.target.getAttribute('data-spy');
+          var found = spyTargets.indexOf(en.target);
+          if (found !== -1) activeSpyIdx = found;
+          tocLinks.forEach(function(a){
+            a.classList.toggle('is-active', a.getAttribute('data-toc') === id);
+          });
+        }
+      });
+    }, { rootMargin: '-18% 0px -68% 0px' });
+    spyTargets.forEach(function(el){ spyObs.observe(el); });
+  } else {
+    reveals.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  document.querySelectorAll('.dossier-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var box = btn.closest('.dossier');
+      var open = box.getAttribute('data-open') === 'true';
+      box.setAttribute('data-open', open ? 'false' : 'true');
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+    });
+  });
+
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  function showToast(msg){
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.classList.add('is-on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('is-on'); }, 1800);
+  }
+  document.querySelectorAll('.share-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var hash = btn.getAttribute('data-copy') || '';
+      var url = location.origin + location.pathname + hash;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function(){ showToast('已複製本節連結'); });
+      } else {
+        location.hash = hash;
+        showToast('已定位至本節');
+      }
+    });
+  });
+
+  var drawer = document.getElementById('mobile-drawer');
+  var fab = document.getElementById('fab-toc');
+  var sClose = document.getElementById('sheet-close');
+  function closeDrawer(){ if (drawer) drawer.classList.remove('is-open'); }
+  if (fab && drawer) fab.addEventListener('click', function(){ drawer.classList.add('is-open'); });
+  if (sClose) sClose.addEventListener('click', closeDrawer);
+  if (drawer) {
+    drawer.addEventListener('click', function(e){
+      if (e.target === drawer || e.target.closest('[data-toc]')) closeDrawer();
+    });
+  }
+
+  var lb = document.getElementById('lb');
+  var lbImg = document.getElementById('lb-img');
+  var lbCap = document.getElementById('lb-cap');
+  var lbPrev = document.getElementById('lb-prev');
+  var lbNext = document.getElementById('lb-next');
+  var lbClose = document.getElementById('lb-close');
+  var shots = Array.prototype.slice.call(document.querySelectorAll('.shot'));
+  var curIdx = -1;
+
+  function openAt(idx){
+    if (!shots.length || idx < 0 || idx >= shots.length) return;
+    curIdx = idx;
+    var a = shots[curIdx];
+    lbImg.src = a.getAttribute('href') || a.querySelector('img').src;
+    lbCap.textContent = (a.getAttribute('data-caption') || '') + '  ·  全刊圖版 ' + (curIdx + 1) + ' / ' + shots.length;
+    lb.classList.add('is-open');
+    lbPrev.style.display = shots.length > 1 ? '' : 'none';
+    lbNext.style.display = shots.length > 1 ? '' : 'none';
+  }
+  function closeLb(){ lb.classList.remove('is-open'); curIdx = -1; }
+  shots.forEach(function(a, i){
+    a.addEventListener('click', function(e){ e.preventDefault(); openAt(i); });
+  });
+  if (lbPrev) lbPrev.addEventListener('click', function(e){ e.stopPropagation(); openAt((curIdx - 1 + shots.length) % shots.length); });
+  if (lbNext) lbNext.addEventListener('click', function(e){ e.stopPropagation(); openAt((curIdx + 1) % shots.length); });
+  if (lbClose) lbClose.addEventListener('click', closeLb);
+  if (lb) lb.addEventListener('click', function(e){ if (e.target === lb) closeLb(); });
+
+  document.addEventListener('keydown', function(e){
+    var tag = (e.target && e.target.tagName) || '';
+    if (lb && lb.classList.contains('is-open')) {
+      if (e.key === 'Escape') closeLb();
+      if (e.key === 'ArrowLeft') openAt((curIdx - 1 + shots.length) % shots.length);
+      if (e.key === 'ArrowRight') openAt((curIdx + 1) % shots.length);
+      return;
+    }
+    if (/INPUT|SELECT|TEXTAREA/.test(tag) || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.key === 't' || e.key === 'T') { toggleTheme(); showToast(root.getAttribute('data-theme') === 'dark' ? '已切換至夜讀模式' : '已切換至紙本模式'); }
+    if ((e.key === 'j' || e.key === 'J') && spyTargets.length) {
+      activeSpyIdx = Math.min(spyTargets.length - 1, activeSpyIdx + 1);
+      spyTargets[activeSpyIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    if ((e.key === 'k' || e.key === 'K') && spyTargets.length) {
+      activeSpyIdx = Math.max(0, activeSpyIdx - 1);
+      spyTargets[activeSpyIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+
+  window.addEventListener('DOMContentLoaded', function(){
+    var list = window.EVERYNEWS_ISSUES || [];
+    var pager = document.getElementById('issue-pager');
+    if (!pager || !list.length) return;
+    var curFile = '20261125.html';
+    var idx = list.findIndex(function(x){ return x.file === curFile; });
+    if (idx === -1) idx = 0;
+    var prevIssue = list[idx + 1];
+    var nextIssue = idx > 0 ? list[idx - 1] : null;
+    var html = '';
+    if (prevIssue) {
+      html += '<a class="pager-card prev" href="' + prevIssue.file + '"><small>← PREVIOUS ISSUE · 上一刊</small><strong>' + prevIssue.date + ' 期</strong></a>';
+    } else {
+      html += '<a class="pager-card prev" href="archive.html"><small>BACK ISSUES · 往期刊物架</small><strong>查看全部歷史期次</strong></a>';
+    }
+    if (nextIssue) {
+      html += '<a class="pager-card next" href="' + nextIssue.file + '"><small>NEXT ISSUE · 下一刊 →</small><strong>' + nextIssue.date + ' 期</strong></a>';
+    } else {
+      html += '<a class="pager-card next" href="archive.html"><small>ALL ISSUES · 共 ' + list.length + ' 期 →</small><strong>進入往期刊物架篩選</strong></a>';
+    }
+    pager.innerHTML = html;
+  });
+})();
+</script>
+</body>
+</html>
