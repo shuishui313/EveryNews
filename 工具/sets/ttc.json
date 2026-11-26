@@ -1,0 +1,40 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "arXiv 2611.32255 · 11-24",
+  "date": "2026.11.26",
+  "noImageReason": "論文無正文資訊圖，克隆機制與數字走流程與對比卡呈現",
+  "slides": [
+    {
+      "type": "cover-min",
+      "kicker": "AGENT SANDBOX · 會話分叉",
+      "headline": ["跑著的會話", "整份分叉出來"],
+      "accentLine": 1,
+      "sub": "TimeTravelContainer 用寫時複製實時分叉進程、內存、文件與網絡。",
+      "num": "84.1×",
+      "numLabel": "環境克隆加速 · 論文自報",
+      "chips": [
+        "內存省 31%–72%，端到端快 1.7–9.4 倍",
+        "無需 root、內核改動或硬件虛擬化",
+        "支持 Linux、macOS 與 WSL 2"
+      ],
+      "note": "測試為兩條 EDA 流程，數字仍待獨立復現。"
+    },
+    {
+      "type": "diagram",
+      "kicker": "COPY-ON-WRITE · 分叉鏈路",
+      "headline": ["共享只讀頁", "分叉才付費"],
+      "accentLine": 1,
+      "sub": "工具會話的內存多數在分叉點後只讀，副本自動共享。",
+      "nodes": [
+        { "box": "运行中会话", "lab": "進程與內存狀態" },
+        { "box": "live fork", "lab": "寫時複製分叉", "tone": "dim" },
+        { "box": "分支探索", "lab": "僅分歧頁新增內存", "tone": "fill" }
+      ],
+      "arrows": [
+        { "label": "共享只讀頁" },
+        { "label": "可回退並行" }
+      ],
+      "verdict": "為智能體沙箱補上一層可分支、可回退的基礎原語。"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "Cognition Blog · 11-24",
+  "date": "2026.11.26",
+  "noImageReason": "SWE-2.1 公告主视觉为品牌图，真正的看点在基准对照表，改用数据卡呈现",
+  "slides": [
+    {
+      "type": "ledger",
+      "kicker": "BENCHMARK SELF-REPORT · 自評帳本",
+      "headline": ["自報翻一倍", "對照仍落後"],
+      "accentLine": 1,
+      "sub": "SWE-2.1 的前後代 GPA 翻倍，放到同行表格裡另一回事。",
+      "rows": [
+        { "k": "Terminal-Bench 4.1", "v": "24.2 → 50.0", "d": "自家前後代對照", "on": true },
+        { "k": "ProgramBench", "v": "44.0 vs 66.0", "d": "GPT-6.2 Sol 仍領先", "on": false },
+        { "k": "ExploitBench", "v": "36.1 → 80.0", "d": "自家前後代對照", "on": true }
+      ],
+      "note": "所有數字為廠商自評，無獨立評測。"
+    },
+    {
+      "type": "columns",
+      "kicker": "MODEL VARIANTS · 三個版本",
+      "headline": ["標準、加速", "與寬鬆防護"],
+      "accentLine": 1,
+      "sub": "同一模型發三版，差在速度與安全限制。",
+      "cols2": [
+        {
+          "k": "SWE-2.1 標準",
+          "items": [
+            "純強化學習訓練於 Kimi K3",
+            "約 60 tokens/s",
+            "部署時帶安全防護"
+          ]
+        },
+        {
+          "k": "Ultrafast 與 Cyber",
+          "items": [
+            "Cerebras 跑同模型，約 600 tokens/s",
+            "Cyber 放寬防護供防禦工作",
+            "付費客戶免费至 12/8"
+          ]
+        }
+      ],
+      "verdict": "榜首仍由 Opus 5.5 與 Gemini 4 Neon 把持。"
+    }
+  ]
+}

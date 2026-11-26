@@ -1,0 +1,35 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "Claude by Anthropic · 11-24",
+  "date": "2026.11.26",
+  "noImageReason": "Install as app 公告配圖為介面示意，核心在權限分檔，改走權限卡呈現",
+  "slides": [
+    {
+      "type": "cover-split",
+      "kicker": "DESKTOP PERMISSIONS · 桌面授權",
+      "headline": ["作品裝成軟件", "權限分了三檔"],
+      "accentLine": 1,
+      "sub": "Artifact 可裝成 Mac 與 Windows 桌面應用，全套餐 beta。",
+      "hero": { "num": "3", "unit": "檔權限" },
+      "chips": [
+        "Own icon 與獨立視窗，不必開 Claude 對話",
+        "Team 默認開啟，Enterprise 需管理員開",
+        "安裝前不預審，更新後重新授權",
+        "HIPAA 與混合部署不支持"
+      ]
+    },
+    {
+      "type": "specs",
+      "kicker": "ACCESS TIERS · 訪問邊界",
+      "headline": ["從瀏覽器", "到完全訪問"],
+      "accentLine": 1,
+      "sub": "權限逐檔放開，完全訪問只給自己或組織可信的應用。",
+      "cells": [
+        { "k": "默認檔", "t": "瀏覽器級", "d": "只能做瀏覽器裡本來能做的事" },
+        { "k": "應用檔", "t": "系統功能", "d": "可申請通知、全局快捷鍵、置頂視窗" },
+        { "k": "完全訪問", "t": "本機讀寫", "d": "可運行程序、讀改刪文件，不必每次問" }
+      ],
+      "verdict": "授權只覆蓋當前版本，每次更新都要重新問一遍。"
+    }
+  ]
+}

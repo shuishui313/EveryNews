@@ -1,0 +1,49 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "Sakana AI · 11-25",
+  "date": "2026.11.26",
+  "noImageReason": "Namazu Small 頁面主視覺為品牌圖，強弱項差異改走雙欄對照卡",
+  "slides": [
+    {
+      "type": "bigfact",
+      "kicker": "SMALL MODEL · 小模型突圍",
+      "headline": ["三百億參數", "贏四倍體量"],
+      "accentLine": 1,
+      "sub": "Namazu Small 在 25 項基準平均上超過 120B 的 Nemotron 3 Super。",
+      "num": "30B",
+      "numLabel": "參數量 · 基於 Nemotron 3 Nano 開放底座",
+      "rows": [
+        { "k": "BrowseComp", "v": "73.5 vs 36.1" },
+        { "k": "LongBench-Cite", "v": "80.2" },
+        { "k": "本地部署", "v": "12 月上半月公佈" }
+      ],
+      "note": "平均分具體數值原文未列，強項為廠商自報。"
+    },
+    {
+      "type": "columns",
+      "kicker": "STRENGTH & GAP · 強弱分明",
+      "headline": ["查得到很強", "背不住就弱"],
+      "accentLine": 1,
+      "sub": "會查網頁的任務領先，純靠內部知識的題目掉隊。",
+      "cols2": [
+        {
+          "k": "強項",
+          "items": [
+            "BrowseComp 73.5 對 Super 的 36.1",
+            "FaithEval 78.3，LongBench-Cite 80.2",
+            "長文檔取證與網頁研究"
+          ]
+        },
+        {
+          "k": "弱項",
+          "items": [
+            "SimpleQA Verified 6.8 對 18.1",
+            "日文 SimpleQA 8.0 對 24.9",
+            "不依赖外部檢索的知識題"
+          ]
+        }
+      ],
+      "verdict": "底座開放、後訓練自做，強弱兩欄都寫進官方表格。"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "Epochal Blog · 11-24",
+  "date": "2026.11.26",
+  "noImageReason": "Time Portal 公告配圖為時間軸示意，核心在三組對照相關係數，改走數據卡",
+  "slides": [
+    {
+      "type": "statement",
+      "kicker": "HISTORICAL REPLAY · 歷史回放",
+      "kickerTop": "FORECASTING AGENTS · 預測評測",
+      "lines": [
+        "回放像當時",
+        "不等於能[[預言未來]]"
+      ],
+      "by": "Epochal · Time Portal"
+    },
+    {
+      "type": "ledger",
+      "kicker": "CORRELATION LEDGER · 相關帳本",
+      "headline": ["零點九八", "是回放的相關"],
+      "accentLine": 1,
+      "sub": "347 個預測題按原時刻回放，相關係數衡量重現程度。",
+      "rows": [
+        { "k": "Time Portal", "v": "0.98", "d": "與當時即時結果的相關性", "on": true },
+        { "k": "給即時網頁", "v": "0.16", "d": "能查到答案，錯誤歸零", "on": false },
+        { "k": "完全無網路", "v": "0.49", "d": "只靠內部知識", "on": false }
+      ],
+      "note": "檔案萬億頁、30 多年，動態頁面可到分鐘級版本。"
+    }
+  ]
+}
