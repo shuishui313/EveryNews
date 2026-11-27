@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>EveryNews · Issue No.017 (2026-11-26)</title>
+<title>EveryNews · Issue No.018 (2026-11-27)</title>
 <meta name="description" content="EveryNews 每日 AI 線上雜誌：讀報筆記體快訊、視覺圖版與兩篇深度專欄。">
 <script>
 (function(){try{var t=localStorage.getItem('everynews-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
@@ -405,13 +405,13 @@ html[data-theme="dark"] .shot:hover img{filter:brightness(1)}
 <body>
 <div class="progress-rail" aria-hidden="true"><div class="progress-bar" id="progress-bar"></div></div>
 
-<header class="topbar issue-nav" data-current="20261126.html">
+<header class="topbar issue-nav" data-current="20261127.html">
   <div class="topbar-inner">
     <div class="topbar-left">
       <a href="index.html" class="mini-brand">EveryNews.</a>
       <span class="topbar-sep">/</span>
       <div class="issue-switcher">
-        <select id="issue-select" aria-label="切換期次"><option value="20261126.html" selected>No.017 · 2026-11-26</option><option value="archive.html">往期刊物架</option></select>
+        <select id="issue-select" aria-label="切換期次"><option value="20261127.html" selected>No.018 · 2026-11-27</option><option value="archive.html">往期刊物架</option></select>
         <a href="archive.html" class="archive-link">往期刊物架 →</a>
       </div>
     </div>
@@ -429,7 +429,7 @@ html[data-theme="dark"] .shot:hover img{filter:brightness(1)}
 <section class="masthead">
   <div class="masthead-meta">
     <span class="stamp-pill">DAILY AI JOURNAL · 每日一刊</span>
-    <span>THU · 26 NOV 2026 · 約 6 分鐘讀完</span>
+    <span>FRI · 27 NOV 2026 · 約 6 分鐘讀完</span>
   </div>
   <div class="masthead-hero">
     <div>
@@ -437,25 +437,25 @@ html[data-theme="dark"] .shot:hover img{filter:brightness(1)}
       <p class="journal-sub">把每天真正值得讀的一手技術博客、論文與財報對完帳，寫成一份連貫好讀的同行讀報雜誌。</p>
     </div>
     <div class="issue-box">
-      <span class="ib-kicker">ISSUE NO. 017 · 週四</span>
-      <div class="ib-date">2026-11-26</div>
+      <span class="ib-kicker">ISSUE NO. 018 · 週五</span>
+      <div class="ib-date">2026-11-27</div>
       <p class="stat">6 篇快訊 · 12 張圖版 · 2 篇專欄</p>
     </div>
   </div>
 </section>
 
-<nav class="jump jump-compat" aria-hidden="true"><a href="#swe21">① 翻倍的自报分数，对照表还压着一头</a><a href="#install-app">② 作品装成软件，权限分了三档</a><a href="#namazu">③ 三成参数赢四倍体量，弱项也照写</a><a href="#magi2">④ 视频规格拉满，价格和权重还悬着</a><a href="#time-portal">⑤ 回放像当时，不等于能预测未来</a><a href="#ttc">⑥ 跑着的会话，整份分叉出来</a></nav>
+<nav class="jump jump-compat" aria-hidden="true"><a href="#rust-migration">① 影子流量先变差再变好，Rust 才切上线</a><a href="#workspace-mcp">② 接 Workspace 的代理，得赶两个日期</a><a href="#volvo-aeon">③ 人形机器人进厂，先学把零件放进夹具</a><a href="#ppo-grpo">④ 一千二百次训练后，批量大小决定 critic 去留</a><a href="#alice-80b">⑤ 八百亿参数，每个 token 只醒三十亿</a><a href="#gpt56-sunset">⑥ 旗舰模型半年就退，订阅用户开始算账</a></nav>
 
 <div class="mag-shell">
   <aside class="toc-rail" aria-label="本期目錄">
     <div class="toc-head"><span>IN THIS ISSUE</span><span>目錄</span></div>
     
   <ul class="toc-list">
-    <li><a class="toc-link" href="#swe21" data-toc="swe21"><span class="toc-no">01</span><span>翻倍的自报分数，对照表还压着一头</span></a></li><li><a class="toc-link" href="#install-app" data-toc="install-app"><span class="toc-no">02</span><span>作品装成软件，权限分了三档</span></a></li><li><a class="toc-link" href="#namazu" data-toc="namazu"><span class="toc-no">03</span><span>三成参数赢四倍体量，弱项也照写</span></a></li><li><a class="toc-link" href="#magi2" data-toc="magi2"><span class="toc-no">04</span><span>视频规格拉满，价格和权重还悬着</span></a></li><li><a class="toc-link" href="#time-portal" data-toc="time-portal"><span class="toc-no">05</span><span>回放像当时，不等于能预测未来</span></a></li><li><a class="toc-link" href="#ttc" data-toc="ttc"><span class="toc-no">06</span><span>跑着的会话，整份分叉出来</span></a></li>
+    <li><a class="toc-link" href="#rust-migration" data-toc="rust-migration"><span class="toc-no">01</span><span>影子流量先变差再变好，Rust 才切上线</span></a></li><li><a class="toc-link" href="#workspace-mcp" data-toc="workspace-mcp"><span class="toc-no">02</span><span>接 Workspace 的代理，得赶两个日期</span></a></li><li><a class="toc-link" href="#volvo-aeon" data-toc="volvo-aeon"><span class="toc-no">03</span><span>人形机器人进厂，先学把零件放进夹具</span></a></li><li><a class="toc-link" href="#ppo-grpo" data-toc="ppo-grpo"><span class="toc-no">04</span><span>一千二百次训练后，批量大小决定 critic 去留</span></a></li><li><a class="toc-link" href="#alice-80b" data-toc="alice-80b"><span class="toc-no">05</span><span>八百亿参数，每个 token 只醒三十亿</span></a></li><li><a class="toc-link" href="#gpt56-sunset" data-toc="gpt56-sunset"><span class="toc-no">06</span><span>旗舰模型半年就退，订阅用户开始算账</span></a></li>
   </ul>
   <div class="toc-sec-label">ESSAYS · 深度專欄</div>
          <ul class="toc-list">
-           <li><a class="toc-link" href="#lect-01" data-toc="lect-01"><span class="toc-no">E1</span><span>數週長訓跑得穩，Rocket 過的是哪三關</span></a></li><li><a class="toc-link" href="#lect-02" data-toc="lect-02"><span class="toc-no">E2</span><span>把網頁鎖回過去，回放環境測出了什麼</span></a></li>
+           <li><a class="toc-link" href="#lect-01" data-toc="lect-01"><span class="toc-no">E1</span><span>把 API 換成 Rust，怎麼證明沒改壞</span></a></li><li><a class="toc-link" href="#lect-02" data-toc="lect-02"><span class="toc-no">E2</span><span>critic 要不要留，先看批量多大</span></a></li>
          </ul>
 
     <div class="toc-kbd">快捷鍵 <kbd>J</kbd> <kbd>K</kbd> 上下篇 · <kbd>T</kbd> 夜讀</div>
@@ -463,272 +463,272 @@ html[data-theme="dark"] .shot:hover img{filter:brightness(1)}
 
   <main class="mag-main">
     <section class="dispatches">
-      <article class="story reveal is-lead" id="swe21" data-spy="swe21">
+      <article class="story reveal is-lead" id="rust-migration" data-spy="rust-migration">
   <div class="story-meta">
     <span class="story-folio">01</span>
-    <span class="story-rubric">Cognition</span>
+    <span class="story-rubric">Anthropic</span>
     <span class="lead-badge">COVER STORY · 本期頭條</span>
   </div>
-  <h3 class="story-title">翻倍的自报分数，对照表还压着一头</h3>
+  <h3 class="story-title">影子流量先变差再变好，Rust 才切上线</h3>
   <div class="plate-wrap">
     <div class="strip strip-2"><figure class="plate">
-            <a class="shot" href="cards/20261126/01-swe21-01.webp" data-group="swe21" data-index="0" data-caption="① 翻倍的自报分数，对照表还压着一头 — 圖版 1/2">
-              <img src="cards/20261126/01-swe21-01.webp" alt="翻倍的自报分数，对照表还压着一头" loading="lazy" decoding="async">
+            <a class="shot" href="cards/20261127/01-rust-migration-01.webp" data-group="rust-migration" data-index="0" data-caption="① 影子流量先变差再变好，Rust 才切上线 — 圖版 1/2">
+              <img src="cards/20261127/01-rust-migration-01.webp" alt="影子流量先变差再变好，Rust 才切上线" loading="lazy" decoding="async">
               <span class="zoom-pill">檢視原圖</span>
             </a>
             <figcaption><span>FIG 01.1</span><span>01 / 02</span></figcaption>
           </figure><figure class="plate">
-            <a class="shot" href="cards/20261126/01-swe21-02.webp" data-group="swe21" data-index="1" data-caption="① 翻倍的自报分数，对照表还压着一头 — 圖版 2/2">
-              <img src="cards/20261126/01-swe21-02.webp" alt="翻倍的自报分数，对照表还压着一头" loading="lazy" decoding="async">
+            <a class="shot" href="cards/20261127/01-rust-migration-02.webp" data-group="rust-migration" data-index="1" data-caption="① 影子流量先变差再变好，Rust 才切上线 — 圖版 2/2">
+              <img src="cards/20261127/01-rust-migration-02.webp" alt="影子流量先变差再变好，Rust 才切上线" loading="lazy" decoding="async">
               <span class="zoom-pill">檢視原圖</span>
             </a>
             <figcaption><span>FIG 01.2</span><span>02 / 02</span></figcaption>
           </figure></div>
   </div>
   <div class="story-body">
-    <div class="post"><p>Cognition 放出 SWE-2.1，自报把 Terminal-Bench 4.1 从 24.2 拉到 50.0，ExploitBench 从 36.1 提到 80.0，数字看着像翻了一倍。翻到官方那张对照表，Claude Opus 5.5 和 Gemini 4 Neon 在多数基准上仍压着它，ProgramBench 上 GPT-6.2 Sol 更是 66.0 对 44.0。自评只说明自家前后两代的变化，排行榜要等第三方用同一套评测框架跑过才算数。</p></div>
+    <div class="post"><p>Anthropic 把 Messages API 从 Python 换成 Rust，每请求 CPU 约降七成，首 token 中位延迟约降两成。真正费工夫的是证明没改坏，团队把同一请求先跑模型一次再回放输出，逐段比对两套实现，匹配率从四月约四分之一走到八月 99.6%。审计约七百个集成测试时还揪出一百多处被削弱的断言。这套影子流量盯了数月，九月才把公共流量逐批切过去，服务全程没下线。</p></div>
     <div class="story-actions">
-      <a class="src-btn" href="https://cognition.com/blog/swe-2-1" target="_blank" rel="noopener">
+      <a class="src-btn" href="https://www.anthropic.com/research/migrating-api-to-rust" target="_blank" rel="noopener">
               <span>閱讀一手原文</span>
-              <small>cognition.com</small>
+              <small>anthropic.com</small>
               <i aria-hidden="true">↗</i>
             </a>
-      <button type="button" class="share-btn" data-copy="#swe21">複製本節連結</button>
+      <button type="button" class="share-btn" data-copy="#rust-migration">複製本節連結</button>
     </div>
     <div class="dossier" data-open="false">
-        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-swe21">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-rust-migration">
           <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
-          <span class="dossier-count">6 項參數</span>
+          <span class="dossier-count">7 項參數</span>
           <span class="dossier-icon" aria-hidden="true">+</span>
         </button>
-        <div class="dossier-panel" id="facts-swe21">
+        <div class="dossier-panel" id="facts-rust-migration">
           <div class="dossier-inner">
-            <table><tbody><tr><th>主体</th><td>Cognition，SWE-2.1</td></tr><tr><th>自报基准</th><td>Terminal-Bench 4.1 由 24.2 到 50.0，ExploitBench 由 36.1 到 80.0</td></tr><tr><th>对照</th><td>ProgramBench 上 GPT-6.2 Sol 为 66.0，SWE-2.1 为 44.0</td></tr><tr><th>训练</th><td>以纯强化学习训练于 Kimi K3，未写参数量</td></tr><tr><th>版本</th><td>SWE-2.1、Ultrafast 与 Cyber，分别对应标准、Cerebras 加速与宽松防护</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://cognition.com/blog/swe-2-1" target="_blank" rel="noopener">https://cognition.com/blog/swe-2-1</a></td></tr></tbody></table>
+            <table><tbody><tr><th>主体</th><td>Anthropic，Migrating our Messages API to Rust</td></tr><tr><th>规模</th><td>2024 年初到 2026 年秋，API 流量约增 1800 倍</td></tr><tr><th>收益</th><td>每请求 CPU 约降 70%，首 token 中位延迟约降 20%</td></tr><tr><th>验证</th><td>影子流量比对，匹配率 4 月约四分之一到 8 月 99.6%</td></tr><tr><th>代码</th><td>到 2026 年 5 月，Claude 写了 Anthropic 合并代码逾 80%</td></tr><tr><th>上线</th><td>2026 年 9 月公共流量迁至 Rust，服务未下线</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://www.anthropic.com/research/migrating-api-to-rust" target="_blank" rel="noopener">https://www.anthropic.com/research/migrating-api-to-rust</a></td></tr></tbody></table>
           </div>
         </div>
       </div>
   </div>
-</article><article class="story reveal" id="install-app" data-spy="install-app">
+</article><article class="story reveal" id="workspace-mcp" data-spy="workspace-mcp">
   <div class="story-meta">
     <span class="story-folio">02</span>
-    <span class="story-rubric">Anthropic</span>
+    <span class="story-rubric">Google Workspace Updates</span>
     
   </div>
-  <h3 class="story-title">作品装成软件，权限分了三档</h3>
+  <h3 class="story-title">接 Workspace 的代理，得赶两个日期</h3>
   <div class="plate-wrap">
     <div class="strip strip-2"><figure class="plate">
-            <a class="shot" href="cards/20261126/02-install-app-01.webp" data-group="install-app" data-index="0" data-caption="② 作品装成软件，权限分了三档 — 圖版 1/2">
-              <img src="cards/20261126/02-install-app-01.webp" alt="作品装成软件，权限分了三档" loading="lazy" decoding="async">
+            <a class="shot" href="cards/20261127/02-workspace-mcp-01.webp" data-group="workspace-mcp" data-index="0" data-caption="② 接 Workspace 的代理，得赶两个日期 — 圖版 1/2">
+              <img src="cards/20261127/02-workspace-mcp-01.webp" alt="接 Workspace 的代理，得赶两个日期" loading="lazy" decoding="async">
               <span class="zoom-pill">檢視原圖</span>
             </a>
             <figcaption><span>FIG 02.1</span><span>01 / 02</span></figcaption>
           </figure><figure class="plate">
-            <a class="shot" href="cards/20261126/02-install-app-02.webp" data-group="install-app" data-index="1" data-caption="② 作品装成软件，权限分了三档 — 圖版 2/2">
-              <img src="cards/20261126/02-install-app-02.webp" alt="作品装成软件，权限分了三档" loading="lazy" decoding="async">
+            <a class="shot" href="cards/20261127/02-workspace-mcp-02.webp" data-group="workspace-mcp" data-index="1" data-caption="② 接 Workspace 的代理，得赶两个日期 — 圖版 2/2">
+              <img src="cards/20261127/02-workspace-mcp-02.webp" alt="接 Workspace 的代理，得赶两个日期" loading="lazy" decoding="async">
               <span class="zoom-pill">檢視原圖</span>
             </a>
             <figcaption><span>FIG 02.2</span><span>02 / 02</span></figcaption>
           </figure></div>
   </div>
   <div class="story-body">
-    <div class="post"><p>Anthropic 给 Mac 和 Windows 版 Claude 开了 Install as app，对话里的 Artifact 能装成独立图标和窗口的桌面软件，团队版默认开着，企业版要管理员手动开启。权限分三档，默认档只能做浏览器里能做的事，应用档可以申请通知和全局快捷键，完全访问档能运行程序、读写删文件。官方明说安装前不预审，授权只覆盖当前版本，每次更新都要重新问一遍。</p></div>
+    <div class="post"><p>Google 把 Workspace 的 MCP 服务器和命令行工具全量开放，覆盖 Gmail、Drive、Docs、日历等，同时给了两道日期。2027 年 2 月 1 日起，代理再读这些数据的必须走 MCP 或命令行，直接调 REST 的接口会被技术限制；4 月 1 日起 Scaled 层开始对免费额度以上的用量收费。管理员能在控制台给敏感动作设人在环确认，代理的 OAuth 客户端也得标明自己是代理。现有超过 99% 的活跃开发者仍在免费层。</p></div>
     <div class="story-actions">
-      <a class="src-btn" href="https://claude.com/resources/articles/install-as-app" target="_blank" rel="noopener">
+      <a class="src-btn" href="https://workspaceupdates.googleblog.com/2026/11/mcp-servers-cli-standardized-usage-tiers-now-available.html" target="_blank" rel="noopener">
               <span>閱讀一手原文</span>
-              <small>claude.com</small>
+              <small>workspaceupdates.googleblog.com</small>
               <i aria-hidden="true">↗</i>
             </a>
-      <button type="button" class="share-btn" data-copy="#install-app">複製本節連結</button>
+      <button type="button" class="share-btn" data-copy="#workspace-mcp">複製本節連結</button>
     </div>
     <div class="dossier" data-open="false">
-        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-install-app">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-workspace-mcp">
           <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
           <span class="dossier-count">7 項參數</span>
           <span class="dossier-icon" aria-hidden="true">+</span>
         </button>
-        <div class="dossier-panel" id="facts-install-app">
+        <div class="dossier-panel" id="facts-workspace-mcp">
           <div class="dossier-inner">
-            <table><tbody><tr><th>主体</th><td>Anthropic，Install as app</td></tr><tr><th>状态</th><td>Mac 与 Windows 版 Claude 全量 beta，所有套餐可用</td></tr><tr><th>权限</th><td>默认档等同浏览器，应用档可申请通知与全局快捷键，完全访问可运行程序读写删文件</td></tr><tr><th>开关</th><td>Team 默认开启，Enterprise 需管理员开启</td></tr><tr><th>边界</th><td>安装前不预审，授权只覆盖当前版本，每次更新重新询问</td></tr><tr><th>不适用</th><td>HIPAA 就绪组织与混合部署</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://claude.com/resources/articles/install-as-app" target="_blank" rel="noopener">https://claude.com/resources/articles/install-as-app</a></td></tr></tbody></table>
+            <table><tbody><tr><th>主体</th><td>Google Workspace Updates</td></tr><tr><th>发布</th><td>2026 年 11 月 24 日</td></tr><tr><th>上线</th><td>MCP 服务器与 Workspace CLI 全量可用，覆盖 Gmail、Drive、Docs 等</td></tr><tr><th>限期</th><td>2027 年 2 月 1 日起，代理须走 MCP 或 CLI，不得直连 REST</td></tr><tr><th>计费</th><td>2027 年 4 月 1 日起 Scaled 层对免费额度以上用量收费</td></tr><tr><th>管控</th><td>管理员可设人在环确认、看审计日志，OAuth 客户端需标记为代理</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://workspaceupdates.googleblog.com/2026/11/mcp-servers-cli-standardized-usage-tiers-now-available.html" target="_blank" rel="noopener">https://workspaceupdates.googleblog.com/2026/11/mcp-servers-cli-standardized-usage-tiers-now-available.html</a></td></tr></tbody></table>
           </div>
         </div>
       </div>
   </div>
-</article><article class="story reveal" id="namazu" data-spy="namazu">
+</article><article class="story reveal" id="volvo-aeon" data-spy="volvo-aeon">
   <div class="story-meta">
     <span class="story-folio">03</span>
-    <span class="story-rubric">Sakana AI</span>
+    <span class="story-rubric">Hexagon Robotics 与 Volvo Cars</span>
     
   </div>
-  <h3 class="story-title">三成参数赢四倍体量，弱项也照写</h3>
+  <h3 class="story-title">人形机器人进厂，先学把零件放进夹具</h3>
   <div class="plate-wrap">
     <div class="strip strip-2"><figure class="plate">
-            <a class="shot" href="cards/20261126/03-namazu-01.webp" data-group="namazu" data-index="0" data-caption="③ 三成参数赢四倍体量，弱项也照写 — 圖版 1/2">
-              <img src="cards/20261126/03-namazu-01.webp" alt="三成参数赢四倍体量，弱项也照写" loading="lazy" decoding="async">
+            <a class="shot" href="cards/20261127/03-volvo-aeon-01.webp" data-group="volvo-aeon" data-index="0" data-caption="③ 人形机器人进厂，先学把零件放进夹具 — 圖版 1/2">
+              <img src="cards/20261127/03-volvo-aeon-01.webp" alt="人形机器人进厂，先学把零件放进夹具" loading="lazy" decoding="async">
               <span class="zoom-pill">檢視原圖</span>
             </a>
             <figcaption><span>FIG 03.1</span><span>01 / 02</span></figcaption>
           </figure><figure class="plate">
-            <a class="shot" href="cards/20261126/03-namazu-02.webp" data-group="namazu" data-index="1" data-caption="③ 三成参数赢四倍体量，弱项也照写 — 圖版 2/2">
-              <img src="cards/20261126/03-namazu-02.webp" alt="三成参数赢四倍体量，弱项也照写" loading="lazy" decoding="async">
+            <a class="shot" href="cards/20261127/03-volvo-aeon-02.webp" data-group="volvo-aeon" data-index="1" data-caption="③ 人形机器人进厂，先学把零件放进夹具 — 圖版 2/2">
+              <img src="cards/20261127/03-volvo-aeon-02.webp" alt="人形机器人进厂，先学把零件放进夹具" loading="lazy" decoding="async">
               <span class="zoom-pill">檢視原圖</span>
             </a>
             <figcaption><span>FIG 03.2</span><span>02 / 02</span></figcaption>
           </figure></div>
   </div>
   <div class="story-body">
-    <div class="post"><p>Sakana AI 端出 Namazu Small，用三百亿参数在二十五项基准的平均分上超过了四倍体量的 Nemotron 3 Super，做法是在英伟达开放底座上接着做预训练和后训练。强项集中在要查网页的任务，BrowseComp 从对照的 36.1 拉到 73.5，LongBench-Cite 到 80.2。弱项同样写明，只靠模型内部知识作答的 SimpleQA Verified 只有 6.8，比 Super 的 18.1 还低。本地部署细节要等十二月上半月。</p></div>
+    <div class="post"><p>Hexagon 和 Volvo 宣布，AEON 人形机器人已经在 Volvo 比利时 Ghent 工厂接受训练，官方特意说明这不在演示阶段，而是在真实工业任务上验证。Volvo 自己的制造团队和 Hexagon 一起带它上手，先做重复且费人体的活。更多单元会在 2027 年上半年到场承担更广任务，目标是同年年中进入真实生产。厂方的算法很实在，能用吞吐量衡量的机器人，比视频里好看的更有说服力。</p></div>
     <div class="story-actions">
-      <a class="src-btn" href="https://sakana.ai/namazu-small/" target="_blank" rel="noopener">
+      <a class="src-btn" href="https://robotics.hexagon.com/volvo-cars-aeon-humanoid-robots-for-manufacturing/" target="_blank" rel="noopener">
               <span>閱讀一手原文</span>
-              <small>sakana.ai</small>
+              <small>robotics.hexagon.com</small>
               <i aria-hidden="true">↗</i>
             </a>
-      <button type="button" class="share-btn" data-copy="#namazu">複製本節連結</button>
+      <button type="button" class="share-btn" data-copy="#volvo-aeon">複製本節連結</button>
     </div>
     <div class="dossier" data-open="false">
-        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-namazu">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-volvo-aeon">
           <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
-          <span class="dossier-count">6 項參數</span>
+          <span class="dossier-count">7 項參數</span>
           <span class="dossier-icon" aria-hidden="true">+</span>
         </button>
-        <div class="dossier-panel" id="facts-namazu">
+        <div class="dossier-panel" id="facts-volvo-aeon">
           <div class="dossier-inner">
-            <table><tbody><tr><th>主体</th><td>Sakana AI，Namazu Small</td></tr><tr><th>规模</th><td>300 亿参数，基于 NVIDIA Nemotron 3 Nano 开放底座继续预训练与后训练</td></tr><tr><th>强项</th><td>BrowseComp 73.5 对 Super 的 36.1，LongBench-Cite 80.2，FaithEval 78.3</td></tr><tr><th>弱项</th><td>SimpleQA Verified 6.8 对 18.1，日文 SimpleQA 8.0 对 24.9</td></tr><tr><th>部署</th><td>本地部署细节预计 12 月上半月公布，价格未提</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://sakana.ai/namazu-small/" target="_blank" rel="noopener">https://sakana.ai/namazu-small/</a></td></tr></tbody></table>
+            <table><tbody><tr><th>主体</th><td>Hexagon Robotics 与 Volvo Cars</td></tr><tr><th>发布</th><td>2026 年 11 月 26 日</td></tr><tr><th>地点</th><td>Volvo 比利时 Ghent 工厂</td></tr><tr><th>状态</th><td>AEON 在真实工业任务上训练验证，由 Volvo 制造团队与 Hexagon 合作</td></tr><tr><th>目标</th><td>支持重复性与人体工学要求高的工作</td></tr><tr><th>时间</th><td>2027 年上半年更多单元到场扩大任务，2027 年中用于真实生产</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://robotics.hexagon.com/volvo-cars-aeon-humanoid-robots-for-manufacturing/" target="_blank" rel="noopener">https://robotics.hexagon.com/volvo-cars-aeon-humanoid-robots-for-manufacturing/</a></td></tr></tbody></table>
           </div>
         </div>
       </div>
   </div>
-</article><article class="story reveal" id="magi2" data-spy="magi2">
+</article><article class="story reveal" id="ppo-grpo" data-spy="ppo-grpo">
   <div class="story-meta">
     <span class="story-folio">04</span>
-    <span class="story-rubric">Sand.ai</span>
+    <span class="story-rubric">arXiv 2611.32013</span>
     
   </div>
-  <h3 class="story-title">视频规格拉满，价格和权重还悬着</h3>
+  <h3 class="story-title">一千二百次训练后，批量大小决定 critic 去留</h3>
   <div class="plate-wrap">
     <div class="strip strip-2"><figure class="plate">
-            <a class="shot" href="cards/20261126/04-magi2-01.webp" data-group="magi2" data-index="0" data-caption="④ 视频规格拉满，价格和权重还悬着 — 圖版 1/2">
-              <img src="cards/20261126/04-magi2-01.webp" alt="视频规格拉满，价格和权重还悬着" loading="lazy" decoding="async">
+            <a class="shot" href="cards/20261127/04-ppo-grpo-01.webp" data-group="ppo-grpo" data-index="0" data-caption="④ 一千二百次训练后，批量大小决定 critic 去留 — 圖版 1/2">
+              <img src="cards/20261127/04-ppo-grpo-01.webp" alt="一千二百次训练后，批量大小决定 critic 去留" loading="lazy" decoding="async">
               <span class="zoom-pill">檢視原圖</span>
             </a>
             <figcaption><span>FIG 04.1</span><span>01 / 02</span></figcaption>
           </figure><figure class="plate">
-            <a class="shot" href="cards/20261126/04-magi2-02.webp" data-group="magi2" data-index="1" data-caption="④ 视频规格拉满，价格和权重还悬着 — 圖版 2/2">
-              <img src="cards/20261126/04-magi2-02.webp" alt="视频规格拉满，价格和权重还悬着" loading="lazy" decoding="async">
+            <a class="shot" href="cards/20261127/04-ppo-grpo-02.webp" data-group="ppo-grpo" data-index="1" data-caption="④ 一千二百次训练后，批量大小决定 critic 去留 — 圖版 2/2">
+              <img src="cards/20261127/04-ppo-grpo-02.webp" alt="一千二百次训练后，批量大小决定 critic 去留" loading="lazy" decoding="async">
               <span class="zoom-pill">檢視原圖</span>
             </a>
             <figcaption><span>FIG 04.2</span><span>02 / 02</span></figcaption>
           </figure></div>
   </div>
   <div class="story-body">
-    <div class="post"><p>Sand.ai 发布 MAGI-2，总参数四千八百亿、每次激活约二百八十亿，能一次生成最长三十秒的 1080p 二十五帧视频，声音和画面同步出，对白还带口型。单次请求最多塞二十个参考素材，图片视频音频都能当参照。八月放出的预览版只有一千一百四十亿总参数，这次规模翻了四倍多。开源权重和详细技术报告都写着 soon，价格原文一个字没提，商用门槛现在还无从算起。</p></div>
+    <div class="post"><p>Scale AI 与卡内基梅隆的研究跑了逾一千二百次训练，其中九十六次用大模型，比较带 critic 的 PPO 和去掉 critic 的 GRPO。谁都没有全面胜出，关键变量是批量。小批量时 PPO 普遍领先，批量放大后 GRPO 追平轻引导版本，还超过重引导的版本，在更长时域和更复杂领域需要更大批量才追上。实验覆盖控制任务、短时域数学和长时域终端代理，论文页面未给出具体分差数值。</p></div>
     <div class="story-actions">
-      <a class="src-btn" href="https://sand.ai/blog/magi-2" target="_blank" rel="noopener">
+      <a class="src-btn" href="https://arxiv.org/abs/2611.32013" target="_blank" rel="noopener">
               <span>閱讀一手原文</span>
-              <small>sand.ai</small>
+              <small>arxiv.org</small>
               <i aria-hidden="true">↗</i>
             </a>
-      <button type="button" class="share-btn" data-copy="#magi2">複製本節連結</button>
+      <button type="button" class="share-btn" data-copy="#ppo-grpo">複製本節連結</button>
     </div>
     <div class="dossier" data-open="false">
-        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-magi2">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-ppo-grpo">
           <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
           <span class="dossier-count">7 項參數</span>
           <span class="dossier-icon" aria-hidden="true">+</span>
         </button>
-        <div class="dossier-panel" id="facts-magi2">
+        <div class="dossier-panel" id="facts-ppo-grpo">
           <div class="dossier-inner">
-            <table><tbody><tr><th>主体</th><td>Sand.ai，MAGI-2</td></tr><tr><th>规模</th><td>4800 亿总参数，约 280 亿激活</td></tr><tr><th>规格</th><td>最长 30 秒、1080p、25 帧，原生同步音视频，对白带口型</td></tr><tr><th>参考</th><td>单次最多 20 个媒体，可含 10 图 5 视频 5 音频</td></tr><tr><th>前代</th><td>八月预览版约 1140 亿总参数、60 亿激活</td></tr><tr><th>待定</th><td>开源权重与技术报告预告，价格原文未提</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://sand.ai/blog/magi-2" target="_blank" rel="noopener">https://sand.ai/blog/magi-2</a></td></tr></tbody></table>
+            <table><tbody><tr><th>主体</th><td>arXiv 2611.32013，To Critic Or Not To Critic</td></tr><tr><th>作者</th><td>Jason Wei 等五人，Scale AI 与卡内基梅隆大学</td></tr><tr><th>提交</th><td>2026 年 11 月 24 日</td></tr><tr><th>规模</th><td>逾 1200 次训练运行，其中 96 次用大模型</td></tr><tr><th>结论</th><td>小批量 PPO 领先，大批量下 GRPO 追平轻引导 PPO 并超过重引导 PPO</td></tr><tr><th>范围</th><td>控制任务、短时域数学、长时域终端代理</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://arxiv.org/abs/2611.32013" target="_blank" rel="noopener">https://arxiv.org/abs/2611.32013</a></td></tr></tbody></table>
           </div>
         </div>
       </div>
   </div>
-</article><article class="story reveal" id="time-portal" data-spy="time-portal">
+</article><article class="story reveal" id="alice-80b" data-spy="alice-80b">
   <div class="story-meta">
     <span class="story-folio">05</span>
-    <span class="story-rubric">Epochal</span>
+    <span class="story-rubric">Yandex</span>
     
   </div>
-  <h3 class="story-title">回放像当时，不等于能预测未来</h3>
+  <h3 class="story-title">八百亿参数，每个 token 只醒三十亿</h3>
   <div class="plate-wrap">
     <div class="strip strip-2"><figure class="plate">
-            <a class="shot" href="cards/20261126/05-time-portal-01.webp" data-group="time-portal" data-index="0" data-caption="⑤ 回放像当时，不等于能预测未来 — 圖版 1/2">
-              <img src="cards/20261126/05-time-portal-01.webp" alt="回放像当时，不等于能预测未来" loading="lazy" decoding="async">
+            <a class="shot" href="cards/20261127/05-alice-80b-01.webp" data-group="alice-80b" data-index="0" data-caption="⑤ 八百亿参数，每个 token 只醒三十亿 — 圖版 1/2">
+              <img src="cards/20261127/05-alice-80b-01.webp" alt="八百亿参数，每个 token 只醒三十亿" loading="lazy" decoding="async">
               <span class="zoom-pill">檢視原圖</span>
             </a>
             <figcaption><span>FIG 05.1</span><span>01 / 02</span></figcaption>
           </figure><figure class="plate">
-            <a class="shot" href="cards/20261126/05-time-portal-02.webp" data-group="time-portal" data-index="1" data-caption="⑤ 回放像当时，不等于能预测未来 — 圖版 2/2">
-              <img src="cards/20261126/05-time-portal-02.webp" alt="回放像当时，不等于能预测未来" loading="lazy" decoding="async">
+            <a class="shot" href="cards/20261127/05-alice-80b-02.webp" data-group="alice-80b" data-index="1" data-caption="⑤ 八百亿参数，每个 token 只醒三十亿 — 圖版 2/2">
+              <img src="cards/20261127/05-alice-80b-02.webp" alt="八百亿参数，每个 token 只醒三十亿" loading="lazy" decoding="async">
               <span class="zoom-pill">檢視原圖</span>
             </a>
             <figcaption><span>FIG 05.2</span><span>02 / 02</span></figcaption>
           </figure></div>
   </div>
   <div class="story-body">
-    <div class="post"><p>Epochal 上线 Time Portal，给预测类智能体提供一个锁死在时间点的网页环境，档案覆盖超过一万亿页、跨度三十多年，连 Linux 内核时钟和包镜像都按所选日期对齐。官方在三百四十七个预测市场问题上做回放，结果和当时真实运行的相关性到 0.98，用实时网页回放只有 0.16。这组数证明的是历史重放能重现当时看到的信息，跟模型能不能预测未来是两回事，官方自己也把它称作第一步。</p></div>
+    <div class="post"><p>Yandex 放出 AliceAI-Foundation-80B-A3B-Base，八百亿总参数、每 token 只激活三十亿，模型卡写明完全从零训练。架构是 48 层混合体，主体由十二组 KDA 加 MoE 叠一组 Gated Attention 加 MoE，配 512 个专家、top-k 选 10 加 1 个共享专家，上下文 262144。关键决策用多次各两万亿 token 的独立训练来验证。模型卡未写许可证与发布日期，引用时得留这一栏。</p></div>
     <div class="story-actions">
-      <a class="src-btn" href="https://epochal.com/blog/introducing-time-portal" target="_blank" rel="noopener">
+      <a class="src-btn" href="https://huggingface.co/yandex/AliceAI-Foundation-80B-A3B-Base" target="_blank" rel="noopener">
               <span>閱讀一手原文</span>
-              <small>epochal.com</small>
+              <small>huggingface.co</small>
               <i aria-hidden="true">↗</i>
             </a>
-      <button type="button" class="share-btn" data-copy="#time-portal">複製本節連結</button>
+      <button type="button" class="share-btn" data-copy="#alice-80b">複製本節連結</button>
     </div>
     <div class="dossier" data-open="false">
-        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-time-portal">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-alice-80b">
           <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
-          <span class="dossier-count">7 項參數</span>
+          <span class="dossier-count">6 項參數</span>
           <span class="dossier-icon" aria-hidden="true">+</span>
         </button>
-        <div class="dossier-panel" id="facts-time-portal">
+        <div class="dossier-panel" id="facts-alice-80b">
           <div class="dossier-inner">
-            <table><tbody><tr><th>主体</th><td>Epochal，Time Portal</td></tr><tr><th>档案</th><td>超过一万亿页网页、七万亿 URL、跨度 30 多年，动态页面可到分钟级版本</td></tr><tr><th>API</th><td>search、fetch、sandbox，请求带 Accept-Datetime 时间戳</td></tr><tr><th>实验</th><td>347 个预测市场问题，回放与实时结果相关性 r=0.98</td></tr><tr><th>对照</th><td>给实时网页回放 r=0.16，完全不给网页 r=0.49</td></tr><tr><th>边界</th><td>官方称时间闸门必要但不充分，免费版为受限版本</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://epochal.com/blog/introducing-time-portal" target="_blank" rel="noopener">https://epochal.com/blog/introducing-time-portal</a></td></tr></tbody></table>
+            <table><tbody><tr><th>主体</th><td>Yandex，AliceAI-Foundation-80B-A3B-Base</td></tr><tr><th>规模</th><td>800 亿总参数，每 token 激活 30 亿</td></tr><tr><th>训练</th><td>完全从零训练，以多次各 2 万亿 token 的独立训练验证关键决策</td></tr><tr><th>架构</th><td>48 层混合架构，12 组三 KDA 加 MoE 与一组 Gated Attention 加 MoE</td></tr><tr><th>细节</th><td>512 专家，top-k 10 加 1 共享，1 层 MTP，上下文 262144</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://huggingface.co/yandex/AliceAI-Foundation-80B-A3B-Base" target="_blank" rel="noopener">https://huggingface.co/yandex/AliceAI-Foundation-80B-A3B-Base</a></td></tr></tbody></table>
           </div>
         </div>
       </div>
   </div>
-</article><article class="story reveal" id="ttc" data-spy="ttc">
+</article><article class="story reveal" id="gpt56-sunset" data-spy="gpt56-sunset">
   <div class="story-meta">
     <span class="story-folio">06</span>
-    <span class="story-rubric">NVIDIA 研究者</span>
+    <span class="story-rubric">OpenAI</span>
     
   </div>
-  <h3 class="story-title">跑着的会话，整份分叉出来</h3>
+  <h3 class="story-title">旗舰模型半年就退，订阅用户开始算账</h3>
   <div class="plate-wrap">
     <div class="strip strip-2"><figure class="plate">
-            <a class="shot" href="cards/20261126/06-ttc-01.webp" data-group="ttc" data-index="0" data-caption="⑥ 跑着的会话，整份分叉出来 — 圖版 1/2">
-              <img src="cards/20261126/06-ttc-01.webp" alt="跑着的会话，整份分叉出来" loading="lazy" decoding="async">
+            <a class="shot" href="cards/20261127/06-gpt56-sunset-01.webp" data-group="gpt56-sunset" data-index="0" data-caption="⑥ 旗舰模型半年就退，订阅用户开始算账 — 圖版 1/2">
+              <img src="cards/20261127/06-gpt56-sunset-01.webp" alt="旗舰模型半年就退，订阅用户开始算账" loading="lazy" decoding="async">
               <span class="zoom-pill">檢視原圖</span>
             </a>
             <figcaption><span>FIG 06.1</span><span>01 / 02</span></figcaption>
           </figure><figure class="plate">
-            <a class="shot" href="cards/20261126/06-ttc-02.webp" data-group="ttc" data-index="1" data-caption="⑥ 跑着的会话，整份分叉出来 — 圖版 2/2">
-              <img src="cards/20261126/06-ttc-02.webp" alt="跑着的会话，整份分叉出来" loading="lazy" decoding="async">
+            <a class="shot" href="cards/20261127/06-gpt56-sunset-02.webp" data-group="gpt56-sunset" data-index="1" data-caption="⑥ 旗舰模型半年就退，订阅用户开始算账 — 圖版 2/2">
+              <img src="cards/20261127/06-gpt56-sunset-02.webp" alt="旗舰模型半年就退，订阅用户开始算账" loading="lazy" decoding="async">
               <span class="zoom-pill">檢視原圖</span>
             </a>
             <figcaption><span>FIG 06.2</span><span>02 / 02</span></figcaption>
           </figure></div>
   </div>
   <div class="story-body">
-    <div class="post"><p>英伟达研究者上传论文，提出 TimeTravelContainer，能把一个正在运行的工具会话连同进程、内存、文件和网络状态实时分叉，用写时复制让副本共享只读内存。论文报出的环境克隆快了八十四倍，内存省三到七成，端到端快一点七到九点四倍，测试用的是两个电子设计自动化流程。根权限、内核改动和硬件虚拟化都不需要，Linux、苹果芯片和 WSL 都能跑，前提是论文数字能复现。</p></div>
+    <div class="post"><p>GPT-6.2 对话优化版从 11 月 23 日起向全球付费用户推送，OpenAI 同时定了 GPT-5.6 的退场日，Sol 和 Terra 都在 12 月 23 日从聊天、Work 和 Codex 移除。官方称淘汰落后两代是常规释放容量的安排，新模型图像理解从 47.4% 升到 71.7%。但 GPT-5.6 从七月全量到退役不足半年，已有用户说它适合写作和安全研究，没了它订阅就少了几分价值。</p></div>
     <div class="story-actions">
-      <a class="src-btn" href="https://arxiv.org/abs/2611.32255" target="_blank" rel="noopener">
+      <a class="src-btn" href="https://openai.com/" target="_blank" rel="noopener">
               <span>閱讀一手原文</span>
-              <small>arxiv.org</small>
+              <small>openai.com</small>
               <i aria-hidden="true">↗</i>
             </a>
-      <button type="button" class="share-btn" data-copy="#ttc">複製本節連結</button>
+      <button type="button" class="share-btn" data-copy="#gpt56-sunset">複製本節連結</button>
     </div>
     <div class="dossier" data-open="false">
-        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-ttc">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-gpt56-sunset">
           <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
-          <span class="dossier-count">6 項參數</span>
+          <span class="dossier-count">7 項參數</span>
           <span class="dossier-icon" aria-hidden="true">+</span>
         </button>
-        <div class="dossier-panel" id="facts-ttc">
+        <div class="dossier-panel" id="facts-gpt56-sunset">
           <div class="dossier-inner">
-            <table><tbody><tr><th>主体</th><td>NVIDIA 研究者，arXiv 2611.32255</td></tr><tr><th>机制</th><td>TimeTravelContainer，rootless 容器运行时，写时复制实时分叉进程、内存、文件与网络</td></tr><tr><th>数字</th><td>克隆快 84.1 倍，内存省 31%–72%，端到端快 1.7–9.4 倍</td></tr><tr><th>测试</th><td>两条 EDA 流程，MAGE 驱动 Innovus 与 EvoDRC 驱动 KLayout</td></tr><tr><th>兼容</th><td>无需内核改动、硬件虚拟化或 root，支持 Linux、macOS 与 WSL 2</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://arxiv.org/abs/2611.32255" target="_blank" rel="noopener">https://arxiv.org/abs/2611.32255</a></td></tr></tbody></table>
+            <table><tbody><tr><th>主体</th><td>OpenAI，GPT-6.2 与 GPT-5.6</td></tr><tr><th>推送</th><td>GPT-6.2 对话优化版 11 月 23 日起全球推送 Plus、Pro、Business、Enterprise</td></tr><tr><th>退役</th><td>GPT-5.6 Sol 与 Terra 于 12 月 23 日从聊天、Work、Codex 移除</td></tr><tr><th>性能</th><td>图像理解 47.4% 到 71.7%，复杂指令 78.1%，BrowseComp 64.5%</td></tr><tr><th>定价</th><td>API 每百万输入 token 2 美元、输出 10 美元</td></tr><tr><th>寿命</th><td>GPT-5.6 旗舰工作寿命不足半年</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://openai.com/" target="_blank" rel="noopener">https://openai.com/</a></td></tr></tbody></table>
           </div>
         </div>
       </div>
@@ -744,27 +744,27 @@ html[data-theme="dark"] .shot:hover img{filter:brightness(1)}
             <article class="essay reveal" id="lect-01" data-spy="lect-01">
   <div class="essay-kicker">
     <span class="essay-badge">ESSAY 01</span>
-    <span class="essay-stat">883 漢字 · 深度拆解</span>
+    <span class="essay-stat">898 漢字 · 深度拆解</span>
   </div>
-  <h3 class="essay-title">數週長訓跑得穩，Rocket 過的是哪三關</h3>
-  <div class="essay-brief"><div class="brief-cell"><span class="bk">原文</span><span class="bv"><a class="inline-url" href="https://microsoft.ai/news/rl-infrastructure-at-microsoft-ai" target="_blank" rel="noopener">https://microsoft.ai/news/rl-infrastructure-at-microsoft-ai</a></span></div><div class="brief-cell"><span class="bk">判據</span><span class="bv">讀完能照做，寫清適用邊界，三個月內仍有參考價值</span></div></div>
-  <div class="essay-prose"><p class="essay-lead">微軟 AI 十一月二十三日放出技術帖，講它自研的強化學習框架 Rocket 怎麼給三萬億參數的 MAI Base 2 做後訓練。讀完你能拿走一把尺子，用來判斷一套長訓基礎設施是否靠得住。微軟的主張是從基座模型靠強化學習一路上爬，不從第三方模型蒸餾，這就意味著訓練要跨數千步、持續數週甚至數月、鋪在上千張 GPU 上。</p><p>長訓第一關是採樣過時。智能體的一次 rollout 可能跑上幾小時，學習器卻一直在更新策略，同一個 GRPO 分組裡最慢的那個會把整組拖住，訓練愈发偏離當前策略。Rocket 讓採樣器每四個訓練步拿一次新權重，傳輸一次十五秒，採樣滯後因此控制在零到三步。它還優先完成已在途的 rollout，自動調節在途數量，避免慢任務無限堆積。</p><p>失敗的 rollout 直接丟掉，不等重試。理由是重試完成後與第一批成功的樣本之間會拉出很大空檔，反而更拖。這筆取捨有代價，官方自己寫明，丟棄會給 GRPO 分組優勢的基線帶入雜訊或偏差，因為失敗樣本裡有些共同特徵從沒進過學習器。拿統計潔淨度換吞吐量，帳要自己認。</p><p>第二關是數值一致。數千步更新裡微小的數值偏差會累計。他們做到採樣器與學習器對同一檢查點、同一輸入逐位一致，並用一個七十億激活、一千八百億總參數的模型做對照。兩次從同一檢查點起跑，相隔約一個月，逐位一致那次在可比步數上評估分更高。這組對照把一致性的收益變成可量的分差，不再停留在主張層面。</p><p>第三關是容錯。學習器掛掉時，控制器與採樣機繼續跑，系統暫停新題接入，著手重建並從最新檢查點恢復，再接回原有控制器。單是 learner 復原約五分鐘，最近一次運行因此省下超過百分之七的 GPU 小時。缺乏這種能力時，一次故障就要把整組訓練拉回起點。</p><p>儲存選擇也決定能不能跑得動。MoE 專家權重佔模型參數九成五以上，採用 MXFP8 儲存、計算時反量化回 BF16，採樣器的權重記憶體接近減半。KV 快取只把部分全局注意力層量化，其餘保留 BF16，可以多容納約百分之六十七的全局上下文 token。省下來的顯存直接兌現成更長的上下文。</p><p>邊界要說清。這些都是微軟自報的工程帳，基線和對照都在自家集群上跑，百分之七的 GPU 小時與逐位一致都是特定配置下的結果。技術棧建立在開源的 verl、slime 與自維護的 SGLang 分支上，跑在 Ray 和 Kubernetes 或 Slurm 之上，沒有現成的一鍵腳本。小團隊照搬全套成本很高，能借走的是三個判斷點，採樣滯後多少、數值是否逐位一致、故障恢復要多久。</p><p>從材料裡還能推出一條。強化學習一旦拉長到數週，瓶頸就落在一致性與容錯上，這兩樣決定訓練會不會在某一步悄悄走偏。挑基礎設施時先看這兩項，吞吐數字排在後面。</p></div>
+  <h3 class="essay-title">把 API 換成 Rust，怎麼證明沒改壞</h3>
+  <div class="essay-brief"><div class="brief-cell"><span class="bk">原文</span><span class="bv"><a class="inline-url" href="https://www.anthropic.com/research/migrating-api-to-rust" target="_blank" rel="noopener">https://www.anthropic.com/research/migrating-api-to-rust</a></span></div><div class="brief-cell"><span class="bk">判據</span><span class="bv">讀完能照做，寫清適用邊界，三個月內仍有參考價值</span></div></div>
+  <div class="essay-prose"><p class="essay-lead">Anthropic 十一月二十五日把 Messages API 從 Python 遷到 Rust 的過程寫成工程博客，讀完你能拿走一套方法，用來判斷一次大規模重寫到底有沒有改壞。這個入口同時服務外部客戶與內部的 Claude Code，2024 年初到 2026 年秋流量約漲了一千八百倍，Python 在對象創建與內存 churn 上的開銷成了瓶頸。升級後每請求 CPU 約降七成，首 token 中位延遲約降兩成。</p><p>先做一個小而且可逆的驗證。團隊三月先上線一個由 Python 調用的 Rust 解析器，只省下百分之八到十的 CPU，收益一個數量級都不到。這一步的價值在於證明方向可行，並建立可信基線，再決定要不要重寫核心請求路徑。大型遷移的第一步可以是這種可被推翻的小賭注，而不是直接押上全部。</p><p>真正的難題是正確性從哪裡來。博客列了三種來源，寫規則、用測試定義正確、拿既有系統當標尺。這個項目測試不完整，於是走第三條，讓新舊兩套代码跑同一批請求再比對，也就是影子流量。Messages API 有幾十個功能，二十個開關就超過一百萬種組合，靠測試窮舉根本跑不完。</p><p>影子比對有個細節容易被忽略。請求只能計入客戶額度一次，Claude 輸出又有隨機性，所以模型只跑一次，再把輸出回放給 Rust 那一側，逐段比較模型調用前後的每一步，結果要完全一致。團隊不能讀用戶請求，也不看回覆，只記錄差異的形狀，例如出現在服務哪一步、相差多少字節，再配一個指纹，記下第一個差異的字節位置與長度。</p><p>匹配率的曲線反而最說明問題。四月 Rust 通過約七百個集成測試的九成八，但生產流量上只有約四分之一輸入匹配。到了五月中，匹配率降到百分之六點五，原因是比較標準收嚴了。八月升到百分之九十九點六。如果只看第一個數字，很容易以為四月就該上線。</p><p>測試本身也要審計。那些測試跟 Python 實現耦合，會在測試進程裡跑 Python API 並把計費、限流等服務在內存裡模擬掉，通過可能意味著代码對，也可能意味著測試被放松放過了錯代码。審計找出一百多處被削弱的斷言。AI 輔助移植時只 diff 代码不夠，測試 diff 同樣要人看。</p><p>協作方式也值得借。腳本每十到三十分鐘跑一次，按字段把差異分組，只有出現新類型才叫醒協調代理，由它派工到共用 Slack 线程。代理在雲端沙箱裡重現差異，修好後寫一個在舊代码會失敗、新代码會通過的測試。修復要過 PR 審核才進外環，再用影子流量比對開關前後，盯那個指纹有沒有消失。人工意見被記成規則寫進 CLAUDE.md，六月一個代理還回看了約六十條評論。</p><p>邊界要說清。這是 Anthropic 自家工程帳，流量規模與工具鏈都很特定，唯一服務沒下線不代表任何遷移都能如此。能把方法搬走的是順序，先小賭注建立基線，再拿舊系統當標尺，用指纹代替原文隱私，把人工判斷沉澱成規則。</p></div>
   <aside class="editor-note">
           <div class="en-head"><span>EDITOR'S NOTE · 最值得看</span></div>
-          <p>原文講丟棄失敗 rollout 會給 GRPO 分組基線帶來雜訊或偏差的那一段，把吞吐量與統計潔淨度的取捨寫得最直白。</p>
+          <p>原文講匹配率從四月約四分之一降到五月中百分之六點五再升到八月九十九點六的那幾段，把收嚴標準造成的假退步寫得最清楚。</p>
         </aside>
   
 </article><article class="essay reveal" id="lect-02" data-spy="lect-02">
   <div class="essay-kicker">
     <span class="essay-badge">ESSAY 02</span>
-    <span class="essay-stat">668 漢字 · 深度拆解</span>
+    <span class="essay-stat">640 漢字 · 深度拆解</span>
   </div>
-  <h3 class="essay-title">把網頁鎖回過去，回放環境測出了什麼</h3>
-  <div class="essay-brief"><div class="brief-cell"><span class="bk">原文</span><span class="bv"><a class="inline-url" href="https://epochal.com/blog/introducing-time-portal" target="_blank" rel="noopener">https://epochal.com/blog/introducing-time-portal</a></span></div><div class="brief-cell"><span class="bk">判據</span><span class="bv">讀完能照做，寫清適用邊界，三個月內仍有參考價值</span></div></div>
-  <div class="essay-prose"><p class="essay-lead">Epochal 十一月二十四日上線 Time Portal，給智能體提供一個鎖定在過去時間點的網頁環境。讀完你會拿到一把尺子，用來判斷一個歷史回放環境究竟測出了什麼，又沒測出什麼。它提供 search、fetch 和 sandbox 三類 API，每次請求帶一個時間戳，檔案覆蓋超過一萬億頁網頁、七萬億個網址、三十多年歷史，變動頻繁的頁面能到分鐘級版本鏈。</p><p>難點在於智能體會發現自己不在那個時代。它可以跑 date 命令看時鐘，可以翻文件系統，網頁內容稍有現代痕跡就露餡。所以時間閘門要鋪到多層，內核時鐘設成目標時刻，鏡像用當時存在的 Ubuntu 版本與程式庫，pip、npm 與 apt 都按時間點放行，連 curl 和 requests 都走 Time Portal。少一層，回放就不保真。</p><p>那組 0.98 的相關性得講清來路。研究者在 Kalshi 與 Polymarket 的預測題上先讓智能體即時作答，幾週後用 Time Portal 把同一批題按原來的預測時刻回放。0.98 是回放結果與當時即時結果的相關性，不是預測準確率。給即時網頁的對照組只有 0.16，因為智能體能查到答案，錯誤幾乎歸零；完全不給網路的對照組是 0.49。三組放在一起，比的其實是能否重現當時的資訊環境。</p><p>從這裡能推出一條。這套環境的用處落在把已經發生過的任務重跑一遍，用來比較不同智能體或不同策略在同一資訊集下的表現。資訊洩漏被堵住之後，回放才成為可重複的實驗台，這對做智能體評測的團隊比任何預言都實用。</p><p>適用邊界同樣明確。覆蓋與洩漏兩件事決定保真度，某條資訊當時在不在網上、智能體能否拿到，官方承認覆蓋範圍與知識截止都是挑戰，時間閘門必要但不充分。應用中若有一部分內容來自別的網站，那部分可以在時間點之後變化。免費版是受限版本，完整能力仍要與他們洽談。</p><p>要照做的話，先把問題限定成同一時間點、同一資訊集下的可重複評測，別拿它當預言機。每次回放都要記錄時間戳與資料版本，並用即時網頁與無網路兩組對照，確認分數的變化来自策略而非資料外洩。評測結論只在這個框裡成立，越過邊界就要重新標註。</p></div>
+  <h3 class="essay-title">critic 要不要留，先看批量多大</h3>
+  <div class="essay-brief"><div class="brief-cell"><span class="bk">原文</span><span class="bv"><a class="inline-url" href="https://arxiv.org/abs/2611.32013" target="_blank" rel="noopener">https://arxiv.org/abs/2611.32013</a></span></div><div class="brief-cell"><span class="bk">判據</span><span class="bv">讀完能照做，寫清適用邊界，三個月內仍有參考價值</span></div></div>
+  <div class="essay-prose"><p class="essay-lead">Scale AI 與卡內基梅隆在十一月二十四日提交論文 To Critic Or Not To Critic，讀完你能拿走一條選型線，判斷強化學習該用 PPO 還是 GRPO。研究跑了逾一千二百次訓練，其中九十六次用大模型，覆蓋控制任務、短時域數學題和長時域終端代理。起點是個現實問題，rollout 越貴，critic 帶來的方差下降是否值回它的算力開銷就越要算清。</p><p>先講兩個算法的差別。PPO 訓練一個 critic 來降低梯度方差，讓模型從較少軌跡裡學到東西，代價是額外算力與引導偏差。GRPO 去掉 critic，靠分組內的相對優勢做歸一化，結構更省，DeepSeek-R1 之後開源社區廣泛採用它。論文把兩者放到共享的 actor 目標下比較，這一步很關鍵，否則比的其實是兩套目標函數而不是 critic 本身。</p><p>結論落在批量這條線上，沒有哪個算法全面勝出。小批量時 PPO 普遍領先，因為 critic 用較少樣本就壓住了噪聲。批量放大後 GRPO 常常追平輕引導的 PPO，並超過重引導的 PPO，在更長時域與更複雜領域裡，GRPO 需要更大批量才追得上。也就是說，算力緊、單批樣本少的時候 critic 值錢，批量足夠大時它的邊際收益被攤薄。</p><p>從這條線能推出一個做法。先按自己的 rollout 成本定批量，再選算法，而不是反過來先選算法再遷就批量。終端代理這種長時域任務，一條軌跡本就昂貴，小批量几乎必然，PPO 的 critic 更可能划得來。短時域數學題能把批量堆上去，GRPO 的結構簡單就更合適。同一個模型在不同任務上未必該用同一個算法。</p><p>適用邊界得講明。arXiv 頁面給的是方向性結論，沒有給出具體分差數值，也沒有列出作者自報的局限。Research 來源寫明比較在三類任務上進行，但頁面未分別給出控制任務或數學題的獨立數字。要照做就自己去復現，按論文的多批量網格跑一組對照，別把小批量領先直接套到自己的配置上。</p><p>論文沒給數值反而提示了一件事。算法選擇的結論往往帶條件，博客標題式地宣佈某算法取代另一個，通常省略了批量與時域這兩個自變量。把條件補回來，結論才好用。</p></div>
   <aside class="editor-note">
           <div class="en-head"><span>EDITOR'S NOTE · 最值得看</span></div>
-          <p>原文三百四十七任務的三組 r 值對照表，Time Portal 0.98、即時網頁 0.16、無網路 0.49，把回放與作弊的差別一次給全。</p>
+          <p>論文摘要裡小批量 PPO 領先、大批量 GRPO 追平輕引導 PPO 並超過重引導 PPO 的那兩句，把選型線一次給全。</p>
         </aside>
   
 </article>
@@ -775,21 +775,21 @@ html[data-theme="dark"] .shot:hover img{filter:brightness(1)}
 <nav class="issue-pager" id="issue-pager" aria-label="前後期翻頁"></nav>
 
 <footer class="foot">
-  <p><strong>EveryNews.</strong> · Issue No.017 · 每日 AI 讀報雜誌</p>
+  <p><strong>EveryNews.</strong> · Issue No.018 · 每日 AI 讀報雜誌</p>
   <p><a href="archive.html" style="text-decoration:underline">瀏覽全部往期刊物架 →</a></p>
 </footer>
 
 <button type="button" class="fab-toc" id="fab-toc">☰ 本期目錄</button>
 <div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
   <div class="mobile-sheet">
-    <div class="sheet-head"><strong>本期目錄 · Issue No.017</strong><button type="button" class="sheet-close" id="sheet-close">×</button></div>
+    <div class="sheet-head"><strong>本期目錄 · Issue No.018</strong><button type="button" class="sheet-close" id="sheet-close">×</button></div>
     
   <ul class="toc-list">
-    <li><a class="toc-link" href="#swe21" data-toc="swe21"><span class="toc-no">01</span><span>翻倍的自报分数，对照表还压着一头</span></a></li><li><a class="toc-link" href="#install-app" data-toc="install-app"><span class="toc-no">02</span><span>作品装成软件，权限分了三档</span></a></li><li><a class="toc-link" href="#namazu" data-toc="namazu"><span class="toc-no">03</span><span>三成参数赢四倍体量，弱项也照写</span></a></li><li><a class="toc-link" href="#magi2" data-toc="magi2"><span class="toc-no">04</span><span>视频规格拉满，价格和权重还悬着</span></a></li><li><a class="toc-link" href="#time-portal" data-toc="time-portal"><span class="toc-no">05</span><span>回放像当时，不等于能预测未来</span></a></li><li><a class="toc-link" href="#ttc" data-toc="ttc"><span class="toc-no">06</span><span>跑着的会话，整份分叉出来</span></a></li>
+    <li><a class="toc-link" href="#rust-migration" data-toc="rust-migration"><span class="toc-no">01</span><span>影子流量先变差再变好，Rust 才切上线</span></a></li><li><a class="toc-link" href="#workspace-mcp" data-toc="workspace-mcp"><span class="toc-no">02</span><span>接 Workspace 的代理，得赶两个日期</span></a></li><li><a class="toc-link" href="#volvo-aeon" data-toc="volvo-aeon"><span class="toc-no">03</span><span>人形机器人进厂，先学把零件放进夹具</span></a></li><li><a class="toc-link" href="#ppo-grpo" data-toc="ppo-grpo"><span class="toc-no">04</span><span>一千二百次训练后，批量大小决定 critic 去留</span></a></li><li><a class="toc-link" href="#alice-80b" data-toc="alice-80b"><span class="toc-no">05</span><span>八百亿参数，每个 token 只醒三十亿</span></a></li><li><a class="toc-link" href="#gpt56-sunset" data-toc="gpt56-sunset"><span class="toc-no">06</span><span>旗舰模型半年就退，订阅用户开始算账</span></a></li>
   </ul>
   <div class="toc-sec-label">ESSAYS · 深度專欄</div>
          <ul class="toc-list">
-           <li><a class="toc-link" href="#lect-01" data-toc="lect-01"><span class="toc-no">E1</span><span>數週長訓跑得穩，Rocket 過的是哪三關</span></a></li><li><a class="toc-link" href="#lect-02" data-toc="lect-02"><span class="toc-no">E2</span><span>把網頁鎖回過去，回放環境測出了什麼</span></a></li>
+           <li><a class="toc-link" href="#lect-01" data-toc="lect-01"><span class="toc-no">E1</span><span>把 API 換成 Rust，怎麼證明沒改壞</span></a></li><li><a class="toc-link" href="#lect-02" data-toc="lect-02"><span class="toc-no">E2</span><span>critic 要不要留，先看批量多大</span></a></li>
          </ul>
 
   </div>
@@ -962,7 +962,7 @@ html[data-theme="dark"] .shot:hover img{filter:brightness(1)}
     var list = window.EVERYNEWS_ISSUES || [];
     var pager = document.getElementById('issue-pager');
     if (!pager || !list.length) return;
-    var curFile = '20261126.html';
+    var curFile = '20261127.html';
     var idx = list.findIndex(function(x){ return x.file === curFile; });
     if (idx === -1) idx = 0;
     var prevIssue = list[idx + 1];

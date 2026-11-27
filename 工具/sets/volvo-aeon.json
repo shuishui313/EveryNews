@@ -1,0 +1,37 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "Hexagon Robotics · 11-26",
+  "date": "2026.11.27",
+  "noImageReason": "新聞稿配圖為車間示意，試點節奏與訓練方式改走時程卡呈現",
+  "slides": [
+    {
+      "type": "cover-min",
+      "kicker": "HUMANOID IN FACTORY · 人形進廠",
+      "headline": ["先學放零件", "再談量產"],
+      "accentLine": 1,
+      "sub": "AEON 在 Volvo 比利時 Ghent 工廠接受真實工業任務訓練。",
+      "num": "2027",
+      "numLabel": "上半年更多單元到場，年中進入真實生產",
+      "chips": [
+        "Volvo 製造團隊與 Hexagon 合作訓練",
+        "目標是重複性與人體工學要求高的工作",
+        "官方特意說明這不在演示階段"
+      ],
+      "note": "新聞稿未公佈身高、體重與載重數據。"
+    },
+    {
+      "type": "list",
+      "kicker": "DEPLOYMENT PATH · 落地節奏",
+      "headline": ["從訓練", "到真實生產"],
+      "accentLine": 1,
+      "sub": "車廠的衡量標準是吞吐量，不是掌聲。",
+      "items": [
+        { "k": "現在", "v": "在真實任務上訓練與驗證" },
+        { "k": "起步", "v": "把零件放進夾具一類重複工作" },
+        { "k": "2027 上半年", "v": "更多單元到場，承擔更廣任務" },
+        { "k": "2027 年中", "v": "用於真實生產" }
+      ],
+      "verdict": "目標是適應既有產線，與人和自動化設備一起工作。"
+    }
+  ]
+}

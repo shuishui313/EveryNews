@@ -1,0 +1,42 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "arXiv 2611.32013 · 11-24",
+  "date": "2026.11.27",
+  "noImageReason": "論文無正文資訊圖，批量與算法的選型關係改走對比卡呈現",
+  "slides": [
+    {
+      "type": "versus",
+      "kicker": "RL ALGORITHMS · 算法選型",
+      "headline": ["小批量 PPO", "大批量 GRPO"],
+      "accentLine": 1,
+      "sub": "逾 1200 次訓練，其中 96 次用大模型，誰領先要看批量。",
+      "bars": [
+        { "label": "小批量", "price": "PPO 普遍領先", "width": 90 },
+        { "label": "大批量", "price": "GRPO 追平並超過", "width": 70 }
+      ],
+      "rows": [
+        { "k": "控制任務", "v": "納入比較" },
+        { "k": "短時域數學", "v": "納入比較" },
+        { "k": "長時域終端代理", "v": "GRPO 需更大批量才追上" }
+      ],
+      "note": "論文為 Scale AI 與卡內基梅隆，24 Nov 2026 提交。"
+    },
+    {
+      "type": "diagram",
+      "kicker": "BATCH AS VARIABLE · 批量是變量",
+      "headline": ["先看批量", "再選算法"],
+      "accentLine": 1,
+      "sub": "critic 的邊際收益隨批量攤薄。",
+      "nodes": [
+        { "box": "批量小", "lab": "critic 壓噪聲，PPO 值錢" },
+        { "box": "批量放大", "lab": "GRPO 追平輕引導", "tone": "dim" },
+        { "box": "時域更長", "lab": "GRPO 需更大批量", "tone": "fill" }
+      ],
+      "arrows": [
+        { "label": "算力緊" },
+        { "label": "算力足" }
+      ],
+      "verdict": "arXiv 頁未給出具體分差與作者自報局限。"
+    }
+  ]
+}

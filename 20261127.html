@@ -1,0 +1,986 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EveryNews · Issue No.018 (2026-11-27)</title>
+<meta name="description" content="EveryNews 每日 AI 線上雜誌：讀報筆記體快訊、視覺圖版與兩篇深度專欄。">
+<script>
+(function(){try{var t=localStorage.getItem('everynews-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<style>
+:root{
+  --paper:#F6F3EC;
+  --paper-elev:#FCFBF8;
+  --paper-feature:#EFEBE1;
+  --ink:#141318;
+  --ink2:#3F3B4D;
+  --mute:#787287;
+  --line:rgba(20,19,24,.12);
+  --line-strong:#141318;
+  --accent:#3B28CC;
+  --accent-soft:rgba(59,40,204,.07);
+  --stamp:#C84B31;
+  --shadow:0 8px 24px rgba(20,19,24,.05),0 1px 3px rgba(20,19,24,.04);
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI","PingFang TC","PingFang SC","Noto Sans TC","Hiragino Sans GB","Microsoft JhengHei",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+html[data-theme="dark"]{
+  --paper:#0F0F13;
+  --paper-elev:#17171F;
+  --paper-feature:#1C1B26;
+  --ink:#EFECE4;
+  --ink2:#B8B3C7;
+  --mute:#857F96;
+  --line:rgba(255,255,255,.11);
+  --line-strong:#E2DDD2;
+  --accent:#9688FF;
+  --accent-soft:rgba(150,136,255,.12);
+  --stamp:#E06348;
+  --shadow:0 14px 34px rgba(0,0,0,.4),0 2px 6px rgba(0,0,0,.28);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-variant-numeric:tabular-nums;line-height:1.82;font-size:16px;
+  -webkit-font-smoothing:antialiased;line-break:strict;
+  transition:background-color .3s var(--ease),color .3s var(--ease);
+}
+a{color:inherit;text-decoration:none}
+button,select{font:inherit}
+button{cursor:pointer}
+
+/* 顶部阅读进度条 */
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2.5px;z-index:100;background:transparent}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--stamp),var(--accent));transition:width .1s linear}
+
+/* 唯一合并的单层毛玻璃杂志顶栏（整合期次切换、归档入口、进度与日夜开关） */
+.topbar{
+  position:sticky;top:0;z-index:80;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  background:color-mix(in srgb,var(--paper) 86%,transparent);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{
+  max-width:1260px;margin:0 auto;padding:9px clamp(18px,4vw,52px);
+  display:flex;align-items:center;gap:14px;justify-content:space-between;flex-wrap:wrap;
+}
+.topbar-left{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.mini-brand{font-weight:800;font-size:15.5px;letter-spacing:-.02em}
+.topbar-sep{color:var(--line);user-select:none}
+.issue-switcher{display:inline-flex;align-items:center;gap:8px}
+.issue-switcher select{
+  font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:99px;
+  border:1px solid var(--line);background:var(--paper-elev);color:var(--ink);cursor:pointer;
+}
+.issue-switcher select:focus{outline:2px solid var(--accent);outline-offset:1px}
+.archive-link{font-size:12.5px;font-weight:600;color:var(--accent);padding:3px 6px}
+.archive-link:hover{text-decoration:underline}
+.topbar-right{display:flex;align-items:center;gap:12px;margin-left:auto}
+.issue-nav-hint{font-family:var(--mono);font-size:11px;color:var(--mute);display:none}
+@media(min-width:900px){.issue-nav-hint{display:inline}}
+.read-pct{font-family:var(--mono);font-size:11.5px;color:var(--mute);min-width:36px;text-align:right}
+.theme-btn{
+  display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:99px;
+  border:1px solid var(--line);background:var(--paper-elev);color:var(--ink2);
+  font-size:12px;font-weight:600;transition:border-color .2s,transform .2s var(--ease);
+}
+.theme-btn:hover{border-color:var(--accent);transform:translateY(-1px)}
+.theme-dot{width:7px;height:7px;border-radius:50%;background:var(--stamp)}
+
+/* 瑞士现代杂志报头 Masthead */
+.masthead{max-width:1260px;margin:0 auto;padding:clamp(28px,4.2vw,52px) clamp(18px,4vw,52px) 0}
+.masthead-meta{
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+  padding-bottom:12px;border-bottom:1px solid var(--line);
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--mute);text-transform:uppercase;
+}
+.stamp-pill{display:inline-flex;align-items:center;gap:8px;color:var(--stamp);font-weight:700}
+.stamp-pill::before{content:"";width:7px;height:7px;border-radius:1.5px;background:var(--stamp)}
+.masthead-hero{
+  display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end;
+  padding:clamp(24px,3.6vw,42px) 0 clamp(24px,3.2vw,36px);
+  border-bottom:2px solid var(--line-strong);
+}
+.journal-name{
+  font-size:clamp(42px,6.8vw,82px);font-weight:900;
+  line-height:.95;letter-spacing:-.045em;margin:0;
+}
+.journal-name span{color:var(--accent)}
+.journal-sub{
+  margin:14px 0 0;font-size:clamp(15px,1.4vw,17.5px);color:var(--ink2);max-width:52ch;line-height:1.68;
+}
+.issue-box{
+  text-align:right;border-left:1px solid var(--line);padding-left:28px;
+  display:flex;flex-direction:column;justify-content:flex-end;gap:4px;
+}
+.issue-box .ib-kicker{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--stamp);font-weight:700}
+.issue-box .ib-date{font-size:clamp(26px,2.8vw,34px);font-weight:800;line-height:1.08;letter-spacing:-.03em}
+.stat{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin:4px 0 0}
+
+.jump-compat{display:none}
+
+/* 双栏瑞士网格：左侧吸附目录 + 右侧主内容区 */
+.mag-shell{
+  max-width:1260px;margin:0 auto;padding:0 clamp(18px,4vw,52px) 80px;
+  display:grid;grid-template-columns:240px minmax(0,1fr);gap:clamp(28px,4.5vw,60px);align-items:start;
+}
+.toc-rail{
+  position:sticky;top:64px;padding:32px 22px 24px 0;
+  border-right:1px solid var(--line);
+}
+.toc-head{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--mute);
+  text-transform:uppercase;margin:0 0 14px;display:flex;justify-content:space-between;
+}
+.toc-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.toc-link{
+  display:grid;grid-template-columns:24px 1fr;gap:8px;align-items:baseline;
+  padding:7px 10px;border-radius:5px;font-size:13px;line-height:1.45;color:var(--ink2);
+  border-left:2px solid transparent;transition:all .2s var(--ease);
+}
+.toc-link:hover{background:var(--accent-soft);color:var(--ink)}
+.toc-link.is-active{
+  background:var(--accent-soft);color:var(--ink);font-weight:700;
+  border-left-color:var(--stamp);transform:translateX(2px);
+}
+.toc-no{font-family:var(--mono);font-size:11px;color:var(--mute)}
+.toc-link.is-active .toc-no{color:var(--stamp);font-weight:700}
+.toc-sec-label{
+  margin:18px 0 8px;padding-top:14px;border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--mute);
+}
+.toc-kbd{
+  margin-top:20px;padding-top:14px;border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:10.5px;color:var(--mute);line-height:1.6;
+}
+.toc-kbd kbd{
+  padding:1px 5px;border:1px solid var(--line);border-radius:3px;background:var(--paper-elev);font-size:10px;
+}
+
+/* 新闻条目版面 */
+.mag-main{min-width:0}
+.story{padding:clamp(34px,4.2vw,52px) 0;border-bottom:1px solid var(--line)}
+.story.is-lead{padding-top:clamp(28px,3.4vw,42px)}
+.story-meta{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.story-folio{
+  font-size:24px;font-weight:900;line-height:1;color:var(--accent);letter-spacing:-.04em;
+}
+.story-rubric{
+  font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 9px;border:1px solid var(--line);border-radius:4px;color:var(--ink2);background:var(--paper-elev);
+}
+.lead-badge{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;font-weight:700;
+  padding:3px 9px;border-radius:4px;background:var(--stamp);color:#FAF8F4;
+}
+.story-title{
+  font-size:clamp(22px,2.8vw,32px);font-weight:800;
+  line-height:1.28;letter-spacing:-.025em;margin:0 0 22px;color:var(--ink);
+}
+.story.is-lead .story-title{font-size:clamp(25px,3.2vw,36px)}
+
+/* 图版阵列：统一左对齐与满宽瑞士网格，与正文、档案卡、分割线右边缘严丝合缝对齐 */
+.plate-wrap{margin:0 0 24px;width:100%}
+.strip{display:grid;gap:clamp(12px,1.8vw,20px);width:100%}
+.strip-1{grid-template-columns:minmax(0,1fr);max-width:480px}
+.strip-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.strip-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.plate{margin:0;display:flex;flex-direction:column;gap:7px}
+.plate.wide{grid-column:span 2}
+.strip-1 .plate.wide{grid-column:span 1;max-width:680px}
+.shot{
+  position:relative;display:block;border-radius:6px;overflow:hidden;
+  border:1px solid var(--line);background:var(--paper-elev);box-shadow:var(--shadow);
+  cursor:zoom-in;transition:transform .32s var(--ease),box-shadow .32s var(--ease),border-color .22s;
+}
+.shot:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 18px 36px rgba(20,19,24,.11)}
+.shot img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;transition:transform .45s var(--ease),filter .3s}
+html[data-theme="dark"] .shot img{filter:brightness(.93) contrast(1.02)}
+html[data-theme="dark"] .shot:hover img{filter:brightness(1)}
+.plate.wide .shot img{aspect-ratio:16/9;object-fit:contain}
+.shot:hover img{transform:scale(1.015)}
+.zoom-pill{
+  position:absolute;right:10px;bottom:10px;padding:4px 10px;border-radius:99px;
+  background:rgba(20,19,24,.78);color:#FAF8F4;font-size:11px;font-family:var(--mono);
+  opacity:0;transform:translateY(4px);transition:all .22s var(--ease);pointer-events:none;
+}
+.shot:hover .zoom-pill{opacity:1;transform:translateY(0)}
+.plate figcaption{
+  display:flex;justify-content:space-between;font-family:var(--mono);
+  font-size:10.5px;letter-spacing:.08em;color:var(--mute);padding:0 2px;
+}
+
+/* 正文与按钮区：100% 撑满主阅读栏，消除右侧参差留白 */
+.story-body{width:100%}
+.post p{margin:0 0 1em;font-size:16.5px;line-height:1.9;color:var(--ink);text-align:justify}
+.story-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:16px 0 4px}
+.src-btn{
+  display:inline-flex;align-items:center;gap:9px;padding:7px 14px;border-radius:6px;
+  border:1px solid var(--line);background:var(--paper-elev);font-size:13px;font-weight:600;
+  transition:all .22s var(--ease);
+}
+.src-btn small{font-family:var(--mono);font-size:11px;color:var(--mute);font-weight:400}
+.src-btn i{font-style:normal;color:var(--accent);transition:transform .22s var(--ease)}
+.src-btn:hover{border-color:var(--accent);transform:translateY(-1px)}
+.src-btn:hover i{transform:translate(2px,-2px)}
+.share-btn{
+  padding:7px 12px;border-radius:6px;border:1px solid transparent;background:transparent;
+  color:var(--mute);font-size:12.5px;transition:all .2s;
+}
+.share-btn:hover{border-color:var(--line);background:var(--paper-elev);color:var(--ink)}
+
+/* 手风琴核验档案卡 */
+.dossier{margin-top:14px;border:1px solid var(--line);border-radius:6px;background:var(--paper-elev);overflow:hidden}
+.dossier-btn{
+  width:100%;display:flex;align-items:center;gap:10px;padding:10px 15px;
+  background:transparent;border:none;color:var(--ink2);text-align:left;transition:background .2s;
+}
+.dossier-btn:hover{background:var(--accent-soft)}
+.dossier-label{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em}
+.dossier-label i{width:6px;height:6px;border-radius:1px;background:var(--accent);display:inline-block}
+.dossier-count{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--mute)}
+.dossier-icon{
+  width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:15px;color:var(--accent);transition:transform .28s var(--ease);
+}
+.dossier[data-open="true"] .dossier-icon{transform:rotate(45deg)}
+.dossier-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s var(--ease)}
+.dossier[data-open="true"] .dossier-panel{grid-template-rows:1fr}
+.dossier-inner{overflow:hidden}
+.dossier-inner table{width:100%;border-collapse:collapse;border-top:1px solid var(--line);font-size:13.5px}
+.dossier-inner th{
+  text-align:left;vertical-align:top;white-space:nowrap;color:var(--mute);
+  font-family:var(--mono);font-weight:600;padding:8px 18px 8px 15px;width:1%;
+}
+.dossier-inner td{padding:8px 15px 8px 0;border-bottom:1px solid var(--line);color:var(--ink2);overflow-wrap:anywhere}
+.dossier-inner tr:last-child td{border-bottom:none}
+.inline-url{color:var(--accent);word-break:break-all}
+.inline-url:hover{text-decoration:underline}
+
+/* 深度专栏 Feature Well（东方现代编辑感：顶线规格栏 + 首段导语竖线提亮） */
+.feature-well{
+  margin-top:52px;padding:clamp(28px,4vw,48px);border-radius:8px;
+  background:var(--paper-feature);border-top:2px solid var(--line-strong);
+}
+.feature-header{
+  display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;
+  padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:6px;
+}
+.feature-header h2{font-size:clamp(22px,2.6vw,30px);font-weight:800;margin:0;letter-spacing:-.025em}
+.feature-header span{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--stamp);font-weight:700}
+.essay{padding:34px 0;border-bottom:1px solid var(--line)}
+.essay:last-child{border-bottom:none;padding-bottom:4px}
+.essay-kicker{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.essay-badge{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;font-weight:700;
+  padding:3px 8px;background:var(--ink);color:var(--paper);border-radius:3px;
+}
+.essay-stat{font-family:var(--mono);font-size:11.5px;color:var(--mute)}
+.essay-title{
+  font-size:clamp(21px,2.5vw,28px);font-weight:800;
+  margin:0 0 20px;line-height:1.3;letter-spacing:-.02em;
+}
+.essay-brief{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;
+  margin:0 0 26px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.brief-cell{display:flex;flex-direction:column;gap:5px}
+.brief-cell .bk{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--stamp);font-weight:700}
+.brief-cell .bv{font-size:13px;line-height:1.58;color:var(--ink2);overflow-wrap:anywhere}
+.essay-prose{width:100%}
+.essay-prose p{margin:0 0 1.12em;font-size:16.5px;line-height:1.92;color:var(--ink);text-align:justify}
+.essay-prose p.essay-lead{
+  font-size:17.2px;font-weight:500;padding-left:16px;
+  border-left:3px solid var(--accent);color:var(--ink);
+}
+.editor-note{
+  margin:22px 0 16px;padding:14px 18px;border-left:3px solid var(--stamp);
+  background:var(--paper-elev);border-radius:0 6px 6px 0;width:100%;
+}
+.editor-note .en-head{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--stamp);font-weight:700;margin-bottom:5px}
+.editor-note p{margin:0;font-size:14.5px;line-height:1.68;color:var(--ink2)}
+
+/* 前后期翻页与页脚 */
+.issue-pager{
+  max-width:1260px;margin:0 auto;padding:0 clamp(18px,4vw,52px) 36px;
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+}
+.pager-card{
+  padding:18px 22px;border:1px solid var(--line);border-radius:6px;background:var(--paper-elev);
+  display:flex;flex-direction:column;gap:4px;transition:all .22s var(--ease);
+}
+.pager-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.pager-card.next{text-align:right}
+.pager-card small{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--mute)}
+.pager-card strong{font-size:17px;font-weight:700}
+
+.foot{
+  max-width:1260px;margin:0 auto;padding:26px clamp(18px,4vw,52px) 60px;
+  border-top:2px solid var(--line-strong);color:var(--mute);font-size:13px;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+}
+.foot p{margin:0}
+
+/* 移动端悬浮目录抽屉 */
+.fab-toc{
+  display:none;position:fixed;right:18px;bottom:20px;z-index:85;
+  padding:10px 16px;border-radius:99px;border:1px solid var(--line);
+  background:var(--ink);color:var(--paper);font-size:13px;font-weight:600;
+  box-shadow:0 10px 26px rgba(0,0,0,.22);
+}
+.mobile-drawer{
+  position:fixed;inset:0;z-index:95;background:rgba(12,11,16,.58);
+  backdrop-filter:blur(4px);display:flex;align-items:flex-end;opacity:0;pointer-events:none;
+  transition:opacity .26s var(--ease);
+}
+.mobile-drawer.is-open{opacity:1;pointer-events:auto}
+.mobile-sheet{
+  width:100%;max-height:76vh;overflow-y:auto;background:var(--paper-elev);
+  border-radius:16px 16px 0 0;padding:20px 20px 30px;
+  transform:translateY(100%);transition:transform .3s var(--ease);
+}
+.mobile-drawer.is-open .mobile-sheet{transform:translateY(0)}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.sheet-head strong{font-size:16px;font-weight:800}
+.sheet-close{border:none;background:transparent;color:var(--mute);font-size:22px;line-height:1}
+
+/* 灯箱 */
+.lightbox{
+  position:fixed;inset:0;background:rgba(12,11,18,.92);backdrop-filter:blur(8px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:110;padding:24px;opacity:0;pointer-events:none;transition:opacity .24s var(--ease);
+}
+.lightbox.is-open{opacity:1;pointer-events:auto}
+.lb-stage{position:relative;display:flex;align-items:center;justify-content:center;max-width:92vw;max-height:82vh}
+.lb-stage img{max-width:92vw;max-height:82vh;border-radius:6px;box-shadow:0 24px 60px rgba(0,0,0,.5);transform:scale(.96);transition:transform .28s var(--ease)}
+.lightbox.is-open .lb-stage img{transform:scale(1)}
+.lb-nav{
+  position:fixed;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;
+  font-size:20px;display:flex;align-items:center;justify-content:center;transition:background .2s;
+}
+.lb-nav:hover{background:rgba(255,255,255,.2)}
+.lb-prev{left:20px}
+.lb-next{right:20px}
+.lb-close{
+  position:fixed;top:18px;right:22px;width:40px;height:40px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;font-size:20px;
+}
+.lb-bar{margin-top:14px;color:rgba(255,255,255,.82);font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-align:center}
+
+.toast{
+  position:fixed;left:50%;bottom:28px;transform:translate(-50%,16px);opacity:0;
+  background:var(--ink);color:var(--paper);padding:8px 16px;border-radius:99px;
+  font-size:13px;font-weight:600;z-index:120;pointer-events:none;transition:all .26s var(--ease);
+}
+.toast.is-on{opacity:1;transform:translate(-50%,0)}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
+.reveal.is-visible{opacity:1;transform:translateY(0)}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+}
+@media (max-width:1024px){
+  .mag-shell{grid-template-columns:1fr}
+  .toc-rail{display:none}
+  .fab-toc{display:inline-flex;align-items:center;gap:6px}
+}
+@media (max-width:760px){
+  .masthead-hero{grid-template-columns:1fr;gap:16px}
+  .issue-box{text-align:left;border-left:none;border-top:1px solid var(--line);padding:14px 0 0}
+  .strip-2,.strip-3,.essay-brief{grid-template-columns:1fr}
+  .plate.wide{grid-column:span 1}
+  .issue-pager{grid-template-columns:1fr}
+  .pager-card.next{text-align:left}
+  .lb-nav{bottom:18px;top:auto;transform:none}
+  .lb-prev{left:28%}
+  .lb-next{right:28%}
+}
+</style>
+</head>
+<body>
+<div class="progress-rail" aria-hidden="true"><div class="progress-bar" id="progress-bar"></div></div>
+
+<header class="topbar issue-nav" data-current="20261127.html">
+  <div class="topbar-inner">
+    <div class="topbar-left">
+      <a href="index.html" class="mini-brand">EveryNews.</a>
+      <span class="topbar-sep">/</span>
+      <div class="issue-switcher">
+        <select id="issue-select" aria-label="切換期次"><option value="20261127.html" selected>No.018 · 2026-11-27</option><option value="archive.html">往期刊物架</option></select>
+        <a href="archive.html" class="archive-link">往期刊物架 →</a>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span class="issue-nav-hint" id="issue-nav-hint"></span>
+      <span class="read-pct" id="read-pct">0%</span>
+      <button type="button" class="theme-btn" id="theme-toggle" aria-label="切換紙本與夜讀模式">
+        <span class="theme-dot"></span><span id="theme-label">夜讀</span>
+      </button>
+    </div>
+  </div>
+</header>
+<script src="issues.js"></script>
+
+<section class="masthead">
+  <div class="masthead-meta">
+    <span class="stamp-pill">DAILY AI JOURNAL · 每日一刊</span>
+    <span>FRI · 27 NOV 2026 · 約 6 分鐘讀完</span>
+  </div>
+  <div class="masthead-hero">
+    <div>
+      <h1 class="journal-name">EveryNews<span>.</span></h1>
+      <p class="journal-sub">把每天真正值得讀的一手技術博客、論文與財報對完帳，寫成一份連貫好讀的同行讀報雜誌。</p>
+    </div>
+    <div class="issue-box">
+      <span class="ib-kicker">ISSUE NO. 018 · 週五</span>
+      <div class="ib-date">2026-11-27</div>
+      <p class="stat">6 篇快訊 · 12 張圖版 · 2 篇專欄</p>
+    </div>
+  </div>
+</section>
+
+<nav class="jump jump-compat" aria-hidden="true"><a href="#rust-migration">① 影子流量先变差再变好，Rust 才切上线</a><a href="#workspace-mcp">② 接 Workspace 的代理，得赶两个日期</a><a href="#volvo-aeon">③ 人形机器人进厂，先学把零件放进夹具</a><a href="#ppo-grpo">④ 一千二百次训练后，批量大小决定 critic 去留</a><a href="#alice-80b">⑤ 八百亿参数，每个 token 只醒三十亿</a><a href="#gpt56-sunset">⑥ 旗舰模型半年就退，订阅用户开始算账</a></nav>
+
+<div class="mag-shell">
+  <aside class="toc-rail" aria-label="本期目錄">
+    <div class="toc-head"><span>IN THIS ISSUE</span><span>目錄</span></div>
+    
+  <ul class="toc-list">
+    <li><a class="toc-link" href="#rust-migration" data-toc="rust-migration"><span class="toc-no">01</span><span>影子流量先变差再变好，Rust 才切上线</span></a></li><li><a class="toc-link" href="#workspace-mcp" data-toc="workspace-mcp"><span class="toc-no">02</span><span>接 Workspace 的代理，得赶两个日期</span></a></li><li><a class="toc-link" href="#volvo-aeon" data-toc="volvo-aeon"><span class="toc-no">03</span><span>人形机器人进厂，先学把零件放进夹具</span></a></li><li><a class="toc-link" href="#ppo-grpo" data-toc="ppo-grpo"><span class="toc-no">04</span><span>一千二百次训练后，批量大小决定 critic 去留</span></a></li><li><a class="toc-link" href="#alice-80b" data-toc="alice-80b"><span class="toc-no">05</span><span>八百亿参数，每个 token 只醒三十亿</span></a></li><li><a class="toc-link" href="#gpt56-sunset" data-toc="gpt56-sunset"><span class="toc-no">06</span><span>旗舰模型半年就退，订阅用户开始算账</span></a></li>
+  </ul>
+  <div class="toc-sec-label">ESSAYS · 深度專欄</div>
+         <ul class="toc-list">
+           <li><a class="toc-link" href="#lect-01" data-toc="lect-01"><span class="toc-no">E1</span><span>把 API 換成 Rust，怎麼證明沒改壞</span></a></li><li><a class="toc-link" href="#lect-02" data-toc="lect-02"><span class="toc-no">E2</span><span>critic 要不要留，先看批量多大</span></a></li>
+         </ul>
+
+    <div class="toc-kbd">快捷鍵 <kbd>J</kbd> <kbd>K</kbd> 上下篇 · <kbd>T</kbd> 夜讀</div>
+  </aside>
+
+  <main class="mag-main">
+    <section class="dispatches">
+      <article class="story reveal is-lead" id="rust-migration" data-spy="rust-migration">
+  <div class="story-meta">
+    <span class="story-folio">01</span>
+    <span class="story-rubric">Anthropic</span>
+    <span class="lead-badge">COVER STORY · 本期頭條</span>
+  </div>
+  <h3 class="story-title">影子流量先变差再变好，Rust 才切上线</h3>
+  <div class="plate-wrap">
+    <div class="strip strip-2"><figure class="plate">
+            <a class="shot" href="cards/20261127/01-rust-migration-01.webp" data-group="rust-migration" data-index="0" data-caption="① 影子流量先变差再变好，Rust 才切上线 — 圖版 1/2">
+              <img src="cards/20261127/01-rust-migration-01.webp" alt="影子流量先变差再变好，Rust 才切上线" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 01.1</span><span>01 / 02</span></figcaption>
+          </figure><figure class="plate">
+            <a class="shot" href="cards/20261127/01-rust-migration-02.webp" data-group="rust-migration" data-index="1" data-caption="① 影子流量先变差再变好，Rust 才切上线 — 圖版 2/2">
+              <img src="cards/20261127/01-rust-migration-02.webp" alt="影子流量先变差再变好，Rust 才切上线" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 01.2</span><span>02 / 02</span></figcaption>
+          </figure></div>
+  </div>
+  <div class="story-body">
+    <div class="post"><p>Anthropic 把 Messages API 从 Python 换成 Rust，每请求 CPU 约降七成，首 token 中位延迟约降两成。真正费工夫的是证明没改坏，团队把同一请求先跑模型一次再回放输出，逐段比对两套实现，匹配率从四月约四分之一走到八月 99.6%。审计约七百个集成测试时还揪出一百多处被削弱的断言。这套影子流量盯了数月，九月才把公共流量逐批切过去，服务全程没下线。</p></div>
+    <div class="story-actions">
+      <a class="src-btn" href="https://www.anthropic.com/research/migrating-api-to-rust" target="_blank" rel="noopener">
+              <span>閱讀一手原文</span>
+              <small>anthropic.com</small>
+              <i aria-hidden="true">↗</i>
+            </a>
+      <button type="button" class="share-btn" data-copy="#rust-migration">複製本節連結</button>
+    </div>
+    <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-rust-migration">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">7 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-rust-migration">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>主体</th><td>Anthropic，Migrating our Messages API to Rust</td></tr><tr><th>规模</th><td>2024 年初到 2026 年秋，API 流量约增 1800 倍</td></tr><tr><th>收益</th><td>每请求 CPU 约降 70%，首 token 中位延迟约降 20%</td></tr><tr><th>验证</th><td>影子流量比对，匹配率 4 月约四分之一到 8 月 99.6%</td></tr><tr><th>代码</th><td>到 2026 年 5 月，Claude 写了 Anthropic 合并代码逾 80%</td></tr><tr><th>上线</th><td>2026 年 9 月公共流量迁至 Rust，服务未下线</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://www.anthropic.com/research/migrating-api-to-rust" target="_blank" rel="noopener">https://www.anthropic.com/research/migrating-api-to-rust</a></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+  </div>
+</article><article class="story reveal" id="workspace-mcp" data-spy="workspace-mcp">
+  <div class="story-meta">
+    <span class="story-folio">02</span>
+    <span class="story-rubric">Google Workspace Updates</span>
+    
+  </div>
+  <h3 class="story-title">接 Workspace 的代理，得赶两个日期</h3>
+  <div class="plate-wrap">
+    <div class="strip strip-2"><figure class="plate">
+            <a class="shot" href="cards/20261127/02-workspace-mcp-01.webp" data-group="workspace-mcp" data-index="0" data-caption="② 接 Workspace 的代理，得赶两个日期 — 圖版 1/2">
+              <img src="cards/20261127/02-workspace-mcp-01.webp" alt="接 Workspace 的代理，得赶两个日期" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 02.1</span><span>01 / 02</span></figcaption>
+          </figure><figure class="plate">
+            <a class="shot" href="cards/20261127/02-workspace-mcp-02.webp" data-group="workspace-mcp" data-index="1" data-caption="② 接 Workspace 的代理，得赶两个日期 — 圖版 2/2">
+              <img src="cards/20261127/02-workspace-mcp-02.webp" alt="接 Workspace 的代理，得赶两个日期" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 02.2</span><span>02 / 02</span></figcaption>
+          </figure></div>
+  </div>
+  <div class="story-body">
+    <div class="post"><p>Google 把 Workspace 的 MCP 服务器和命令行工具全量开放，覆盖 Gmail、Drive、Docs、日历等，同时给了两道日期。2027 年 2 月 1 日起，代理再读这些数据的必须走 MCP 或命令行，直接调 REST 的接口会被技术限制；4 月 1 日起 Scaled 层开始对免费额度以上的用量收费。管理员能在控制台给敏感动作设人在环确认，代理的 OAuth 客户端也得标明自己是代理。现有超过 99% 的活跃开发者仍在免费层。</p></div>
+    <div class="story-actions">
+      <a class="src-btn" href="https://workspaceupdates.googleblog.com/2026/11/mcp-servers-cli-standardized-usage-tiers-now-available.html" target="_blank" rel="noopener">
+              <span>閱讀一手原文</span>
+              <small>workspaceupdates.googleblog.com</small>
+              <i aria-hidden="true">↗</i>
+            </a>
+      <button type="button" class="share-btn" data-copy="#workspace-mcp">複製本節連結</button>
+    </div>
+    <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-workspace-mcp">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">7 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-workspace-mcp">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>主体</th><td>Google Workspace Updates</td></tr><tr><th>发布</th><td>2026 年 11 月 24 日</td></tr><tr><th>上线</th><td>MCP 服务器与 Workspace CLI 全量可用，覆盖 Gmail、Drive、Docs 等</td></tr><tr><th>限期</th><td>2027 年 2 月 1 日起，代理须走 MCP 或 CLI，不得直连 REST</td></tr><tr><th>计费</th><td>2027 年 4 月 1 日起 Scaled 层对免费额度以上用量收费</td></tr><tr><th>管控</th><td>管理员可设人在环确认、看审计日志，OAuth 客户端需标记为代理</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://workspaceupdates.googleblog.com/2026/11/mcp-servers-cli-standardized-usage-tiers-now-available.html" target="_blank" rel="noopener">https://workspaceupdates.googleblog.com/2026/11/mcp-servers-cli-standardized-usage-tiers-now-available.html</a></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+  </div>
+</article><article class="story reveal" id="volvo-aeon" data-spy="volvo-aeon">
+  <div class="story-meta">
+    <span class="story-folio">03</span>
+    <span class="story-rubric">Hexagon Robotics 与 Volvo Cars</span>
+    
+  </div>
+  <h3 class="story-title">人形机器人进厂，先学把零件放进夹具</h3>
+  <div class="plate-wrap">
+    <div class="strip strip-2"><figure class="plate">
+            <a class="shot" href="cards/20261127/03-volvo-aeon-01.webp" data-group="volvo-aeon" data-index="0" data-caption="③ 人形机器人进厂，先学把零件放进夹具 — 圖版 1/2">
+              <img src="cards/20261127/03-volvo-aeon-01.webp" alt="人形机器人进厂，先学把零件放进夹具" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 03.1</span><span>01 / 02</span></figcaption>
+          </figure><figure class="plate">
+            <a class="shot" href="cards/20261127/03-volvo-aeon-02.webp" data-group="volvo-aeon" data-index="1" data-caption="③ 人形机器人进厂，先学把零件放进夹具 — 圖版 2/2">
+              <img src="cards/20261127/03-volvo-aeon-02.webp" alt="人形机器人进厂，先学把零件放进夹具" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 03.2</span><span>02 / 02</span></figcaption>
+          </figure></div>
+  </div>
+  <div class="story-body">
+    <div class="post"><p>Hexagon 和 Volvo 宣布，AEON 人形机器人已经在 Volvo 比利时 Ghent 工厂接受训练，官方特意说明这不在演示阶段，而是在真实工业任务上验证。Volvo 自己的制造团队和 Hexagon 一起带它上手，先做重复且费人体的活。更多单元会在 2027 年上半年到场承担更广任务，目标是同年年中进入真实生产。厂方的算法很实在，能用吞吐量衡量的机器人，比视频里好看的更有说服力。</p></div>
+    <div class="story-actions">
+      <a class="src-btn" href="https://robotics.hexagon.com/volvo-cars-aeon-humanoid-robots-for-manufacturing/" target="_blank" rel="noopener">
+              <span>閱讀一手原文</span>
+              <small>robotics.hexagon.com</small>
+              <i aria-hidden="true">↗</i>
+            </a>
+      <button type="button" class="share-btn" data-copy="#volvo-aeon">複製本節連結</button>
+    </div>
+    <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-volvo-aeon">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">7 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-volvo-aeon">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>主体</th><td>Hexagon Robotics 与 Volvo Cars</td></tr><tr><th>发布</th><td>2026 年 11 月 26 日</td></tr><tr><th>地点</th><td>Volvo 比利时 Ghent 工厂</td></tr><tr><th>状态</th><td>AEON 在真实工业任务上训练验证，由 Volvo 制造团队与 Hexagon 合作</td></tr><tr><th>目标</th><td>支持重复性与人体工学要求高的工作</td></tr><tr><th>时间</th><td>2027 年上半年更多单元到场扩大任务，2027 年中用于真实生产</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://robotics.hexagon.com/volvo-cars-aeon-humanoid-robots-for-manufacturing/" target="_blank" rel="noopener">https://robotics.hexagon.com/volvo-cars-aeon-humanoid-robots-for-manufacturing/</a></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+  </div>
+</article><article class="story reveal" id="ppo-grpo" data-spy="ppo-grpo">
+  <div class="story-meta">
+    <span class="story-folio">04</span>
+    <span class="story-rubric">arXiv 2611.32013</span>
+    
+  </div>
+  <h3 class="story-title">一千二百次训练后，批量大小决定 critic 去留</h3>
+  <div class="plate-wrap">
+    <div class="strip strip-2"><figure class="plate">
+            <a class="shot" href="cards/20261127/04-ppo-grpo-01.webp" data-group="ppo-grpo" data-index="0" data-caption="④ 一千二百次训练后，批量大小决定 critic 去留 — 圖版 1/2">
+              <img src="cards/20261127/04-ppo-grpo-01.webp" alt="一千二百次训练后，批量大小决定 critic 去留" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 04.1</span><span>01 / 02</span></figcaption>
+          </figure><figure class="plate">
+            <a class="shot" href="cards/20261127/04-ppo-grpo-02.webp" data-group="ppo-grpo" data-index="1" data-caption="④ 一千二百次训练后，批量大小决定 critic 去留 — 圖版 2/2">
+              <img src="cards/20261127/04-ppo-grpo-02.webp" alt="一千二百次训练后，批量大小决定 critic 去留" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 04.2</span><span>02 / 02</span></figcaption>
+          </figure></div>
+  </div>
+  <div class="story-body">
+    <div class="post"><p>Scale AI 与卡内基梅隆的研究跑了逾一千二百次训练，其中九十六次用大模型，比较带 critic 的 PPO 和去掉 critic 的 GRPO。谁都没有全面胜出，关键变量是批量。小批量时 PPO 普遍领先，批量放大后 GRPO 追平轻引导版本，还超过重引导的版本，在更长时域和更复杂领域需要更大批量才追上。实验覆盖控制任务、短时域数学和长时域终端代理，论文页面未给出具体分差数值。</p></div>
+    <div class="story-actions">
+      <a class="src-btn" href="https://arxiv.org/abs/2611.32013" target="_blank" rel="noopener">
+              <span>閱讀一手原文</span>
+              <small>arxiv.org</small>
+              <i aria-hidden="true">↗</i>
+            </a>
+      <button type="button" class="share-btn" data-copy="#ppo-grpo">複製本節連結</button>
+    </div>
+    <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-ppo-grpo">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">7 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-ppo-grpo">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>主体</th><td>arXiv 2611.32013，To Critic Or Not To Critic</td></tr><tr><th>作者</th><td>Jason Wei 等五人，Scale AI 与卡内基梅隆大学</td></tr><tr><th>提交</th><td>2026 年 11 月 24 日</td></tr><tr><th>规模</th><td>逾 1200 次训练运行，其中 96 次用大模型</td></tr><tr><th>结论</th><td>小批量 PPO 领先，大批量下 GRPO 追平轻引导 PPO 并超过重引导 PPO</td></tr><tr><th>范围</th><td>控制任务、短时域数学、长时域终端代理</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://arxiv.org/abs/2611.32013" target="_blank" rel="noopener">https://arxiv.org/abs/2611.32013</a></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+  </div>
+</article><article class="story reveal" id="alice-80b" data-spy="alice-80b">
+  <div class="story-meta">
+    <span class="story-folio">05</span>
+    <span class="story-rubric">Yandex</span>
+    
+  </div>
+  <h3 class="story-title">八百亿参数，每个 token 只醒三十亿</h3>
+  <div class="plate-wrap">
+    <div class="strip strip-2"><figure class="plate">
+            <a class="shot" href="cards/20261127/05-alice-80b-01.webp" data-group="alice-80b" data-index="0" data-caption="⑤ 八百亿参数，每个 token 只醒三十亿 — 圖版 1/2">
+              <img src="cards/20261127/05-alice-80b-01.webp" alt="八百亿参数，每个 token 只醒三十亿" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 05.1</span><span>01 / 02</span></figcaption>
+          </figure><figure class="plate">
+            <a class="shot" href="cards/20261127/05-alice-80b-02.webp" data-group="alice-80b" data-index="1" data-caption="⑤ 八百亿参数，每个 token 只醒三十亿 — 圖版 2/2">
+              <img src="cards/20261127/05-alice-80b-02.webp" alt="八百亿参数，每个 token 只醒三十亿" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 05.2</span><span>02 / 02</span></figcaption>
+          </figure></div>
+  </div>
+  <div class="story-body">
+    <div class="post"><p>Yandex 放出 AliceAI-Foundation-80B-A3B-Base，八百亿总参数、每 token 只激活三十亿，模型卡写明完全从零训练。架构是 48 层混合体，主体由十二组 KDA 加 MoE 叠一组 Gated Attention 加 MoE，配 512 个专家、top-k 选 10 加 1 个共享专家，上下文 262144。关键决策用多次各两万亿 token 的独立训练来验证。模型卡未写许可证与发布日期，引用时得留这一栏。</p></div>
+    <div class="story-actions">
+      <a class="src-btn" href="https://huggingface.co/yandex/AliceAI-Foundation-80B-A3B-Base" target="_blank" rel="noopener">
+              <span>閱讀一手原文</span>
+              <small>huggingface.co</small>
+              <i aria-hidden="true">↗</i>
+            </a>
+      <button type="button" class="share-btn" data-copy="#alice-80b">複製本節連結</button>
+    </div>
+    <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-alice-80b">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">6 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-alice-80b">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>主体</th><td>Yandex，AliceAI-Foundation-80B-A3B-Base</td></tr><tr><th>规模</th><td>800 亿总参数，每 token 激活 30 亿</td></tr><tr><th>训练</th><td>完全从零训练，以多次各 2 万亿 token 的独立训练验证关键决策</td></tr><tr><th>架构</th><td>48 层混合架构，12 组三 KDA 加 MoE 与一组 Gated Attention 加 MoE</td></tr><tr><th>细节</th><td>512 专家，top-k 10 加 1 共享，1 层 MTP，上下文 262144</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://huggingface.co/yandex/AliceAI-Foundation-80B-A3B-Base" target="_blank" rel="noopener">https://huggingface.co/yandex/AliceAI-Foundation-80B-A3B-Base</a></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+  </div>
+</article><article class="story reveal" id="gpt56-sunset" data-spy="gpt56-sunset">
+  <div class="story-meta">
+    <span class="story-folio">06</span>
+    <span class="story-rubric">OpenAI</span>
+    
+  </div>
+  <h3 class="story-title">旗舰模型半年就退，订阅用户开始算账</h3>
+  <div class="plate-wrap">
+    <div class="strip strip-2"><figure class="plate">
+            <a class="shot" href="cards/20261127/06-gpt56-sunset-01.webp" data-group="gpt56-sunset" data-index="0" data-caption="⑥ 旗舰模型半年就退，订阅用户开始算账 — 圖版 1/2">
+              <img src="cards/20261127/06-gpt56-sunset-01.webp" alt="旗舰模型半年就退，订阅用户开始算账" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 06.1</span><span>01 / 02</span></figcaption>
+          </figure><figure class="plate">
+            <a class="shot" href="cards/20261127/06-gpt56-sunset-02.webp" data-group="gpt56-sunset" data-index="1" data-caption="⑥ 旗舰模型半年就退，订阅用户开始算账 — 圖版 2/2">
+              <img src="cards/20261127/06-gpt56-sunset-02.webp" alt="旗舰模型半年就退，订阅用户开始算账" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 06.2</span><span>02 / 02</span></figcaption>
+          </figure></div>
+  </div>
+  <div class="story-body">
+    <div class="post"><p>GPT-6.2 对话优化版从 11 月 23 日起向全球付费用户推送，OpenAI 同时定了 GPT-5.6 的退场日，Sol 和 Terra 都在 12 月 23 日从聊天、Work 和 Codex 移除。官方称淘汰落后两代是常规释放容量的安排，新模型图像理解从 47.4% 升到 71.7%。但 GPT-5.6 从七月全量到退役不足半年，已有用户说它适合写作和安全研究，没了它订阅就少了几分价值。</p></div>
+    <div class="story-actions">
+      <a class="src-btn" href="https://openai.com/" target="_blank" rel="noopener">
+              <span>閱讀一手原文</span>
+              <small>openai.com</small>
+              <i aria-hidden="true">↗</i>
+            </a>
+      <button type="button" class="share-btn" data-copy="#gpt56-sunset">複製本節連結</button>
+    </div>
+    <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-gpt56-sunset">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">7 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-gpt56-sunset">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>主体</th><td>OpenAI，GPT-6.2 与 GPT-5.6</td></tr><tr><th>推送</th><td>GPT-6.2 对话优化版 11 月 23 日起全球推送 Plus、Pro、Business、Enterprise</td></tr><tr><th>退役</th><td>GPT-5.6 Sol 与 Terra 于 12 月 23 日从聊天、Work、Codex 移除</td></tr><tr><th>性能</th><td>图像理解 47.4% 到 71.7%，复杂指令 78.1%，BrowseComp 64.5%</td></tr><tr><th>定价</th><td>API 每百万输入 token 2 美元、输出 10 美元</td></tr><tr><th>寿命</th><td>GPT-5.6 旗舰工作寿命不足半年</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://openai.com/" target="_blank" rel="noopener">https://openai.com/</a></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+  </div>
+</article>
+    </section>
+
+    <section class="feature-well reveal">
+            <div class="feature-header">
+              <h2>深度專欄 · Feature Essays</h2>
+              <span>DEEP DIVES · 每日兩篇</span>
+            </div>
+            <article class="essay reveal" id="lect-01" data-spy="lect-01">
+  <div class="essay-kicker">
+    <span class="essay-badge">ESSAY 01</span>
+    <span class="essay-stat">898 漢字 · 深度拆解</span>
+  </div>
+  <h3 class="essay-title">把 API 換成 Rust，怎麼證明沒改壞</h3>
+  <div class="essay-brief"><div class="brief-cell"><span class="bk">原文</span><span class="bv"><a class="inline-url" href="https://www.anthropic.com/research/migrating-api-to-rust" target="_blank" rel="noopener">https://www.anthropic.com/research/migrating-api-to-rust</a></span></div><div class="brief-cell"><span class="bk">判據</span><span class="bv">讀完能照做，寫清適用邊界，三個月內仍有參考價值</span></div></div>
+  <div class="essay-prose"><p class="essay-lead">Anthropic 十一月二十五日把 Messages API 從 Python 遷到 Rust 的過程寫成工程博客，讀完你能拿走一套方法，用來判斷一次大規模重寫到底有沒有改壞。這個入口同時服務外部客戶與內部的 Claude Code，2024 年初到 2026 年秋流量約漲了一千八百倍，Python 在對象創建與內存 churn 上的開銷成了瓶頸。升級後每請求 CPU 約降七成，首 token 中位延遲約降兩成。</p><p>先做一個小而且可逆的驗證。團隊三月先上線一個由 Python 調用的 Rust 解析器，只省下百分之八到十的 CPU，收益一個數量級都不到。這一步的價值在於證明方向可行，並建立可信基線，再決定要不要重寫核心請求路徑。大型遷移的第一步可以是這種可被推翻的小賭注，而不是直接押上全部。</p><p>真正的難題是正確性從哪裡來。博客列了三種來源，寫規則、用測試定義正確、拿既有系統當標尺。這個項目測試不完整，於是走第三條，讓新舊兩套代码跑同一批請求再比對，也就是影子流量。Messages API 有幾十個功能，二十個開關就超過一百萬種組合，靠測試窮舉根本跑不完。</p><p>影子比對有個細節容易被忽略。請求只能計入客戶額度一次，Claude 輸出又有隨機性，所以模型只跑一次，再把輸出回放給 Rust 那一側，逐段比較模型調用前後的每一步，結果要完全一致。團隊不能讀用戶請求，也不看回覆，只記錄差異的形狀，例如出現在服務哪一步、相差多少字節，再配一個指纹，記下第一個差異的字節位置與長度。</p><p>匹配率的曲線反而最說明問題。四月 Rust 通過約七百個集成測試的九成八，但生產流量上只有約四分之一輸入匹配。到了五月中，匹配率降到百分之六點五，原因是比較標準收嚴了。八月升到百分之九十九點六。如果只看第一個數字，很容易以為四月就該上線。</p><p>測試本身也要審計。那些測試跟 Python 實現耦合，會在測試進程裡跑 Python API 並把計費、限流等服務在內存裡模擬掉，通過可能意味著代码對，也可能意味著測試被放松放過了錯代码。審計找出一百多處被削弱的斷言。AI 輔助移植時只 diff 代码不夠，測試 diff 同樣要人看。</p><p>協作方式也值得借。腳本每十到三十分鐘跑一次，按字段把差異分組，只有出現新類型才叫醒協調代理，由它派工到共用 Slack 线程。代理在雲端沙箱裡重現差異，修好後寫一個在舊代码會失敗、新代码會通過的測試。修復要過 PR 審核才進外環，再用影子流量比對開關前後，盯那個指纹有沒有消失。人工意見被記成規則寫進 CLAUDE.md，六月一個代理還回看了約六十條評論。</p><p>邊界要說清。這是 Anthropic 自家工程帳，流量規模與工具鏈都很特定，唯一服務沒下線不代表任何遷移都能如此。能把方法搬走的是順序，先小賭注建立基線，再拿舊系統當標尺，用指纹代替原文隱私，把人工判斷沉澱成規則。</p></div>
+  <aside class="editor-note">
+          <div class="en-head"><span>EDITOR'S NOTE · 最值得看</span></div>
+          <p>原文講匹配率從四月約四分之一降到五月中百分之六點五再升到八月九十九點六的那幾段，把收嚴標準造成的假退步寫得最清楚。</p>
+        </aside>
+  
+</article><article class="essay reveal" id="lect-02" data-spy="lect-02">
+  <div class="essay-kicker">
+    <span class="essay-badge">ESSAY 02</span>
+    <span class="essay-stat">640 漢字 · 深度拆解</span>
+  </div>
+  <h3 class="essay-title">critic 要不要留，先看批量多大</h3>
+  <div class="essay-brief"><div class="brief-cell"><span class="bk">原文</span><span class="bv"><a class="inline-url" href="https://arxiv.org/abs/2611.32013" target="_blank" rel="noopener">https://arxiv.org/abs/2611.32013</a></span></div><div class="brief-cell"><span class="bk">判據</span><span class="bv">讀完能照做，寫清適用邊界，三個月內仍有參考價值</span></div></div>
+  <div class="essay-prose"><p class="essay-lead">Scale AI 與卡內基梅隆在十一月二十四日提交論文 To Critic Or Not To Critic，讀完你能拿走一條選型線，判斷強化學習該用 PPO 還是 GRPO。研究跑了逾一千二百次訓練，其中九十六次用大模型，覆蓋控制任務、短時域數學題和長時域終端代理。起點是個現實問題，rollout 越貴，critic 帶來的方差下降是否值回它的算力開銷就越要算清。</p><p>先講兩個算法的差別。PPO 訓練一個 critic 來降低梯度方差，讓模型從較少軌跡裡學到東西，代價是額外算力與引導偏差。GRPO 去掉 critic，靠分組內的相對優勢做歸一化，結構更省，DeepSeek-R1 之後開源社區廣泛採用它。論文把兩者放到共享的 actor 目標下比較，這一步很關鍵，否則比的其實是兩套目標函數而不是 critic 本身。</p><p>結論落在批量這條線上，沒有哪個算法全面勝出。小批量時 PPO 普遍領先，因為 critic 用較少樣本就壓住了噪聲。批量放大後 GRPO 常常追平輕引導的 PPO，並超過重引導的 PPO，在更長時域與更複雜領域裡，GRPO 需要更大批量才追得上。也就是說，算力緊、單批樣本少的時候 critic 值錢，批量足夠大時它的邊際收益被攤薄。</p><p>從這條線能推出一個做法。先按自己的 rollout 成本定批量，再選算法，而不是反過來先選算法再遷就批量。終端代理這種長時域任務，一條軌跡本就昂貴，小批量几乎必然，PPO 的 critic 更可能划得來。短時域數學題能把批量堆上去，GRPO 的結構簡單就更合適。同一個模型在不同任務上未必該用同一個算法。</p><p>適用邊界得講明。arXiv 頁面給的是方向性結論，沒有給出具體分差數值，也沒有列出作者自報的局限。Research 來源寫明比較在三類任務上進行，但頁面未分別給出控制任務或數學題的獨立數字。要照做就自己去復現，按論文的多批量網格跑一組對照，別把小批量領先直接套到自己的配置上。</p><p>論文沒給數值反而提示了一件事。算法選擇的結論往往帶條件，博客標題式地宣佈某算法取代另一個，通常省略了批量與時域這兩個自變量。把條件補回來，結論才好用。</p></div>
+  <aside class="editor-note">
+          <div class="en-head"><span>EDITOR'S NOTE · 最值得看</span></div>
+          <p>論文摘要裡小批量 PPO 領先、大批量 GRPO 追平輕引導 PPO 並超過重引導 PPO 的那兩句，把選型線一次給全。</p>
+        </aside>
+  
+</article>
+          </section>
+  </main>
+</div>
+
+<nav class="issue-pager" id="issue-pager" aria-label="前後期翻頁"></nav>
+
+<footer class="foot">
+  <p><strong>EveryNews.</strong> · Issue No.018 · 每日 AI 讀報雜誌</p>
+  <p><a href="archive.html" style="text-decoration:underline">瀏覽全部往期刊物架 →</a></p>
+</footer>
+
+<button type="button" class="fab-toc" id="fab-toc">☰ 本期目錄</button>
+<div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+  <div class="mobile-sheet">
+    <div class="sheet-head"><strong>本期目錄 · Issue No.018</strong><button type="button" class="sheet-close" id="sheet-close">×</button></div>
+    
+  <ul class="toc-list">
+    <li><a class="toc-link" href="#rust-migration" data-toc="rust-migration"><span class="toc-no">01</span><span>影子流量先变差再变好，Rust 才切上线</span></a></li><li><a class="toc-link" href="#workspace-mcp" data-toc="workspace-mcp"><span class="toc-no">02</span><span>接 Workspace 的代理，得赶两个日期</span></a></li><li><a class="toc-link" href="#volvo-aeon" data-toc="volvo-aeon"><span class="toc-no">03</span><span>人形机器人进厂，先学把零件放进夹具</span></a></li><li><a class="toc-link" href="#ppo-grpo" data-toc="ppo-grpo"><span class="toc-no">04</span><span>一千二百次训练后，批量大小决定 critic 去留</span></a></li><li><a class="toc-link" href="#alice-80b" data-toc="alice-80b"><span class="toc-no">05</span><span>八百亿参数，每个 token 只醒三十亿</span></a></li><li><a class="toc-link" href="#gpt56-sunset" data-toc="gpt56-sunset"><span class="toc-no">06</span><span>旗舰模型半年就退，订阅用户开始算账</span></a></li>
+  </ul>
+  <div class="toc-sec-label">ESSAYS · 深度專欄</div>
+         <ul class="toc-list">
+           <li><a class="toc-link" href="#lect-01" data-toc="lect-01"><span class="toc-no">E1</span><span>把 API 換成 Rust，怎麼證明沒改壞</span></a></li><li><a class="toc-link" href="#lect-02" data-toc="lect-02"><span class="toc-no">E2</span><span>critic 要不要留，先看批量多大</span></a></li>
+         </ul>
+
+  </div>
+</div>
+
+<div class="lightbox" id="lb" aria-hidden="true">
+  <button type="button" class="lb-close" id="lb-close" aria-label="關閉">×</button>
+  <button type="button" class="lb-nav lb-prev" id="lb-prev" aria-label="上一張">‹</button>
+  <div class="lb-stage"><img id="lb-img" alt=""></div>
+  <button type="button" class="lb-nav lb-next" id="lb-next" aria-label="下一張">›</button>
+  <div class="lb-bar" id="lb-cap"></div>
+</div>
+
+<div class="toast" id="toast">已複製連結</div>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var tBtn = document.getElementById('theme-toggle');
+  var tLab = document.getElementById('theme-label');
+  function toggleTheme(){
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('everynews-theme', next); } catch(e){}
+    syncThemeLabel();
+  }
+  function syncThemeLabel(){
+    var dark = root.getAttribute('data-theme') === 'dark';
+    if (tLab) tLab.textContent = dark ? '紙本' : '夜讀';
+  }
+  syncThemeLabel();
+  if (tBtn) tBtn.addEventListener('click', toggleTheme);
+
+  var pBar = document.getElementById('progress-bar');
+  var pTxt = document.getElementById('read-pct');
+  function onScroll(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = h > 0 ? Math.min(100, Math.max(0, Math.round((window.scrollY / h) * 100))) : 0;
+    if (pBar) pBar.style.width = pct + '%';
+    if (pTxt) pTxt.textContent = pct + '%';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  var reveals = document.querySelectorAll('.reveal');
+  var spyTargets = Array.prototype.slice.call(document.querySelectorAll('[data-spy]'));
+  var activeSpyIdx = 0;
+
+  if ('IntersectionObserver' in window) {
+    var revObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) {
+          en.target.classList.add('is-visible');
+          revObs.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(function(el){ revObs.observe(el); });
+
+    var tocLinks = document.querySelectorAll('[data-toc]');
+    var spyObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) {
+          var id = en.target.getAttribute('data-spy');
+          var found = spyTargets.indexOf(en.target);
+          if (found !== -1) activeSpyIdx = found;
+          tocLinks.forEach(function(a){
+            a.classList.toggle('is-active', a.getAttribute('data-toc') === id);
+          });
+        }
+      });
+    }, { rootMargin: '-18% 0px -68% 0px' });
+    spyTargets.forEach(function(el){ spyObs.observe(el); });
+  } else {
+    reveals.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  document.querySelectorAll('.dossier-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var box = btn.closest('.dossier');
+      var open = box.getAttribute('data-open') === 'true';
+      box.setAttribute('data-open', open ? 'false' : 'true');
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+    });
+  });
+
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  function showToast(msg){
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.classList.add('is-on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('is-on'); }, 1800);
+  }
+  document.querySelectorAll('.share-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var hash = btn.getAttribute('data-copy') || '';
+      var url = location.origin + location.pathname + hash;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function(){ showToast('已複製本節連結'); });
+      } else {
+        location.hash = hash;
+        showToast('已定位至本節');
+      }
+    });
+  });
+
+  var drawer = document.getElementById('mobile-drawer');
+  var fab = document.getElementById('fab-toc');
+  var sClose = document.getElementById('sheet-close');
+  function closeDrawer(){ if (drawer) drawer.classList.remove('is-open'); }
+  if (fab && drawer) fab.addEventListener('click', function(){ drawer.classList.add('is-open'); });
+  if (sClose) sClose.addEventListener('click', closeDrawer);
+  if (drawer) {
+    drawer.addEventListener('click', function(e){
+      if (e.target === drawer || e.target.closest('[data-toc]')) closeDrawer();
+    });
+  }
+
+  var lb = document.getElementById('lb');
+  var lbImg = document.getElementById('lb-img');
+  var lbCap = document.getElementById('lb-cap');
+  var lbPrev = document.getElementById('lb-prev');
+  var lbNext = document.getElementById('lb-next');
+  var lbClose = document.getElementById('lb-close');
+  var shots = Array.prototype.slice.call(document.querySelectorAll('.shot'));
+  var curIdx = -1;
+
+  function openAt(idx){
+    if (!shots.length || idx < 0 || idx >= shots.length) return;
+    curIdx = idx;
+    var a = shots[curIdx];
+    lbImg.src = a.getAttribute('href') || a.querySelector('img').src;
+    lbCap.textContent = (a.getAttribute('data-caption') || '') + '  ·  全刊圖版 ' + (curIdx + 1) + ' / ' + shots.length;
+    lb.classList.add('is-open');
+    lbPrev.style.display = shots.length > 1 ? '' : 'none';
+    lbNext.style.display = shots.length > 1 ? '' : 'none';
+  }
+  function closeLb(){ lb.classList.remove('is-open'); curIdx = -1; }
+  shots.forEach(function(a, i){
+    a.addEventListener('click', function(e){ e.preventDefault(); openAt(i); });
+  });
+  if (lbPrev) lbPrev.addEventListener('click', function(e){ e.stopPropagation(); openAt((curIdx - 1 + shots.length) % shots.length); });
+  if (lbNext) lbNext.addEventListener('click', function(e){ e.stopPropagation(); openAt((curIdx + 1) % shots.length); });
+  if (lbClose) lbClose.addEventListener('click', closeLb);
+  if (lb) lb.addEventListener('click', function(e){ if (e.target === lb) closeLb(); });
+
+  document.addEventListener('keydown', function(e){
+    var tag = (e.target && e.target.tagName) || '';
+    if (lb && lb.classList.contains('is-open')) {
+      if (e.key === 'Escape') closeLb();
+      if (e.key === 'ArrowLeft') openAt((curIdx - 1 + shots.length) % shots.length);
+      if (e.key === 'ArrowRight') openAt((curIdx + 1) % shots.length);
+      return;
+    }
+    if (/INPUT|SELECT|TEXTAREA/.test(tag) || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.key === 't' || e.key === 'T') { toggleTheme(); showToast(root.getAttribute('data-theme') === 'dark' ? '已切換至夜讀模式' : '已切換至紙本模式'); }
+    if ((e.key === 'j' || e.key === 'J') && spyTargets.length) {
+      activeSpyIdx = Math.min(spyTargets.length - 1, activeSpyIdx + 1);
+      spyTargets[activeSpyIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    if ((e.key === 'k' || e.key === 'K') && spyTargets.length) {
+      activeSpyIdx = Math.max(0, activeSpyIdx - 1);
+      spyTargets[activeSpyIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+
+  window.addEventListener('DOMContentLoaded', function(){
+    var list = window.EVERYNEWS_ISSUES || [];
+    var pager = document.getElementById('issue-pager');
+    if (!pager || !list.length) return;
+    var curFile = '20261127.html';
+    var idx = list.findIndex(function(x){ return x.file === curFile; });
+    if (idx === -1) idx = 0;
+    var prevIssue = list[idx + 1];
+    var nextIssue = idx > 0 ? list[idx - 1] : null;
+    var html = '';
+    if (prevIssue) {
+      html += '<a class="pager-card prev" href="' + prevIssue.file + '"><small>← PREVIOUS ISSUE · 上一刊</small><strong>' + prevIssue.date + ' 期</strong></a>';
+    } else {
+      html += '<a class="pager-card prev" href="archive.html"><small>BACK ISSUES · 往期刊物架</small><strong>查看全部歷史期次</strong></a>';
+    }
+    if (nextIssue) {
+      html += '<a class="pager-card next" href="' + nextIssue.file + '"><small>NEXT ISSUE · 下一刊 →</small><strong>' + nextIssue.date + ' 期</strong></a>';
+    } else {
+      html += '<a class="pager-card next" href="archive.html"><small>ALL ISSUES · 共 ' + list.length + ' 期 →</small><strong>進入往期刊物架篩選</strong></a>';
+    }
+    pager.innerHTML = html;
+  });
+})();
+</script>
+</body>
+</html>

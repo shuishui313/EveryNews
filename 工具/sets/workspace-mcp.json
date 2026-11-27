@@ -1,0 +1,48 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "Google Workspace Updates · 11-24",
+  "date": "2026.11.27",
+  "noImageReason": "Workspace 公告頁以文字政策為主，兩道日期與分層規則改走時程卡呈現",
+  "slides": [
+    {
+      "type": "cover-split",
+      "kicker": "AGENT ACCESS · 代理接入",
+      "headline": ["接 Workspace", "得走 MCP"],
+      "accentLine": 1,
+      "sub": "MCP 伺服器與 Workspace CLI 全量可用，代理直連 REST 的路要關了。",
+      "hero": { "num": "2", "unit": "道關鍵日期" },
+      "chips": [
+        "覆蓋 Gmail、Drive、Docs、日曆等",
+        "逾 99% 活躍開發者仍在免費 Standard 層",
+        "管理員可設人在環確認與審計日誌",
+        "OAuth 客戶端須標記為代理"
+      ]
+    },
+    {
+      "type": "columns",
+      "kicker": "DEADLINES · 遷移時程",
+      "headline": ["二月一日", "四月一日"],
+      "accentLine": 1,
+      "sub": "先斷直連，再開始計費，留給團隊的窗口只有兩個月。",
+      "cols2": [
+        {
+          "k": "2027 二月一日",
+          "items": [
+            "代理須用 MCP 或 Workspace CLI",
+            "不得直接呼叫 Workspace REST API",
+            "技術執行在此日生效"
+          ]
+        },
+        {
+          "k": "2027 四月一日",
+          "items": [
+            "Scaled 層對免費額度以上用量收費",
+            "未選擇者自動落到 Standard 配額",
+            "先從 Gmail、Drive、Calendar 開始"
+          ]
+        }
+      ],
+      "verdict": "管理員控制台可统一管理代理存取。"
+    }
+  ]
+}

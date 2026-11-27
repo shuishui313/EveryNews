@@ -1,0 +1,36 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "Hugging Face · 11-26",
+  "date": "2026.11.27",
+  "noImageReason": "模型卡為技術清單，架構與激活比例改走規格卡呈現",
+  "slides": [
+    {
+      "type": "bigfact",
+      "kicker": "OPEN MODEL · 開源模型",
+      "headline": ["八百億參數", "每個 token 醒三十億"],
+      "accentLine": 1,
+      "sub": "Yandex 放出 AliceAI-Foundation-80B-A3B-Base，完全從零訓練。",
+      "num": "80B",
+      "numLabel": "總參數 · 每 token 激活 3B",
+      "rows": [
+        { "k": "層數", "v": "48 層混合架構" },
+        { "k": "上下文", "v": "262144" },
+        { "k": "驗證", "v": "多次各 2 萬億 token 獨立訓練" }
+      ],
+      "note": "模型卡未寫許可證與發布日期。"
+    },
+    {
+      "type": "specs",
+      "kicker": "ARCHITECTURE · 架構清單",
+      "headline": ["十二組 KDA", "配一組注意力"],
+      "accentLine": 1,
+      "sub": "MoE 層堆在 KDA 與 Gated Attention 之後。",
+      "cells": [
+        { "k": "主體", "t": "12 × KDA + MoE", "d": "每組三次 KDA 後接 MoE" },
+        { "k": "點綴", "t": "Gated Attention + MoE", "d": "一組置於十二組之後" },
+        { "k": "專家", "t": "512 個", "d": "top-k 10 加 1 共享專家，1 層 MTP" }
+      ],
+      "verdict": "BF16 張量，詞表 129024。"
+    }
+  ]
+}

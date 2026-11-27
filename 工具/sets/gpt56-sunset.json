@@ -1,0 +1,31 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "OpenAI · 11-23",
+  "date": "2026.11.27",
+  "noImageReason": "退役公告為純文字，旗艦壽命與規格增量改走對照卡呈現",
+  "slides": [
+    {
+      "type": "statement",
+      "kicker": "MODEL SUNSET · 模型退役",
+      "kickerTop": "GPT-5.6 · 12 月 23 日",
+      "lines": [
+        "旗艦壽命不足半年",
+        "訂閱用戶開始[[算账]]"
+      ],
+      "by": "OpenAI · GPT-6.2 推送與 GPT-5.6 退役"
+    },
+    {
+      "type": "ledger",
+      "kicker": "RETIREMENT LEDGER · 退役帳本",
+      "headline": ["新模型上來", "舊模型退場"],
+      "accentLine": 1,
+      "sub": "11 月 23 日推送對話優化版，12 月 23 日移除 GPT-5.6。",
+      "rows": [
+        { "k": "圖像理解", "v": "47.4% → 71.7%", "d": "新舊對照", "on": true },
+        { "k": "退役型號", "v": "Sol 與 Terra", "d": "從聊天、Work、Codex 移除", "on": false },
+        { "k": "API 定價", "v": "$2 / $10", "d": "每百萬輸入與輸出 token", "on": false }
+      ],
+      "note": "複雜指令 78.1%，BrowseComp 64.5%，旗艦工作壽命不足六個月。"
+    }
+  ]
+}
