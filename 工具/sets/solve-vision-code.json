@@ -1,0 +1,36 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "arXiv 2611.34813 · 11-27",
+  "date": "2026.11.28",
+  "noImageReason": "論文頁只有文字摘要與社群討論，沒有正文資訊圖，分數對照改走資料卡呈現",
+  "slides": [
+    {
+      "type": "bigfact",
+      "kicker": "VISUAL REASONING · 視覺推理",
+      "headline": ["寫程式這條路", "比生成像素更穩"],
+      "accentLine": 1,
+      "sub": "同一批視覺推理題，Codex 配 gpt-6-astra 拿到 0.923。",
+      "num": "0.923",
+      "numLabel": "VBVR-Pro-Bench · 500 題",
+      "rows": [
+        { "k": "領先幅度", "v": "比最強影片模型高 0.22 以上" },
+        { "k": "方法", "v": "代理寫程式渲染答案影片" },
+        { "k": "評估", "v": "同一個未修改的規則評估器" }
+      ],
+      "note": "卡內基梅隆，11 月 27 日提交 Hugging Face，當日第 3 熱門。"
+    },
+    {
+      "type": "kpi",
+      "kicker": "MODEL SPLIT · 模型分布",
+      "headline": ["閉源代理領跑", "開源仍有差距"],
+      "accentLine": 1,
+      "sub": "三個閉源代理分數接近，開源最佳 GLM-5 落在 0.572。",
+      "cells": [
+        { "n": "0.923", "l": "Codex + astra", "d": "Closed" },
+        { "n": "0.894", "l": "Claude Code", "d": "Fable 5.1" },
+        { "n": "0.572", "l": "GLM-5", "d": "23 個開源模型中最佳" }
+      ],
+      "verdict": "結論只對能從首幀與提示算出來的題目成立。"
+    }
+  ]
+}

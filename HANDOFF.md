@@ -5,12 +5,12 @@
 ## 当前进度
 
 <!-- AUTO:START -->
-最后更新　2026-11-27 12:16　·　批次 2026-11-27　·　everynews-editorial V3
+最后更新　2026-11-28 08:18　·　批次 2026-11-28　·　everynews-editorial V3
 
-- 产物　公开页 `20261127.html` 有（63 KB） · 外置 WebP 配图 `cards/20261127/` 12 张（共 555 KB）
-- 快讯　① 影子流量先变差再变好，Rust 才切上线　② 接 Workspace 的代理，得赶两个日期　③ 人形机器人进厂，先学把零件放进夹具　④ 一千二百次训练后，批量大小决定 critic 去留　⑤ 八百亿参数，每个 token 只醒三十亿　⑥ 旗舰模型半年就退，订阅用户开始算账
-- 讲解　2 篇（講① 把 API 換成 Rust，怎麼證明沒改壞　講② critic 要不要留，先看批量多大）
-- 闸门　`python3 工具/review.py 2026-11-27 --check`　已过
+- 产物　公开页 `20261128.html` 有（62 KB） · 外置 WebP 配图 `cards/20261128/` 10 张（共 523 KB）
+- 快讯　① 写程序比生成视频更会看图　② 线性注意力状态爆炸后，对称擦除把它稳住　③ 四成四每周用 AI，工作量反而变多　④ 开了三套数据，文档解析快了六倍　⑤ 本地推理跑分，原始档也一起开了
+- 讲解　2 篇（講① 四個代理怎麼學會互相傳消息　講② Trainium3 上把十秒影片壓到二十二秒）
+- 闸门　`python3 工具/review.py 2026-11-28 --check`　已过
 <!-- AUTO:END -->
 
 <!-- MANUAL:START -->
@@ -22,6 +22,11 @@
 2. **拆掉社媒短钩子脚镣**：取消「首句 ≤15 字」与 `A-3-a` 开头/收尾组合填空体操，并在 `check-voice.mjs` 反向拦截「十来字孤立短残句成段」，让每条快讯（90–280 字，1–3 段）直接带主语和动作一气呵成。
 3. **配图升级为外置 WebP + 弹性张数 + 横版画框**：保留深紫暖白视觉卡片体系，`make-public.mjs` 自动将 `<日期>/配图/` 转码为 `cards/<YYYYMMDD>/*.webp`（18 张卡从旧版 4.8 MB 双份内联 PNG 压到约 350–450 KB，`<YYYYMMDD>.html` 本体降至 ~25 KB）；`render.mjs` 与 `make.sh` 新增 `shot` 页型 `"wide": true` 1440×810 横版画框支持；取消无用的 `preview.png` 超长截图。
 4. **期次切换抽离 `issues.js` + 台账补齐**：历史 `<YYYYMMDD>.html` 不再在每次出稿时重复改写；`ledger.mjs` 直接读取 `文案.md` 并补齐 `2026-11-18` 至 `2026-11-24` 共 120 条选题记录。
+
+### 2026-11-28 · Linux 渲染工具链修复
+
+1. 环境里 `playwright-cli` 未上 PATH，装到 `/home/box/.local/bin/`，调用 `grab.sh` 与 `出稿.sh` 前需 `export PATH=/home/box/.local/bin:$PATH`。
+2. `工具/make.sh` 原先只认 macOS 的 Chrome 路径，已补上 `/usr/bin/google-chrome` 与 `/usr/bin/chromium` 回退，Linux 下截图正常。
 
 ## 遗留问题
 

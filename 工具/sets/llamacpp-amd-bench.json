@@ -1,0 +1,48 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "ggml-org on HF · 11-26",
+  "date": "2026.11.28",
+  "noImageReason": "博客僅有一張 llama.cpp v1.0.0 標誌圖，跑分儀表板為動態頁面抓不到圖，改走指標卡呈現",
+  "slides": [
+    {
+      "type": "cover-split",
+      "kicker": "LOCAL INFERENCE · 本地推理",
+      "headline": ["跑分公開", "原始檔也給"],
+      "accentLine": 1,
+      "sub": "ggml 在 Hugging Face 上線 llama.cpp 的 AMD 跑分儀表板。",
+      "hero": { "num": "2", "unit": "張卡可選" },
+      "chips": [
+        "Radeon 8060S · gfx1151",
+        "Radeon AI Pro R9700S · gfx1201",
+        "每週定時跑，每配置 10 次重複",
+        "結果放進公開資料桶，可拿 jsonl 重畫圖"
+      ]
+    },
+    {
+      "type": "columns",
+      "kicker": "BENCHMARK METRICS · 兩項指標",
+      "headline": ["PP512 量輸入", "TG128 量輸出"],
+      "accentLine": 1,
+      "sub": "兩項都從零上下文起步，單位為每秒 token 數。",
+      "cols2": [
+        {
+          "k": "PP512",
+          "items": [
+            "處理 512 個輸入 token",
+            "不生成，只算提示詞",
+            "看模型吃 prompt 有多快"
+          ]
+        },
+        {
+          "k": "TG128",
+          "items": [
+            "生成 128 個 token",
+            "不帶既有上下文",
+            "看模型吐字有多快"
+          ]
+        }
+      ],
+      "verdict": "模型橫跨 Inkling 2 Mini、Qwen、Gemma、gpt-oss 與 LFM。"
+    }
+  ]
+}

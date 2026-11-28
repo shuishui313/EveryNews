@@ -31,8 +31,8 @@ import { pathToFileURL } from "node:url";
 
 const [pwPath, outDir] = process.argv.slice(2);
 const { chromium } = await import(pathToFileURL(pwPath).href);
-const chromeApp = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
-const launchOpts = fs.existsSync(chromeApp) ? { executablePath: chromeApp, headless: true } : { headless: true };
+const chromeApp = ["/Applications/Google Chrome.app/Contents/MacOS/Google Chrome", "/usr/bin/google-chrome", "/usr/bin/chromium"].find((p) => fs.existsSync(p));
+const launchOpts = chromeApp ? { executablePath: chromeApp, headless: true } : { headless: true };
 
 const browser = await chromium.launch(launchOpts);
 const context = await browser.newContext({ deviceScaleFactor: 1 });

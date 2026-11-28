@@ -1,0 +1,941 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>EveryNews · Issue No.019 (2026-11-28)</title>
+<meta name="description" content="EveryNews 每日 AI 線上雜誌：讀報筆記體快訊、視覺圖版與兩篇深度專欄。">
+<script>
+(function(){try{var t=localStorage.getItem('everynews-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
+</script>
+<style>
+:root{
+  --paper:#F6F3EC;
+  --paper-elev:#FCFBF8;
+  --paper-feature:#EFEBE1;
+  --ink:#141318;
+  --ink2:#3F3B4D;
+  --mute:#787287;
+  --line:rgba(20,19,24,.12);
+  --line-strong:#141318;
+  --accent:#3B28CC;
+  --accent-soft:rgba(59,40,204,.07);
+  --stamp:#C84B31;
+  --shadow:0 8px 24px rgba(20,19,24,.05),0 1px 3px rgba(20,19,24,.04);
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI","PingFang TC","PingFang SC","Noto Sans TC","Hiragino Sans GB","Microsoft JhengHei",sans-serif;
+  --mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+html[data-theme="dark"]{
+  --paper:#0F0F13;
+  --paper-elev:#17171F;
+  --paper-feature:#1C1B26;
+  --ink:#EFECE4;
+  --ink2:#B8B3C7;
+  --mute:#857F96;
+  --line:rgba(255,255,255,.11);
+  --line-strong:#E2DDD2;
+  --accent:#9688FF;
+  --accent-soft:rgba(150,136,255,.12);
+  --stamp:#E06348;
+  --shadow:0 14px 34px rgba(0,0,0,.4),0 2px 6px rgba(0,0,0,.28);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+  font-variant-numeric:tabular-nums;line-height:1.82;font-size:16px;
+  -webkit-font-smoothing:antialiased;line-break:strict;
+  transition:background-color .3s var(--ease),color .3s var(--ease);
+}
+a{color:inherit;text-decoration:none}
+button,select{font:inherit}
+button{cursor:pointer}
+
+/* 顶部阅读进度条 */
+.progress-rail{position:fixed;top:0;left:0;right:0;height:2.5px;z-index:100;background:transparent}
+.progress-bar{height:100%;width:0%;background:linear-gradient(90deg,var(--stamp),var(--accent));transition:width .1s linear}
+
+/* 唯一合并的单层毛玻璃杂志顶栏（整合期次切换、归档入口、进度与日夜开关） */
+.topbar{
+  position:sticky;top:0;z-index:80;
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  background:color-mix(in srgb,var(--paper) 86%,transparent);
+  border-bottom:1px solid var(--line);
+}
+.topbar-inner{
+  max-width:1260px;margin:0 auto;padding:9px clamp(18px,4vw,52px);
+  display:flex;align-items:center;gap:14px;justify-content:space-between;flex-wrap:wrap;
+}
+.topbar-left{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.mini-brand{font-weight:800;font-size:15.5px;letter-spacing:-.02em}
+.topbar-sep{color:var(--line);user-select:none}
+.issue-switcher{display:inline-flex;align-items:center;gap:8px}
+.issue-switcher select{
+  font-size:12.5px;font-weight:600;padding:4px 10px;border-radius:99px;
+  border:1px solid var(--line);background:var(--paper-elev);color:var(--ink);cursor:pointer;
+}
+.issue-switcher select:focus{outline:2px solid var(--accent);outline-offset:1px}
+.archive-link{font-size:12.5px;font-weight:600;color:var(--accent);padding:3px 6px}
+.archive-link:hover{text-decoration:underline}
+.topbar-right{display:flex;align-items:center;gap:12px;margin-left:auto}
+.issue-nav-hint{font-family:var(--mono);font-size:11px;color:var(--mute);display:none}
+@media(min-width:900px){.issue-nav-hint{display:inline}}
+.read-pct{font-family:var(--mono);font-size:11.5px;color:var(--mute);min-width:36px;text-align:right}
+.theme-btn{
+  display:inline-flex;align-items:center;gap:6px;padding:4px 11px;border-radius:99px;
+  border:1px solid var(--line);background:var(--paper-elev);color:var(--ink2);
+  font-size:12px;font-weight:600;transition:border-color .2s,transform .2s var(--ease);
+}
+.theme-btn:hover{border-color:var(--accent);transform:translateY(-1px)}
+.theme-dot{width:7px;height:7px;border-radius:50%;background:var(--stamp)}
+
+/* 瑞士现代杂志报头 Masthead */
+.masthead{max-width:1260px;margin:0 auto;padding:clamp(28px,4.2vw,52px) clamp(18px,4vw,52px) 0}
+.masthead-meta{
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;
+  padding-bottom:12px;border-bottom:1px solid var(--line);
+  font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--mute);text-transform:uppercase;
+}
+.stamp-pill{display:inline-flex;align-items:center;gap:8px;color:var(--stamp);font-weight:700}
+.stamp-pill::before{content:"";width:7px;height:7px;border-radius:1.5px;background:var(--stamp)}
+.masthead-hero{
+  display:grid;grid-template-columns:1fr auto;gap:32px;align-items:end;
+  padding:clamp(24px,3.6vw,42px) 0 clamp(24px,3.2vw,36px);
+  border-bottom:2px solid var(--line-strong);
+}
+.journal-name{
+  font-size:clamp(42px,6.8vw,82px);font-weight:900;
+  line-height:.95;letter-spacing:-.045em;margin:0;
+}
+.journal-name span{color:var(--accent)}
+.journal-sub{
+  margin:14px 0 0;font-size:clamp(15px,1.4vw,17.5px);color:var(--ink2);max-width:52ch;line-height:1.68;
+}
+.issue-box{
+  text-align:right;border-left:1px solid var(--line);padding-left:28px;
+  display:flex;flex-direction:column;justify-content:flex-end;gap:4px;
+}
+.issue-box .ib-kicker{font-family:var(--mono);font-size:11px;letter-spacing:.12em;color:var(--stamp);font-weight:700}
+.issue-box .ib-date{font-size:clamp(26px,2.8vw,34px);font-weight:800;line-height:1.08;letter-spacing:-.03em}
+.stat{font-family:var(--mono);font-size:11.5px;color:var(--mute);margin:4px 0 0}
+
+.jump-compat{display:none}
+
+/* 双栏瑞士网格：左侧吸附目录 + 右侧主内容区 */
+.mag-shell{
+  max-width:1260px;margin:0 auto;padding:0 clamp(18px,4vw,52px) 80px;
+  display:grid;grid-template-columns:240px minmax(0,1fr);gap:clamp(28px,4.5vw,60px);align-items:start;
+}
+.toc-rail{
+  position:sticky;top:64px;padding:32px 22px 24px 0;
+  border-right:1px solid var(--line);
+}
+.toc-head{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--mute);
+  text-transform:uppercase;margin:0 0 14px;display:flex;justify-content:space-between;
+}
+.toc-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+.toc-link{
+  display:grid;grid-template-columns:24px 1fr;gap:8px;align-items:baseline;
+  padding:7px 10px;border-radius:5px;font-size:13px;line-height:1.45;color:var(--ink2);
+  border-left:2px solid transparent;transition:all .2s var(--ease);
+}
+.toc-link:hover{background:var(--accent-soft);color:var(--ink)}
+.toc-link.is-active{
+  background:var(--accent-soft);color:var(--ink);font-weight:700;
+  border-left-color:var(--stamp);transform:translateX(2px);
+}
+.toc-no{font-family:var(--mono);font-size:11px;color:var(--mute)}
+.toc-link.is-active .toc-no{color:var(--stamp);font-weight:700}
+.toc-sec-label{
+  margin:18px 0 8px;padding-top:14px;border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.14em;color:var(--mute);
+}
+.toc-kbd{
+  margin-top:20px;padding-top:14px;border-top:1px solid var(--line);
+  font-family:var(--mono);font-size:10.5px;color:var(--mute);line-height:1.6;
+}
+.toc-kbd kbd{
+  padding:1px 5px;border:1px solid var(--line);border-radius:3px;background:var(--paper-elev);font-size:10px;
+}
+
+/* 新闻条目版面 */
+.mag-main{min-width:0}
+.story{padding:clamp(34px,4.2vw,52px) 0;border-bottom:1px solid var(--line)}
+.story.is-lead{padding-top:clamp(28px,3.4vw,42px)}
+.story-meta{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.story-folio{
+  font-size:24px;font-weight:900;line-height:1;color:var(--accent);letter-spacing:-.04em;
+}
+.story-rubric{
+  font-family:var(--mono);font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+  padding:3px 9px;border:1px solid var(--line);border-radius:4px;color:var(--ink2);background:var(--paper-elev);
+}
+.lead-badge{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;font-weight:700;
+  padding:3px 9px;border-radius:4px;background:var(--stamp);color:#FAF8F4;
+}
+.story-title{
+  font-size:clamp(22px,2.8vw,32px);font-weight:800;
+  line-height:1.28;letter-spacing:-.025em;margin:0 0 22px;color:var(--ink);
+}
+.story.is-lead .story-title{font-size:clamp(25px,3.2vw,36px)}
+
+/* 图版阵列：统一左对齐与满宽瑞士网格，与正文、档案卡、分割线右边缘严丝合缝对齐 */
+.plate-wrap{margin:0 0 24px;width:100%}
+.strip{display:grid;gap:clamp(12px,1.8vw,20px);width:100%}
+.strip-1{grid-template-columns:minmax(0,1fr);max-width:480px}
+.strip-2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.strip-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.plate{margin:0;display:flex;flex-direction:column;gap:7px}
+.plate.wide{grid-column:span 2}
+.strip-1 .plate.wide{grid-column:span 1;max-width:680px}
+.shot{
+  position:relative;display:block;border-radius:6px;overflow:hidden;
+  border:1px solid var(--line);background:var(--paper-elev);box-shadow:var(--shadow);
+  cursor:zoom-in;transition:transform .32s var(--ease),box-shadow .32s var(--ease),border-color .22s;
+}
+.shot:hover{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 18px 36px rgba(20,19,24,.11)}
+.shot img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover;transition:transform .45s var(--ease),filter .3s}
+html[data-theme="dark"] .shot img{filter:brightness(.93) contrast(1.02)}
+html[data-theme="dark"] .shot:hover img{filter:brightness(1)}
+.plate.wide .shot img{aspect-ratio:16/9;object-fit:contain}
+.shot:hover img{transform:scale(1.015)}
+.zoom-pill{
+  position:absolute;right:10px;bottom:10px;padding:4px 10px;border-radius:99px;
+  background:rgba(20,19,24,.78);color:#FAF8F4;font-size:11px;font-family:var(--mono);
+  opacity:0;transform:translateY(4px);transition:all .22s var(--ease);pointer-events:none;
+}
+.shot:hover .zoom-pill{opacity:1;transform:translateY(0)}
+.plate figcaption{
+  display:flex;justify-content:space-between;font-family:var(--mono);
+  font-size:10.5px;letter-spacing:.08em;color:var(--mute);padding:0 2px;
+}
+
+/* 正文与按钮区：100% 撑满主阅读栏，消除右侧参差留白 */
+.story-body{width:100%}
+.post p{margin:0 0 1em;font-size:16.5px;line-height:1.9;color:var(--ink);text-align:justify}
+.story-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:16px 0 4px}
+.src-btn{
+  display:inline-flex;align-items:center;gap:9px;padding:7px 14px;border-radius:6px;
+  border:1px solid var(--line);background:var(--paper-elev);font-size:13px;font-weight:600;
+  transition:all .22s var(--ease);
+}
+.src-btn small{font-family:var(--mono);font-size:11px;color:var(--mute);font-weight:400}
+.src-btn i{font-style:normal;color:var(--accent);transition:transform .22s var(--ease)}
+.src-btn:hover{border-color:var(--accent);transform:translateY(-1px)}
+.src-btn:hover i{transform:translate(2px,-2px)}
+.share-btn{
+  padding:7px 12px;border-radius:6px;border:1px solid transparent;background:transparent;
+  color:var(--mute);font-size:12.5px;transition:all .2s;
+}
+.share-btn:hover{border-color:var(--line);background:var(--paper-elev);color:var(--ink)}
+
+/* 手风琴核验档案卡 */
+.dossier{margin-top:14px;border:1px solid var(--line);border-radius:6px;background:var(--paper-elev);overflow:hidden}
+.dossier-btn{
+  width:100%;display:flex;align-items:center;gap:10px;padding:10px 15px;
+  background:transparent;border:none;color:var(--ink2);text-align:left;transition:background .2s;
+}
+.dossier-btn:hover{background:var(--accent-soft)}
+.dossier-label{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;font-weight:700;letter-spacing:.08em}
+.dossier-label i{width:6px;height:6px;border-radius:1px;background:var(--accent);display:inline-block}
+.dossier-count{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--mute)}
+.dossier-icon{
+  width:18px;height:18px;display:inline-flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-size:15px;color:var(--accent);transition:transform .28s var(--ease);
+}
+.dossier[data-open="true"] .dossier-icon{transform:rotate(45deg)}
+.dossier-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .32s var(--ease)}
+.dossier[data-open="true"] .dossier-panel{grid-template-rows:1fr}
+.dossier-inner{overflow:hidden}
+.dossier-inner table{width:100%;border-collapse:collapse;border-top:1px solid var(--line);font-size:13.5px}
+.dossier-inner th{
+  text-align:left;vertical-align:top;white-space:nowrap;color:var(--mute);
+  font-family:var(--mono);font-weight:600;padding:8px 18px 8px 15px;width:1%;
+}
+.dossier-inner td{padding:8px 15px 8px 0;border-bottom:1px solid var(--line);color:var(--ink2);overflow-wrap:anywhere}
+.dossier-inner tr:last-child td{border-bottom:none}
+.inline-url{color:var(--accent);word-break:break-all}
+.inline-url:hover{text-decoration:underline}
+
+/* 深度专栏 Feature Well（东方现代编辑感：顶线规格栏 + 首段导语竖线提亮） */
+.feature-well{
+  margin-top:52px;padding:clamp(28px,4vw,48px);border-radius:8px;
+  background:var(--paper-feature);border-top:2px solid var(--line-strong);
+}
+.feature-header{
+  display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:12px;
+  padding-bottom:20px;border-bottom:1px solid var(--line);margin-bottom:6px;
+}
+.feature-header h2{font-size:clamp(22px,2.6vw,30px);font-weight:800;margin:0;letter-spacing:-.025em}
+.feature-header span{font-family:var(--mono);font-size:11px;letter-spacing:.14em;color:var(--stamp);font-weight:700}
+.essay{padding:34px 0;border-bottom:1px solid var(--line)}
+.essay:last-child{border-bottom:none;padding-bottom:4px}
+.essay-kicker{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.essay-badge{
+  font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;font-weight:700;
+  padding:3px 8px;background:var(--ink);color:var(--paper);border-radius:3px;
+}
+.essay-stat{font-family:var(--mono);font-size:11.5px;color:var(--mute)}
+.essay-title{
+  font-size:clamp(21px,2.5vw,28px);font-weight:800;
+  margin:0 0 20px;line-height:1.3;letter-spacing:-.02em;
+}
+.essay-brief{
+  display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;
+  margin:0 0 26px;padding:14px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+}
+.brief-cell{display:flex;flex-direction:column;gap:5px}
+.brief-cell .bk{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;color:var(--stamp);font-weight:700}
+.brief-cell .bv{font-size:13px;line-height:1.58;color:var(--ink2);overflow-wrap:anywhere}
+.essay-prose{width:100%}
+.essay-prose p{margin:0 0 1.12em;font-size:16.5px;line-height:1.92;color:var(--ink);text-align:justify}
+.essay-prose p.essay-lead{
+  font-size:17.2px;font-weight:500;padding-left:16px;
+  border-left:3px solid var(--accent);color:var(--ink);
+}
+.editor-note{
+  margin:22px 0 16px;padding:14px 18px;border-left:3px solid var(--stamp);
+  background:var(--paper-elev);border-radius:0 6px 6px 0;width:100%;
+}
+.editor-note .en-head{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;color:var(--stamp);font-weight:700;margin-bottom:5px}
+.editor-note p{margin:0;font-size:14.5px;line-height:1.68;color:var(--ink2)}
+
+/* 前后期翻页与页脚 */
+.issue-pager{
+  max-width:1260px;margin:0 auto;padding:0 clamp(18px,4vw,52px) 36px;
+  display:grid;grid-template-columns:1fr 1fr;gap:16px;
+}
+.pager-card{
+  padding:18px 22px;border:1px solid var(--line);border-radius:6px;background:var(--paper-elev);
+  display:flex;flex-direction:column;gap:4px;transition:all .22s var(--ease);
+}
+.pager-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.pager-card.next{text-align:right}
+.pager-card small{font-family:var(--mono);font-size:11px;letter-spacing:.1em;color:var(--mute)}
+.pager-card strong{font-size:17px;font-weight:700}
+
+.foot{
+  max-width:1260px;margin:0 auto;padding:26px clamp(18px,4vw,52px) 60px;
+  border-top:2px solid var(--line-strong);color:var(--mute);font-size:13px;
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;
+}
+.foot p{margin:0}
+
+/* 移动端悬浮目录抽屉 */
+.fab-toc{
+  display:none;position:fixed;right:18px;bottom:20px;z-index:85;
+  padding:10px 16px;border-radius:99px;border:1px solid var(--line);
+  background:var(--ink);color:var(--paper);font-size:13px;font-weight:600;
+  box-shadow:0 10px 26px rgba(0,0,0,.22);
+}
+.mobile-drawer{
+  position:fixed;inset:0;z-index:95;background:rgba(12,11,16,.58);
+  backdrop-filter:blur(4px);display:flex;align-items:flex-end;opacity:0;pointer-events:none;
+  transition:opacity .26s var(--ease);
+}
+.mobile-drawer.is-open{opacity:1;pointer-events:auto}
+.mobile-sheet{
+  width:100%;max-height:76vh;overflow-y:auto;background:var(--paper-elev);
+  border-radius:16px 16px 0 0;padding:20px 20px 30px;
+  transform:translateY(100%);transition:transform .3s var(--ease);
+}
+.mobile-drawer.is-open .mobile-sheet{transform:translateY(0)}
+.sheet-head{display:flex;justify-content:space-between;align-items:center;padding-bottom:12px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.sheet-head strong{font-size:16px;font-weight:800}
+.sheet-close{border:none;background:transparent;color:var(--mute);font-size:22px;line-height:1}
+
+/* 灯箱 */
+.lightbox{
+  position:fixed;inset:0;background:rgba(12,11,18,.92);backdrop-filter:blur(8px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  z-index:110;padding:24px;opacity:0;pointer-events:none;transition:opacity .24s var(--ease);
+}
+.lightbox.is-open{opacity:1;pointer-events:auto}
+.lb-stage{position:relative;display:flex;align-items:center;justify-content:center;max-width:92vw;max-height:82vh}
+.lb-stage img{max-width:92vw;max-height:82vh;border-radius:6px;box-shadow:0 24px 60px rgba(0,0,0,.5);transform:scale(.96);transition:transform .28s var(--ease)}
+.lightbox.is-open .lb-stage img{transform:scale(1)}
+.lb-nav{
+  position:fixed;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;
+  font-size:20px;display:flex;align-items:center;justify-content:center;transition:background .2s;
+}
+.lb-nav:hover{background:rgba(255,255,255,.2)}
+.lb-prev{left:20px}
+.lb-next{right:20px}
+.lb-close{
+  position:fixed;top:18px;right:22px;width:40px;height:40px;border-radius:50%;
+  border:1px solid rgba(255,255,255,.22);background:rgba(255,255,255,.08);color:#fff;font-size:20px;
+}
+.lb-bar{margin-top:14px;color:rgba(255,255,255,.82);font-family:var(--mono);font-size:12px;letter-spacing:.04em;text-align:center}
+
+.toast{
+  position:fixed;left:50%;bottom:28px;transform:translate(-50%,16px);opacity:0;
+  background:var(--ink);color:var(--paper);padding:8px 16px;border-radius:99px;
+  font-size:13px;font-weight:600;z-index:120;pointer-events:none;transition:all .26s var(--ease);
+}
+.toast.is-on{opacity:1;transform:translate(-50%,0)}
+
+.reveal{opacity:0;transform:translateY(16px);transition:opacity .55s var(--ease),transform .55s var(--ease)}
+.reveal.is-visible{opacity:1;transform:translateY(0)}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .reveal{opacity:1;transform:none;transition:none}
+}
+@media (max-width:1024px){
+  .mag-shell{grid-template-columns:1fr}
+  .toc-rail{display:none}
+  .fab-toc{display:inline-flex;align-items:center;gap:6px}
+}
+@media (max-width:760px){
+  .masthead-hero{grid-template-columns:1fr;gap:16px}
+  .issue-box{text-align:left;border-left:none;border-top:1px solid var(--line);padding:14px 0 0}
+  .strip-2,.strip-3,.essay-brief{grid-template-columns:1fr}
+  .plate.wide{grid-column:span 1}
+  .issue-pager{grid-template-columns:1fr}
+  .pager-card.next{text-align:left}
+  .lb-nav{bottom:18px;top:auto;transform:none}
+  .lb-prev{left:28%}
+  .lb-next{right:28%}
+}
+</style>
+</head>
+<body>
+<div class="progress-rail" aria-hidden="true"><div class="progress-bar" id="progress-bar"></div></div>
+
+<header class="topbar issue-nav" data-current="20261128.html">
+  <div class="topbar-inner">
+    <div class="topbar-left">
+      <a href="index.html" class="mini-brand">EveryNews.</a>
+      <span class="topbar-sep">/</span>
+      <div class="issue-switcher">
+        <select id="issue-select" aria-label="切換期次"><option value="20261128.html" selected>No.019 · 2026-11-28</option><option value="archive.html">往期刊物架</option></select>
+        <a href="archive.html" class="archive-link">往期刊物架 →</a>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span class="issue-nav-hint" id="issue-nav-hint"></span>
+      <span class="read-pct" id="read-pct">0%</span>
+      <button type="button" class="theme-btn" id="theme-toggle" aria-label="切換紙本與夜讀模式">
+        <span class="theme-dot"></span><span id="theme-label">夜讀</span>
+      </button>
+    </div>
+  </div>
+</header>
+<script src="issues.js"></script>
+
+<section class="masthead">
+  <div class="masthead-meta">
+    <span class="stamp-pill">DAILY AI JOURNAL · 每日一刊</span>
+    <span>SAT · 28 NOV 2026 · 約 6 分鐘讀完</span>
+  </div>
+  <div class="masthead-hero">
+    <div>
+      <h1 class="journal-name">EveryNews<span>.</span></h1>
+      <p class="journal-sub">把每天真正值得讀的一手技術博客、論文與財報對完帳，寫成一份連貫好讀的同行讀報雜誌。</p>
+    </div>
+    <div class="issue-box">
+      <span class="ib-kicker">ISSUE NO. 019 · 週六</span>
+      <div class="ib-date">2026-11-28</div>
+      <p class="stat">5 篇快訊 · 10 張圖版 · 2 篇專欄</p>
+    </div>
+  </div>
+</section>
+
+<nav class="jump jump-compat" aria-hidden="true"><a href="#solve-vision-code">① 写程序比生成视频更会看图</a><a href="#stable-gdn2">② 线性注意力状态爆炸后，对称擦除把它稳住</a><a href="#ecb-ai-work">③ 四成四每周用 AI，工作量反而变多</a><a href="#nemotron-parse">④ 开了三套数据，文档解析快了六倍</a><a href="#llamacpp-amd-bench">⑤ 本地推理跑分，原始档也一起开了</a></nav>
+
+<div class="mag-shell">
+  <aside class="toc-rail" aria-label="本期目錄">
+    <div class="toc-head"><span>IN THIS ISSUE</span><span>目錄</span></div>
+    
+  <ul class="toc-list">
+    <li><a class="toc-link" href="#solve-vision-code" data-toc="solve-vision-code"><span class="toc-no">01</span><span>写程序比生成视频更会看图</span></a></li><li><a class="toc-link" href="#stable-gdn2" data-toc="stable-gdn2"><span class="toc-no">02</span><span>线性注意力状态爆炸后，对称擦除把它稳住</span></a></li><li><a class="toc-link" href="#ecb-ai-work" data-toc="ecb-ai-work"><span class="toc-no">03</span><span>四成四每周用 AI，工作量反而变多</span></a></li><li><a class="toc-link" href="#nemotron-parse" data-toc="nemotron-parse"><span class="toc-no">04</span><span>开了三套数据，文档解析快了六倍</span></a></li><li><a class="toc-link" href="#llamacpp-amd-bench" data-toc="llamacpp-amd-bench"><span class="toc-no">05</span><span>本地推理跑分，原始档也一起开了</span></a></li>
+  </ul>
+  <div class="toc-sec-label">ESSAYS · 深度專欄</div>
+         <ul class="toc-list">
+           <li><a class="toc-link" href="#lect-01" data-toc="lect-01"><span class="toc-no">E1</span><span>四個代理怎麼學會互相傳消息</span></a></li><li><a class="toc-link" href="#lect-02" data-toc="lect-02"><span class="toc-no">E2</span><span>Trainium3 上把十秒影片壓到二十二秒</span></a></li>
+         </ul>
+
+    <div class="toc-kbd">快捷鍵 <kbd>J</kbd> <kbd>K</kbd> 上下篇 · <kbd>T</kbd> 夜讀</div>
+  </aside>
+
+  <main class="mag-main">
+    <section class="dispatches">
+      <article class="story reveal is-lead" id="solve-vision-code" data-spy="solve-vision-code">
+  <div class="story-meta">
+    <span class="story-folio">01</span>
+    <span class="story-rubric">arXiv 2611.34813</span>
+    <span class="lead-badge">COVER STORY · 本期頭條</span>
+  </div>
+  <h3 class="story-title">写程序比生成视频更会看图</h3>
+  <div class="plate-wrap">
+    <div class="strip strip-2"><figure class="plate">
+            <a class="shot" href="cards/20261128/01-solve-vision-code-01.webp" data-group="solve-vision-code" data-index="0" data-caption="① 写程序比生成视频更会看图 — 圖版 1/2">
+              <img src="cards/20261128/01-solve-vision-code-01.webp" alt="写程序比生成视频更会看图" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 01.1</span><span>01 / 02</span></figcaption>
+          </figure><figure class="plate">
+            <a class="shot" href="cards/20261128/01-solve-vision-code-02.webp" data-group="solve-vision-code" data-index="1" data-caption="① 写程序比生成视频更会看图 — 圖版 2/2">
+              <img src="cards/20261128/01-solve-vision-code-02.webp" alt="写程序比生成视频更会看图" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 01.2</span><span>02 / 02</span></figcaption>
+          </figure></div>
+  </div>
+  <div class="story-body">
+    <div class="post"><p>卡内基梅隆的研究把同一批视觉推理题同时交给写程序的代理和生成视频的模型，在 VBVR-Pro-Bench 的五百道题上，Codex 配 gpt-6-astra 拿到 0.923，比最强的视频模型高出 0.22 以上。做法是让代理看同一张首帧和提示词，写一段程序把答案渲染成视频，再交给同一个未经修改的规则评估器打分，代理拿不到标准答案和生成模型。开源模型里最好的 GLM-5 只有 0.572，低于经过强化学习训练的视频模型。结论有明确边界，只对那些能从首帧和提示算出来的题目成立，规则评估器也天然偏向符号化的确定答案。</p></div>
+    <div class="story-actions">
+      <a class="src-btn" href="https://arxiv.org/abs/2611.34813" target="_blank" rel="noopener">
+              <span>閱讀一手原文</span>
+              <small>arxiv.org</small>
+              <i aria-hidden="true">↗</i>
+            </a>
+      <button type="button" class="share-btn" data-copy="#solve-vision-code">複製本節連結</button>
+    </div>
+    <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-solve-vision-code">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">9 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-solve-vision-code">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>主体</th><td>arXiv 2611.34813，Solve Vision with Code，卡内基梅隆大学</td></tr><tr><th>发布</th><td>论文 11 月 25 日，11 月 27 日提交 Hugging Face，当日第 3 热门</td></tr><tr><th>基准</th><td>VBVR-Pro-Bench，500 个实例，5 个认知类别，符号化标准答案</td></tr><tr><th>设置</th><td>同一首帧与提示词，代理不得访问标准答案、元数据与生成模型，每题一次机会</td></tr><tr><th>闭源代理</th><td>Codex 配 gpt-6-astra 0.923，Claude Code 配 Fable 5.1 0.894，Gemini CLI 配 Gemini 3.1 Pro 0.893</td></tr><tr><th>差距</th><td>三个闭源代理均比最强视频模型高 0.22 以上</td></tr><tr><th>开源</th><td>23 个可运行开放权重模型中 GLM-5 最佳，0.572</td></tr><tr><th>局限</th><td>结论只适用能从首帧与提示算出的任务；规则评估器偏向符号化输出</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://arxiv.org/abs/2611.34813" target="_blank" rel="noopener">https://arxiv.org/abs/2611.34813</a></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+  </div>
+</article><article class="story reveal" id="stable-gdn2" data-spy="stable-gdn2">
+  <div class="story-meta">
+    <span class="story-folio">02</span>
+    <span class="story-rubric">arXiv 2611.34051</span>
+    
+  </div>
+  <h3 class="story-title">线性注意力状态爆炸后，对称擦除把它稳住</h3>
+  <div class="plate-wrap">
+    <div class="strip strip-2"><figure class="plate">
+            <a class="shot" href="cards/20261128/02-stable-gdn2-01.webp" data-group="stable-gdn2" data-index="0" data-caption="② 线性注意力状态爆炸后，对称擦除把它稳住 — 圖版 1/2">
+              <img src="cards/20261128/02-stable-gdn2-01.webp" alt="线性注意力状态爆炸后，对称擦除把它稳住" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 02.1</span><span>01 / 02</span></figcaption>
+          </figure><figure class="plate">
+            <a class="shot" href="cards/20261128/02-stable-gdn2-02.webp" data-group="stable-gdn2" data-index="1" data-caption="② 线性注意力状态爆炸后，对称擦除把它稳住 — 圖版 2/2">
+              <img src="cards/20261128/02-stable-gdn2-02.webp" alt="线性注意力状态爆炸后，对称擦除把它稳住" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 02.2</span><span>02 / 02</span></figcaption>
+          </figure></div>
+  </div>
+  <div class="story-body">
+    <div class="post"><p>MemTensor 的论文找出 Gated DeltaNet-2 在长上下文训练里失败的原因，擦除状态时读取方向与修改方向不对称，形成非正规算子，方向性增益跨 token 累积，就算没有新写入，状态也会指数级长大。修法是改成对称擦除，让状态传播不再扩张，再用衰减调节的残差写入保住表达能力，分块并行计算也保留了。研究者在约十六亿参数的模型上验证，循环设置下 128K 的 RULER 平均分比 GDN-2 高 6.80，混合设置下九个下游任务平均高 0.62。摘要给的状态上界是 O(T)，提交者评论写成 O(√T)，以正文为准。实验只做到十六亿参数，放大到更大模型是否照样稳定还没有答案。</p></div>
+    <div class="story-actions">
+      <a class="src-btn" href="https://arxiv.org/abs/2611.34051" target="_blank" rel="noopener">
+              <span>閱讀一手原文</span>
+              <small>arxiv.org</small>
+              <i aria-hidden="true">↗</i>
+            </a>
+      <button type="button" class="share-btn" data-copy="#stable-gdn2">複製本節連結</button>
+    </div>
+    <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-stable-gdn2">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">8 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-stable-gdn2">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>主体</th><td>arXiv 2611.34051，Stable Gated DeltaNet-2，MemTensor 等 14 位作者</td></tr><tr><th>发布</th><td>论文 11 月 25 日，11 月 27 日提交，当日第 1 热门，128 赞</td></tr><tr><th>病因</th><td>擦除时读取与修改方向不对称，形成非正规算子，方向增益跨 token 累积，状态指数增长</td></tr><tr><th>修法</th><td>对称擦除保证状态传播非扩张，衰减调节的残差写入保留表达能力，保留分块并行</td></tr><tr><th>规模</th><td>约 16 亿参数模型</td></tr><tr><th>结果</th><td>循环设置下 128K RULER 平均分比 GDN-2 高 6.80，混合设置下九个下游任务平均高 0.62</td></tr><tr><th>分歧</th><td>摘要写状态增长上界 O(T)，提交者评论写 O(√T)，需以正文为准</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://arxiv.org/abs/2611.34051" target="_blank" rel="noopener">https://arxiv.org/abs/2611.34051</a></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+  </div>
+</article><article class="story reveal" id="ecb-ai-work" data-spy="ecb-ai-work">
+  <div class="story-meta">
+    <span class="story-folio">03</span>
+    <span class="story-rubric">欧洲央行博客</span>
+    
+  </div>
+  <h3 class="story-title">四成四每周用 AI，工作量反而变多</h3>
+  <div class="plate-wrap">
+    <div class="strip strip-2"><figure class="plate">
+            <a class="shot" href="cards/20261128/03-ecb-ai-work-01.webp" data-group="ecb-ai-work" data-index="0" data-caption="③ 四成四每周用 AI，工作量反而变多 — 圖版 1/2">
+              <img src="cards/20261128/03-ecb-ai-work-01.webp" alt="四成四每周用 AI，工作量反而变多" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 03.1</span><span>01 / 02</span></figcaption>
+          </figure><figure class="plate">
+            <a class="shot" href="cards/20261128/03-ecb-ai-work-02.webp" data-group="ecb-ai-work" data-index="1" data-caption="③ 四成四每周用 AI，工作量反而变多 — 圖版 2/2">
+              <img src="cards/20261128/03-ecb-ai-work-02.webp" alt="四成四每周用 AI，工作量反而变多" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 03.2</span><span>02 / 02</span></figcaption>
+          </figure></div>
+  </div>
+  <div class="story-body">
+    <div class="post"><p>欧洲央行十一月二十七日公布的消费者预期调查显示，2026 年八月欧元区有四成四的就业消费者每周至少用一次 AI，约一成八每天用，五月这个比例还超过五成。用它的人里，约五成六说 AI 增加了完成的工作量，四成七说产出质量提高，最常被提到的功能是查找和处理信息。受访者对五年后的预期也从一年前的三成四升到四成六。这份调查用的是欧洲央行自己的 CES 口径，和美国盖洛普的问题与样本都不同，跨区比较只能看趋势。同一篇博客还给了一组对照，从 2021 年到 2027 年底美国企业投资预计增长约四成，欧元区只有约一成二。</p></div>
+    <div class="story-actions">
+      <a class="src-btn" href="https://www.ecb.europa.eu/press/blog/date/2026/html/ecb.blog20261127~81118f8ec0.en.html" target="_blank" rel="noopener">
+              <span>閱讀一手原文</span>
+              <small>ecb.europa.eu</small>
+              <i aria-hidden="true">↗</i>
+            </a>
+      <button type="button" class="share-btn" data-copy="#ecb-ai-work">複製本節連結</button>
+    </div>
+    <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-ecb-ai-work">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">9 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-ecb-ai-work">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>主体</th><td>欧洲央行博客，AI, jobs and prices，三位作者</td></tr><tr><th>发布</th><td>2026 年 11 月 27 日</td></tr><tr><th>数据</th><td>欧洲央行消费者预期调查 CES，Ipsos 实施，18 至 64 岁就业消费者，人口加权</td></tr><tr><th>频率</th><td>2026 年 8 月 44% 每周至少用一次 AI，约 18% 每天用，5 月超过 50%</td></tr><tr><th>影响</th><td>约 56% 使用者称工作量增加，47% 称质量提高</td></tr><tr><th>预期</th><td>五年内行业 AI 使用比例预期 46%，一年前为 34%</td></tr><tr><th>投资</th><td>2021 至 2027 年底美国企业投资预计增长约 40%，欧元区约 12%</td></tr><tr><th>口径</th><td>CES 与盖洛普问题和样本不同，跨区只能看趋势；样本量未披露</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://www.ecb.europa.eu/press/blog/date/2026/html/ecb.blog20261127~81118f8ec0.en.html" target="_blank" rel="noopener">https://www.ecb.europa.eu/press/blog/date/2026/html/ecb.blog20261127~81118f8ec0.en.html</a></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+  </div>
+</article><article class="story reveal" id="nemotron-parse" data-spy="nemotron-parse">
+  <div class="story-meta">
+    <span class="story-folio">04</span>
+    <span class="story-rubric">NVIDIA</span>
+    
+  </div>
+  <h3 class="story-title">开了三套数据，文档解析快了六倍</h3>
+  <div class="plate-wrap">
+    <div class="strip strip-2"><figure class="plate">
+            <a class="shot" href="cards/20261128/04-nemotron-parse-01.webp" data-group="nemotron-parse" data-index="0" data-caption="④ 开了三套数据，文档解析快了六倍 — 圖版 1/2">
+              <img src="cards/20261128/04-nemotron-parse-01.webp" alt="开了三套数据，文档解析快了六倍" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 04.1</span><span>01 / 02</span></figcaption>
+          </figure><figure class="plate wide">
+            <a class="shot" href="cards/20261128/04-nemotron-parse-02.webp" data-group="nemotron-parse" data-index="1" data-caption="④ 开了三套数据，文档解析快了六倍 — 圖版 2/2">
+              <img src="cards/20261128/04-nemotron-parse-02.webp" alt="开了三套数据，文档解析快了六倍" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 04.2</span><span>02 / 02</span></figcaption>
+          </figure></div>
+  </div>
+  <div class="story-body">
+    <div class="post"><p>NVIDIA 把文档解析模型 Nemotron 3.5 Parse 的三套训练数据开了出来，合成图表九百九十八万条，合成表格一百万条，多语言 OCR 七百九十万条，每套都附了图像、标注和训练格式。模型改成按页面形状动态输入，注意力分组数砍到八以压住缓存内存，再配一个最多向前猜三十二个 token 的草稿模型。单卡 H200 跑同一组两千零七十八页，上一代每秒不到三页，新一代不加草稿模型是十三点四八页，加上之后到二十点四四页。微调配方也放出来了，合成牙科表单上基础模型的 pass@1 是零，微调后到九成五八。对照题目出自同一个生成器，换到真实扫描件还要自己再验一遍。</p></div>
+    <div class="story-actions">
+      <a class="src-btn" href="https://huggingface.co/blog/nvidia/building-on-nemotron-35-parse-open-data-fine-tunin" target="_blank" rel="noopener">
+              <span>閱讀一手原文</span>
+              <small>huggingface.co</small>
+              <i aria-hidden="true">↗</i>
+            </a>
+      <button type="button" class="share-btn" data-copy="#nemotron-parse">複製本節連結</button>
+    </div>
+    <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-nemotron-parse">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">10 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-nemotron-parse">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>主体</th><td>NVIDIA，Building on Nemotron 3.5 Parse，Hugging Face 博客</td></tr><tr><th>发布</th><td>2026 年 11 月 26 日</td></tr><tr><th>数据</th><td>Synthetic Charts V1 998 万条，Synthetic Tables V1 100 万条，OCR Synthetic Multilingual v2 790 万条</td></tr><tr><th>训练</th><td>SFT 加 RLVR 用 GRPO，循环输出页从 126 降到 29，总分 66.24 升到 71.38</td></tr><tr><th>架构</th><td>NaViT 动态输入替代固定 2048×1664 画布，GQA-8 压缩缓存，DFlash2 草稿最多猜 32 token</td></tr><tr><th>吞吐</th><td>单卡 H200 BF16，2078 页，Parse 2.0 每秒 2.98 页，Parse 3.5 每秒 13.48 页，加 DFlash2 每秒 20.44 页</td></tr><tr><th>多遍</th><td>double pass 比 single 高 2.18 ParseBench 分，triple pass 高 2.46</td></tr><tr><th>微调例</th><td>256 张留出合成表单，pass@1 从 0% 到 SFT 后 95.85%，RLVR 后 96.58%</td></tr><tr><th>边界</th><td>SFT 与 GRPO 数字来自开发检查点；留出集出自同一生成器；博客未给完整超参数</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://huggingface.co/blog/nvidia/building-on-nemotron-35-parse-open-data-fine-tunin" target="_blank" rel="noopener">https://huggingface.co/blog/nvidia/building-on-nemotron-35-parse-open-data-fine-tunin</a></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+  </div>
+</article><article class="story reveal" id="llamacpp-amd-bench" data-spy="llamacpp-amd-bench">
+  <div class="story-meta">
+    <span class="story-folio">05</span>
+    <span class="story-rubric">ggml-org</span>
+    
+  </div>
+  <h3 class="story-title">本地推理跑分，原始档也一起开了</h3>
+  <div class="plate-wrap">
+    <div class="strip strip-2"><figure class="plate">
+            <a class="shot" href="cards/20261128/05-llamacpp-amd-bench-01.webp" data-group="llamacpp-amd-bench" data-index="0" data-caption="⑤ 本地推理跑分，原始档也一起开了 — 圖版 1/2">
+              <img src="cards/20261128/05-llamacpp-amd-bench-01.webp" alt="本地推理跑分，原始档也一起开了" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 05.1</span><span>01 / 02</span></figcaption>
+          </figure><figure class="plate">
+            <a class="shot" href="cards/20261128/05-llamacpp-amd-bench-02.webp" data-group="llamacpp-amd-bench" data-index="1" data-caption="⑤ 本地推理跑分，原始档也一起开了 — 圖版 2/2">
+              <img src="cards/20261128/05-llamacpp-amd-bench-02.webp" alt="本地推理跑分，原始档也一起开了" loading="lazy" decoding="async">
+              <span class="zoom-pill">檢視原圖</span>
+            </a>
+            <figcaption><span>FIG 05.2</span><span>02 / 02</span></figcaption>
+          </figure></div>
+  </div>
+  <div class="story-body">
+    <div class="post"><p>ggml 团队在 Hugging Face 上线了 llama.cpp 的 AMD 跑分仪表板，能选 Radeon 8060S 和 AI Pro R9700S 两张卡，按模型、量化格式和版本交叉比对。仪表板把 PP512 与 TG128 分开报，前者量五百一十二个输入 token 的处理速度，后者量生成一百二十八个 token 的速度，都从零上下文起步。每周自动跑的结果连同 Flash Attention 开关的十次重复放进公开数据桶，别人可以拿 jsonl 重画图或和本机结果对账。模型清单有 Inkling 2 Mini、Qwen、Gemma、gpt-oss 和 LFM，四比特到 BF16 都能选。</p></div>
+    <div class="story-actions">
+      <a class="src-btn" href="https://huggingface.co/blog/ggml-org/llamacpp-amd-bench" target="_blank" rel="noopener">
+              <span>閱讀一手原文</span>
+              <small>huggingface.co</small>
+              <i aria-hidden="true">↗</i>
+            </a>
+      <button type="button" class="share-btn" data-copy="#llamacpp-amd-bench">複製本節連結</button>
+    </div>
+    <div class="dossier" data-open="false">
+        <button type="button" class="dossier-btn" aria-expanded="false" aria-controls="facts-llamacpp-amd-bench">
+          <span class="dossier-label"><i></i>核驗檔案 · FACT DOSSIER</span>
+          <span class="dossier-count">9 項參數</span>
+          <span class="dossier-icon" aria-hidden="true">+</span>
+        </button>
+        <div class="dossier-panel" id="facts-llamacpp-amd-bench">
+          <div class="dossier-inner">
+            <table><tbody><tr><th>主体</th><td>ggml-org，llama.cpp × AMD Benchmark，Hugging Face 博客</td></tr><tr><th>发布</th><td>2026 年 11 月 26 日</td></tr><tr><th>硬件</th><td>Radeon 8060S（gfx1151）与 Radeon AI Pro R9700S（gfx1201）</td></tr><tr><th>指标</th><td>PP512 处理 512 个输入 token，TG128 生成 128 个 token，均从零上下文起步，单位 tokens/s</td></tr><tr><th>跑法</th><td>每周定时，llama-bench，Flash Attention 开与关，每配置 10 次重复，取平均吞吐</td></tr><tr><th>模型</th><td>Inkling 2 Mini、Qwen、Gemma、gpt-oss、LFM，含稠密与 MoE</td></tr><tr><th>格式</th><td>Q4_K_M、Q8_0 及其他量化，另有 BF16、F16</td></tr><tr><th>数据</th><td>公开存储在 ggml-org/install.sh-benches-data，逐配置为 jsonl</td></tr><tr><th>来源</th><td><a class="inline-url" href="https://huggingface.co/blog/ggml-org/llamacpp-amd-bench" target="_blank" rel="noopener">https://huggingface.co/blog/ggml-org/llamacpp-amd-bench</a></td></tr></tbody></table>
+          </div>
+        </div>
+      </div>
+  </div>
+</article>
+    </section>
+
+    <section class="feature-well reveal">
+            <div class="feature-header">
+              <h2>深度專欄 · Feature Essays</h2>
+              <span>DEEP DIVES · 每日兩篇</span>
+            </div>
+            <article class="essay reveal" id="lect-01" data-spy="lect-01">
+  <div class="essay-kicker">
+    <span class="essay-badge">ESSAY 01</span>
+    <span class="essay-stat">770 漢字 · 深度拆解</span>
+  </div>
+  <h3 class="essay-title">四個代理怎麼學會互相傳消息</h3>
+  <div class="essay-brief"><div class="brief-cell"><span class="bk">原文</span><span class="bv"><a class="inline-url" href="https://huggingface.co/blog/training-swarms" target="_blank" rel="noopener">https://huggingface.co/blog/training-swarms</a></span></div><div class="brief-cell"><span class="bk">判據</span><span class="bv">讀完能照做，寫清適用邊界，三個月內仍有參考價值</span></div></div>
+  <div class="essay-prose"><p class="essay-lead">Hugging Face 十一月二十六日發的多代理訓練筆記，回答一個容易被跑分掩蓋的問題，幾個代理互相傳訊息到底有沒有幫上忙，還是只是把同一筆算力花了更多倍。讀完你能拿走一把尺子，判斷別人展示的多代理提升是不是靠同預算換來的。</p><p>任務裡四名代理各自拿到一個一到九十九的整數，只知道自己的數字和隊友名字，要靠傳訊息把四個數排序，重複的數字也要保留。四個代理共用同一個 Qwen3-0.6B 策略，不是各訓練一個模型。成功條件很寬，只要有一個代理交出完整正確的列表就算整隊贏。</p><p>通信工具只有發訊息、讀郵箱、查未讀三個動作。設計藏在獎勵裡。隊伍總預算是四倍的八千一百九十二個工作 token 加一千零二十四個最終答案 token，合計三萬六千八百六十四。獎勵等於成功乘以一個折扣，用掉的 token 越多折扣越大，發再多訊息也不加分。</p><p>訓練採集中訓練分散執行，訓練時看得到全隊資訊，上線後每名代理只靠自己的觀測。每次更新收集三十二道題，每題八次獨立嘗試，同隊四人共享一個隊伍優勢，哪怕其中一人自己交的答案不對。loss 先在隊內平均再跨隊平均，避免長對話拿到更高權重。</p><p>效果曲線很直接。前五次更新成功率百分之六點五六，到第七十一至七十五次更新時升至百分之八十二點三四，每隊消耗的 token 由一萬二千八百多降到八千多，節省約三成七。每隊廣播次數從二點三八升到五點七三，訊息變多，總 token 反而變少。checkpoint 75 在留出集上解對三十二題裡的二十六題。</p><p>作者接著算了一筆帳。沒訓練過的隊伍就算跑八次挑最好的一次，成功率也只有百分之三十七點五，約吃掉十萬三千個 token。訓練過的隊伍一次就有百分之八十二點三，只用約八千個。把通信練出來比反覆重試便宜一個數量級。這筆對照用的是訓練題不是留出集，前幾次更新也摻了一點訓練，數字是估計。</p><p>邊界得說清。作者承認這道題不適合驗證同預算下的通信收益，單個代理拿不到全部數字，根本解不了，比的是共享策略能不能學會通信以及代價。token 效率沒有留出集數字，原始實驗用一張 H200 訓練加七張跑 vLLM，入門版也要兩張 H200 跑約五小時，花約五十美元。能搬走的是做法，先設計一個單代理鑽不了空子的任務，把 token 算進獎勵，再用同預算比較訓練前後。</p></div>
+  <aside class="editor-note">
+          <div class="en-head"><span>EDITOR'S NOTE · 最值得看</span></div>
+          <p>原文從百分之六點五六升到百分之八十二點三四的那張更新曲線，連同每隊 token 從一萬二千多降到八千多的對照，把學會通信的收益一次給全。</p>
+        </aside>
+  
+</article><article class="essay reveal" id="lect-02" data-spy="lect-02">
+  <div class="essay-kicker">
+    <span class="essay-badge">ESSAY 02</span>
+    <span class="essay-stat">725 漢字 · 深度拆解</span>
+  </div>
+  <h3 class="essay-title">Trainium3 上把十秒影片壓到二十二秒</h3>
+  <div class="essay-brief"><div class="brief-cell"><span class="bk">原文</span><span class="bv"><a class="inline-url" href="https://huggingface.co/blog/video-trainium3" target="_blank" rel="noopener">https://huggingface.co/blog/video-trainium3</a></span></div><div class="brief-cell"><span class="bk">判據</span><span class="bv">讀完能照做，寫清適用邊界，三個月內仍有參考價值</span></div></div>
+  <div class="essay-prose"><p class="essay-lead">Hugging Face 十一月二十七日的工程筆記，講的是同一個影片生成模型換到 AWS Trainium3 之後，怎樣從慢到不能用變成接近即時。讀完你能拿走一套排查順序，遇到新硬件上的推理任務，知道時間究竟花在哪裡。</p><p>起點很樸素。LTX-2.5 是個能同時出畫面和聲音的模型，第一次在四個 NeuronCore 上跑，生成十秒 960×544 的影片要五分二十秒，其中裝置上計算只佔四十五秒，剩下全耗在主機側。時間花在把資料搬來搬去和沒串好的流程上，核心自身的計算其實很快。</p><p>先把模型放下來是第一步。Transformer 塞不進單一核心，diffusers 也沒有對應的張量並行方案，團隊自己打補丁，按四路切權重、八路切影片 token，最後用三十二個核心，等於半台 trn3.48xlarge。注意力頭只有三十二個，張量並行到四就得停。文本編碼器不能和 transformer 住同一核心，留在 CPU，潛空間上採樣和解碼也一樣。</p><p>真正的時間黑洞一個個被挖出來。提示詞本來被補齊到一千零二十四個 token，CPU 編碼器在對無效填充做白工，只編真實 token 後從三點四秒降到一點四秒。rank 零的 CPU 執行緒被另外三十一個 rank 搶走，手動釘住後從七點四秒降到三點三秒。參數塞進不超過 1 GiB 的緩衝區，避開記憶體配置器的浪費。影片解碼本來在 CPU 上要三百五十七秒，搬進核心並按幀切分後只要一點六秒。</p><p>結果是十秒 2048×1024 的影片用二十二到二十三秒生成，比最初快十四倍，像素數還多了約四倍，花的是六十四個核心裡的三十二個。同一個模型走 LTX 在線 API 出十秒 1080p 要二十三點七秒，兩邊幾乎打平。作者找不到可靠的 CUDA 數字，LTX 自報的四張 B200 跑六點八秒沒有測量細節，所以沒做直接對比。</p><p>邊界寫得很實在。單鏡頭最長二十秒，主體一致性靠前一鏡頭的最後二十五幀當條件，光靠提示詞會換人，山羊的角四個 take 裡有三個畫錯，通常每個鏡頭做四次再挑。聲音按鏡頭單獨生成，不會自然跨鏡頭連續。拿來做機器人訓練更不能直接用，真實片段只給一秒時模型判斷不了速度，也壓不過原影片裡已經確定的物理狀態，要拿自己的影格和動作微調檢查點。</p><p>能搬走的是排查次序，先量出時間花在主機還是裝置，再動並行切分，最後才碰精度與快取這類細節，每一步都有前后數字對得上才算數。</p></div>
+  <aside class="editor-note">
+          <div class="en-head"><span>EDITOR'S NOTE · 最值得看</span></div>
+          <p>原文從首次的五分二十秒到優化後二十二秒的那張對照表，每一欄都標了對應的優化，能照著排自己的優先順序。</p>
+        </aside>
+  
+</article>
+          </section>
+  </main>
+</div>
+
+<nav class="issue-pager" id="issue-pager" aria-label="前後期翻頁"></nav>
+
+<footer class="foot">
+  <p><strong>EveryNews.</strong> · Issue No.019 · 每日 AI 讀報雜誌</p>
+  <p><a href="archive.html" style="text-decoration:underline">瀏覽全部往期刊物架 →</a></p>
+</footer>
+
+<button type="button" class="fab-toc" id="fab-toc">☰ 本期目錄</button>
+<div class="mobile-drawer" id="mobile-drawer" aria-hidden="true">
+  <div class="mobile-sheet">
+    <div class="sheet-head"><strong>本期目錄 · Issue No.019</strong><button type="button" class="sheet-close" id="sheet-close">×</button></div>
+    
+  <ul class="toc-list">
+    <li><a class="toc-link" href="#solve-vision-code" data-toc="solve-vision-code"><span class="toc-no">01</span><span>写程序比生成视频更会看图</span></a></li><li><a class="toc-link" href="#stable-gdn2" data-toc="stable-gdn2"><span class="toc-no">02</span><span>线性注意力状态爆炸后，对称擦除把它稳住</span></a></li><li><a class="toc-link" href="#ecb-ai-work" data-toc="ecb-ai-work"><span class="toc-no">03</span><span>四成四每周用 AI，工作量反而变多</span></a></li><li><a class="toc-link" href="#nemotron-parse" data-toc="nemotron-parse"><span class="toc-no">04</span><span>开了三套数据，文档解析快了六倍</span></a></li><li><a class="toc-link" href="#llamacpp-amd-bench" data-toc="llamacpp-amd-bench"><span class="toc-no">05</span><span>本地推理跑分，原始档也一起开了</span></a></li>
+  </ul>
+  <div class="toc-sec-label">ESSAYS · 深度專欄</div>
+         <ul class="toc-list">
+           <li><a class="toc-link" href="#lect-01" data-toc="lect-01"><span class="toc-no">E1</span><span>四個代理怎麼學會互相傳消息</span></a></li><li><a class="toc-link" href="#lect-02" data-toc="lect-02"><span class="toc-no">E2</span><span>Trainium3 上把十秒影片壓到二十二秒</span></a></li>
+         </ul>
+
+  </div>
+</div>
+
+<div class="lightbox" id="lb" aria-hidden="true">
+  <button type="button" class="lb-close" id="lb-close" aria-label="關閉">×</button>
+  <button type="button" class="lb-nav lb-prev" id="lb-prev" aria-label="上一張">‹</button>
+  <div class="lb-stage"><img id="lb-img" alt=""></div>
+  <button type="button" class="lb-nav lb-next" id="lb-next" aria-label="下一張">›</button>
+  <div class="lb-bar" id="lb-cap"></div>
+</div>
+
+<div class="toast" id="toast">已複製連結</div>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var tBtn = document.getElementById('theme-toggle');
+  var tLab = document.getElementById('theme-label');
+  function toggleTheme(){
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try { localStorage.setItem('everynews-theme', next); } catch(e){}
+    syncThemeLabel();
+  }
+  function syncThemeLabel(){
+    var dark = root.getAttribute('data-theme') === 'dark';
+    if (tLab) tLab.textContent = dark ? '紙本' : '夜讀';
+  }
+  syncThemeLabel();
+  if (tBtn) tBtn.addEventListener('click', toggleTheme);
+
+  var pBar = document.getElementById('progress-bar');
+  var pTxt = document.getElementById('read-pct');
+  function onScroll(){
+    var h = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = h > 0 ? Math.min(100, Math.max(0, Math.round((window.scrollY / h) * 100))) : 0;
+    if (pBar) pBar.style.width = pct + '%';
+    if (pTxt) pTxt.textContent = pct + '%';
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  var reveals = document.querySelectorAll('.reveal');
+  var spyTargets = Array.prototype.slice.call(document.querySelectorAll('[data-spy]'));
+  var activeSpyIdx = 0;
+
+  if ('IntersectionObserver' in window) {
+    var revObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) {
+          en.target.classList.add('is-visible');
+          revObs.unobserve(en.target);
+        }
+      });
+    }, { threshold: 0.06, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(function(el){ revObs.observe(el); });
+
+    var tocLinks = document.querySelectorAll('[data-toc]');
+    var spyObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting) {
+          var id = en.target.getAttribute('data-spy');
+          var found = spyTargets.indexOf(en.target);
+          if (found !== -1) activeSpyIdx = found;
+          tocLinks.forEach(function(a){
+            a.classList.toggle('is-active', a.getAttribute('data-toc') === id);
+          });
+        }
+      });
+    }, { rootMargin: '-18% 0px -68% 0px' });
+    spyTargets.forEach(function(el){ spyObs.observe(el); });
+  } else {
+    reveals.forEach(function(el){ el.classList.add('is-visible'); });
+  }
+
+  document.querySelectorAll('.dossier-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var box = btn.closest('.dossier');
+      var open = box.getAttribute('data-open') === 'true';
+      box.setAttribute('data-open', open ? 'false' : 'true');
+      btn.setAttribute('aria-expanded', open ? 'false' : 'true');
+    });
+  });
+
+  var toast = document.getElementById('toast');
+  var toastTimer = null;
+  function showToast(msg){
+    if (!toast) return;
+    toast.textContent = msg;
+    toast.classList.add('is-on');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(function(){ toast.classList.remove('is-on'); }, 1800);
+  }
+  document.querySelectorAll('.share-btn').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var hash = btn.getAttribute('data-copy') || '';
+      var url = location.origin + location.pathname + hash;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(url).then(function(){ showToast('已複製本節連結'); });
+      } else {
+        location.hash = hash;
+        showToast('已定位至本節');
+      }
+    });
+  });
+
+  var drawer = document.getElementById('mobile-drawer');
+  var fab = document.getElementById('fab-toc');
+  var sClose = document.getElementById('sheet-close');
+  function closeDrawer(){ if (drawer) drawer.classList.remove('is-open'); }
+  if (fab && drawer) fab.addEventListener('click', function(){ drawer.classList.add('is-open'); });
+  if (sClose) sClose.addEventListener('click', closeDrawer);
+  if (drawer) {
+    drawer.addEventListener('click', function(e){
+      if (e.target === drawer || e.target.closest('[data-toc]')) closeDrawer();
+    });
+  }
+
+  var lb = document.getElementById('lb');
+  var lbImg = document.getElementById('lb-img');
+  var lbCap = document.getElementById('lb-cap');
+  var lbPrev = document.getElementById('lb-prev');
+  var lbNext = document.getElementById('lb-next');
+  var lbClose = document.getElementById('lb-close');
+  var shots = Array.prototype.slice.call(document.querySelectorAll('.shot'));
+  var curIdx = -1;
+
+  function openAt(idx){
+    if (!shots.length || idx < 0 || idx >= shots.length) return;
+    curIdx = idx;
+    var a = shots[curIdx];
+    lbImg.src = a.getAttribute('href') || a.querySelector('img').src;
+    lbCap.textContent = (a.getAttribute('data-caption') || '') + '  ·  全刊圖版 ' + (curIdx + 1) + ' / ' + shots.length;
+    lb.classList.add('is-open');
+    lbPrev.style.display = shots.length > 1 ? '' : 'none';
+    lbNext.style.display = shots.length > 1 ? '' : 'none';
+  }
+  function closeLb(){ lb.classList.remove('is-open'); curIdx = -1; }
+  shots.forEach(function(a, i){
+    a.addEventListener('click', function(e){ e.preventDefault(); openAt(i); });
+  });
+  if (lbPrev) lbPrev.addEventListener('click', function(e){ e.stopPropagation(); openAt((curIdx - 1 + shots.length) % shots.length); });
+  if (lbNext) lbNext.addEventListener('click', function(e){ e.stopPropagation(); openAt((curIdx + 1) % shots.length); });
+  if (lbClose) lbClose.addEventListener('click', closeLb);
+  if (lb) lb.addEventListener('click', function(e){ if (e.target === lb) closeLb(); });
+
+  document.addEventListener('keydown', function(e){
+    var tag = (e.target && e.target.tagName) || '';
+    if (lb && lb.classList.contains('is-open')) {
+      if (e.key === 'Escape') closeLb();
+      if (e.key === 'ArrowLeft') openAt((curIdx - 1 + shots.length) % shots.length);
+      if (e.key === 'ArrowRight') openAt((curIdx + 1) % shots.length);
+      return;
+    }
+    if (/INPUT|SELECT|TEXTAREA/.test(tag) || e.metaKey || e.ctrlKey || e.altKey) return;
+    if (e.key === 't' || e.key === 'T') { toggleTheme(); showToast(root.getAttribute('data-theme') === 'dark' ? '已切換至夜讀模式' : '已切換至紙本模式'); }
+    if ((e.key === 'j' || e.key === 'J') && spyTargets.length) {
+      activeSpyIdx = Math.min(spyTargets.length - 1, activeSpyIdx + 1);
+      spyTargets[activeSpyIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    if ((e.key === 'k' || e.key === 'K') && spyTargets.length) {
+      activeSpyIdx = Math.max(0, activeSpyIdx - 1);
+      spyTargets[activeSpyIdx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  });
+
+  window.addEventListener('DOMContentLoaded', function(){
+    var list = window.EVERYNEWS_ISSUES || [];
+    var pager = document.getElementById('issue-pager');
+    if (!pager || !list.length) return;
+    var curFile = '20261128.html';
+    var idx = list.findIndex(function(x){ return x.file === curFile; });
+    if (idx === -1) idx = 0;
+    var prevIssue = list[idx + 1];
+    var nextIssue = idx > 0 ? list[idx - 1] : null;
+    var html = '';
+    if (prevIssue) {
+      html += '<a class="pager-card prev" href="' + prevIssue.file + '"><small>← PREVIOUS ISSUE · 上一刊</small><strong>' + prevIssue.date + ' 期</strong></a>';
+    } else {
+      html += '<a class="pager-card prev" href="archive.html"><small>BACK ISSUES · 往期刊物架</small><strong>查看全部歷史期次</strong></a>';
+    }
+    if (nextIssue) {
+      html += '<a class="pager-card next" href="' + nextIssue.file + '"><small>NEXT ISSUE · 下一刊 →</small><strong>' + nextIssue.date + ' 期</strong></a>';
+    } else {
+      html += '<a class="pager-card next" href="archive.html"><small>ALL ISSUES · 共 ' + list.length + ' 期 →</small><strong>進入往期刊物架篩選</strong></a>';
+    }
+    pager.innerHTML = html;
+  });
+})();
+</script>
+</body>
+</html>

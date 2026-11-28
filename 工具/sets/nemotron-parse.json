@@ -1,0 +1,33 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "NVIDIA on HF · 11-26",
+  "date": "2026.11.28",
+  "slides": [
+    {
+      "type": "table",
+      "kicker": "OPEN DATA · 開源數據",
+      "headline": ["三套訓練資料", "連微調配方一起放"],
+      "accentLine": 1,
+      "sub": "合成圖表、合成表格與多語言 OCR，均附影像、標註與訓練格式。",
+      "head": ["資料集", "樣本數", "用途"],
+      "rows": [
+        { "a": "Synthetic Charts V1", "b": "998 萬", "c": "圖表數值與序列" },
+        { "a": "Synthetic Tables V1", "b": "100 萬", "c": "行列與表頭關係" },
+        { "a": "OCR Multilingual v2", "b": "790 萬", "c": "多語言頁面閱讀", "hot": true }
+      ],
+      "verdict": "牙科合成表單 pass@1 從 0% 升至 96.58%，留出集出自同一生成器。"
+    },
+    {
+      "type": "shot",
+      "kicker": "DOCUMENT PARSING · 文檔解析",
+      "headline": ["單卡每秒二十頁", "草稿模型再推一把"],
+      "accentLine": 1,
+      "image": "img/nemotron-parse-01.png",
+      "cap": "單卡 H200 原生文檔解析吞吐量",
+      "caption": "同一組 2078 頁，Parse 2.0 與 3.5 三個配置在並發請求下的吞吐對照",
+      "credit": "huggingface.co",
+      "wide": true,
+      "sub": "Parse 3.5 每秒 13.48 頁，加上 DFlash2 達到 20.44 頁。"
+    }
+  ]
+}

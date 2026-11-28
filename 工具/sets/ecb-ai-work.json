@@ -1,0 +1,31 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "ECB Blog · 11-27",
+  "date": "2026.11.28",
+  "slides": [
+    {
+      "type": "kpi",
+      "kicker": "ECO SURVEY · 調查口徑",
+      "headline": ["四成四每週用", "一成八每天用"],
+      "accentLine": 1,
+      "sub": "2026 年 8 月歐元區 18 至 64 歲就業消費者，人口加權估計。",
+      "cells": [
+        { "n": "44%", "l": "每週至少一次", "d": "Aug 2026" },
+        { "n": "18%", "l": "每天使用", "d": "Aug 2026" },
+        { "n": "46%", "l": "五年後行業預期", "d": "一年前為 34%" }
+      ],
+      "verdict": "CES 與蓋洛普問題和樣本不同，跨區比較只能看趨勢。"
+    },
+    {
+      "type": "shot",
+      "kicker": "WORKPLACE AI · 職場使用",
+      "headline": ["查資料最常被點名", "核對輸出也耗時間"],
+      "accentLine": 1,
+      "image": "img/ecb-ai-work-01.png",
+      "cap": "使用者自述 AI 有幫助與無助於工作的原因",
+      "caption": "歐元區就業消費者選擇原因的比例，歐洲央行消費者預期調查",
+      "credit": "ecb.europa.eu",
+      "sub": "約 56% 使用者說 AI 增加了完成的工作量，47% 說品質提高。"
+    }
+  ]
+}

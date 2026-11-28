@@ -1,0 +1,35 @@
+{
+  "brand": "EVERYNEWS",
+  "source": "arXiv 2611.34051 · 11-27",
+  "date": "2026.11.28",
+  "noImageReason": "論文頁只有一張研究海報，不適合當正文資訊圖，狀態失穩的成因與修法改走示意卡呈現",
+  "slides": [
+    {
+      "type": "statement",
+      "kicker": "LINEAR ATTENTION · 線性注意力",
+      "kickerTop": "Stable Gated DeltaNet-2 · 11-27",
+      "lines": [
+        "狀態指數級長大",
+        "[[對稱擦除]]把它穩住"
+      ],
+      "by": "MemTensor 等 14 位作者 · 當日第 1 熱門論文"
+    },
+    {
+      "type": "diagram",
+      "kicker": "FAILURE TO FIX · 病因與修法",
+      "headline": ["擦除不對稱", "增益跨 token 累積"],
+      "accentLine": 1,
+      "sub": "讀取與修改方向不一致，形成非正規算子，狀態即使沒有新寫入也會擴張。",
+      "nodes": [
+        { "box": "不對稱擦除", "lab": "方向增益逐 token 累積" },
+        { "box": "對稱擦除", "lab": "狀態傳播不再擴張", "tone": "dim" },
+        { "box": "衰減調節寫入", "lab": "保留表達能力與分塊並行", "tone": "fill" }
+      ],
+      "arrows": [
+        { "label": "病因" },
+        { "label": "修法" }
+      ],
+      "verdict": "約 16 億參數驗證，128K RULER 平均高 6.80 分，九個下游任務平均高 0.62。"
+    }
+  ]
+}
